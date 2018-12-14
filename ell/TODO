@@ -1,0 +1,69 @@
+Background
+==========
+
+- Priority scale: High, Medium and Low
+
+- Complexity scale: C1, C2, C4 and C8.  The complexity scale is exponential,
+  with complexity 1 being the lowest complexity.  Complexity is a function
+  of both task 'complexity' and task 'scope'.
+
+  The general rule of thumb is that a complexity 1 task should take 1-2 weeks
+  for a person very familiar with the codebase.  Higher complexity tasks
+  require more time and have higher uncertainty.
+
+  Higher complexity tasks should be refined into several lower complexity tasks
+  once the task is better understood.
+
+
+DBus API
+========
+
+- Add builder APIs for appending fixed-size array data.  Currently arrays are
+  built one element at a time which can get pretty expensive for large arrays.
+  A function that appends multiple fixed elements at once to the gvariant and
+  dbus1 builders is needed.
+
+  Priority: Medium
+  Complexity: C4
+
+
+Kernel Crypto
+=============
+
+- Add support for getsockname (getname) in the Linux kernel for sockets of
+  type AF_ALG.  Currently this is not implemented and the kernel returns
+  EOPNOTSUPP.
+
+  Priority: Low
+  Complexity: C2
+
+
+TLS Support
+===========
+
+- Implement tls_cert_find_certchain
+
+  When the server sends its certificate, it should be sending the full
+  certificate chain, where each certificate directly verifies the preceding one
+  in the list.  The root CA certificate can be optionally omitted.
+
+  Since we are given a server certificate and a location with all CA
+  certificates we need to find a cert chain path to satisfy the above
+  condition.  The location can either be a directory (e.g. /etc/ssl/certs),
+  or a PEM file with all CA certificates concatenated inside.
+
+  Alternatively, we can assume that the user would be providing a certchain
+  file with the entire server certchain in some file format (e.g. PEM) which
+  contains all the required certificates concatenated into a single file.
+
+  The client certificate might require similar handling.
+
+  Priority: Medium
+  Complexity: C2
+
+- Implement Suite B Profile for TLS
+
+  Described in RFC 6460
+
+  Priority: Medium
+  Complexity: C8
