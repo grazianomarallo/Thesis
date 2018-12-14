@@ -1,0 +1,351 @@
+Background
+==========
+
+- Priority scale: High, Medium and Low
+
+- Complexity scale: C1, C2, C4 and C8.  The complexity scale is exponential,
+  with complexity 1 being the lowest complexity.  Complexity is a function
+  of both task 'complexity' and task 'scope'.
+
+  The general rule of thumb is that a complexity 1 task should take 1-2 weeks
+  for a person very familiar with the codebase.  Higher complexity tasks
+  require more time and have higher uncertainty.
+
+  Higher complexity tasks should be refined into several lower complexity tasks
+  once the task is better understood.
+
+
+mac80211_hwsim
+==============
+
+- Add support for HWSIM_CMD_SET_RADIO command
+
+  To allow modifying an existing radio, add the HWSIM_CMD_SET_RADIO.  The
+  first possible feature should be to emulate the hardware RFKILL switch.
+
+  It might be required to add a HWSIM_ATTR_RADIO_HW_RFKILL attribute flag
+  to the HWSIM_CMD_NEW_RADIO to enable virtual radios with a hardware
+  level RFKILL switch.
+
+  Priority: Medium
+  Complexity: C1
+
+- Allow configuration of MAC address or list of MAC addresses
+
+  The radios are auto-generating a fake MAC address.  It would be useful
+  to allow specifying a MAC address to be used.  In certain cases it might
+  be also useful to provide a list of MAC addresses so that for example
+  with secondary interfaces these can be used.
+
+  Priority: Low
+  Complexity: C2
+
+- Move mac80211_hwsim.h header file to UAPI includes
+
+  The mac80211_hwsim.h is the public API description of this netlink
+  interface and thus it should be provided via UAPI includes.
+
+  For this work work the mac80211_hwsim.h header needs to be modified
+  so that it also compiles from userspace.  At the moment it throws
+  errors.  And it needs to become part of the UAPI headers of the
+  Linux kernel.
+
+  In addition it should provide HWSIM_GENL_NAME that provides the
+  generic netlink "MAC82011_HWSIM" family string.
+
+  Priority: Low
+  Complexity: C1
+
+- Provide kernel option to allow defining the number of initial radios
+
+  By default the mac80211_hwsim modules creates 2 radios by default unless
+  it is overwritten with the radios=x module parameter.
+
+  To allow loading the mac80211_hwsim by default and even with accidental
+  loading of the module, it would be good to provide a kernel configuration
+  option that allows changing the default value here.
+
+  For our testing we want to load mac80211_hwsim without any radios. Maybe
+  this should be the default for the new kernel option.
+
+  If the default of initial radios can be changed to zero, then it is also
+  possible to add MODULE_ALIAS_GENL_FAMILY to support auto-loading of
+  the mac80211_hwsim kernel module.
+
+  Priority: Low
+  Complexity: C1
+
+- New configuration options for radios
+
+  At the moment the radios created are all equal and feature rich.  However
+  for testing we want to create radios with different emulated hardware
+  capabilities.  Provide new attributes or flags that allow enabling or
+  disabling certain mac80211 features.
+
+  For example AP mode, P2P mode, number of interface combinations, TDLS
+  support, number of Scan SSIDs, supported ciphers and so on.
+
+  Priority: Low
+  Complexity: C2
+
+
+Wireless monitor
+================
+
+- Add support for PACKET_RECV_OUTPUT socket option of AF_PACKET
+
+  Instead of having to switch every interface manually into promiscuous
+  mode, it would be useful to set PACKET_RECV_OUTPUT to receive also
+  the traffic that leaves the system.
+
+  This would make tracing PAE / EAPoL traffic easy and provides better
+  sniffing capabilities.
+
+  Unfortunately, PACKET_RECV_OUTPUT logic is not implemented at all in
+  the kernel. So, first implement it in the kernel, and then use it in
+  nlmon.c as a set_sockopt option.
+
+  Priority: Low
+  Complexity: C8
+
+- Subscribe to all nl80211 multicast groups at startup
+
+  It seems the nlmon packets are limited to actual subscribed mutlicast
+  groups.  To get a complete picture of all the nl80211 commands and
+  events, it is required that iwmon adds membership to all multicast
+  groups that the nl80211 lists.
+
+  This means that the netlink socket used for resolving nl80211 family
+  name needs to be kept open and actively processed since it will also
+  receive these multicast events.  However the event itself can be dropped
+  since the one from nlmon with the proper kernel level timestamps should
+  be taken into account.
+
+  An alternative is to fix the netlink_deliver_tap() function in the
+  kernel netlink layer to not be affected by the broadcast filtering.
+
+  Priority: Medium
+  Complexity: C1
+
+- Print the 'group' of the decoded message
+
+  Whenever an event / message is received, iwmon should print the genl
+  group of the message (e.g. mlme, scan, config, regulatory).  This will
+  make it easier to add handling of such events / commands inside iwd.
+
+  Priority: Medium
+  Complexity: C1
+
+
+Wireless simulator
+==================
+
+- Add support for builtin wireless access point emulator
+
+  When creating a pair of mac80211_hwsim radios, allow one to operate as
+  access point.  The hwsim utility will emulate the access point on the
+  second interface for as long as it is running.  Which means that from
+  the first interface it is possible to scan and connect to this access
+  point using standard wireless tools (including iwd and iwctl).
+
+  Code for the AP mode can be shared from iwd feature for access point
+  operation once that has been implemented.
+
+  Priority: Medium
+  Complexity: C8
+
+
+Wireless daemon
+===============
+
+- Let EAP methods configure timeouts
+
+  Different EAP methods might have different recommendations for various
+  timeouts.  E.g. retransmit timeout, overall timeout, etc.  The EAP framework
+  should be updated to enable EAP methods to configure these timeouts
+  accordingly.  A sane default should also be provided.
+
+  Priority: High
+  Complexity: C2
+
+- EAPoL should take EAP timeouts into consideration
+
+  EAPoL state machine currently uses its own (very short) timeout for the
+  4-Way handshake / session key generation.  This timeout does not take into
+  account the fact that EAP authentication might need to be performed first.
+
+  Priority: High
+  Complexity: C1
+
+- Add unit test data with 2nd RSNE in Authenticator 3/4 message
+
+  The specification allows the AP to send a second RSN element in its 4-way
+  handshake message 3/4.  Find some test data for this case and create a unit
+  test case.
+
+  Priority: Low
+  Complexity: C1
+
+- Handle "Use group cipher suite" option for pairwise ciphers
+
+  If the AP specifies "Use group cipher suite" as its only pairwise suite, then
+  handle this appropriately inside EAPoL handshaking code.  The install_gtk
+  callback might need to be modified to handle this case.
+
+  Priority: Low
+  Complexity: C1
+
+- Add support for PMK Caching from 802.11-2007.  This is sometimes referred to
+  as "fast, secure roam back".  Essentially the client caches PMKIDs generated
+  when connecting to various APs.  If the client roams back to an AP that has
+  already been connected to, and the PMK is cached by both, then the 802.1X
+  exchange can be skipped.
+
+  Priority: Low
+  Complexity: C4
+
+- Add support for Opportunistic Key Caching (OKC).  This is not defined by
+  any 802.11 standards, but is made available by major vendors such as Cisco
+  and Microsoft.
+
+  Priority: Low
+  Complexity: C4
+
+- Add support for Direct Link Setup from 802.11e.
+
+  Priority: Low
+  Complexity: C8
+
+- Add support for Automatic Power Save Delivery (APSD).  This includes
+  scheduled (s-APSD) and unscheduled (u-APSD).  This will require rudimentary
+  support of WMM protocol.  This feature was introduced in 802.11e.
+
+  Priority: Low
+  Complexity: C4
+
+- Add support for Fast BSS Transition (FT) from 802.11r.  FT over air is
+  already supported by iwd.  Add support for 'FT over DS'. In FT over DS,
+  action frames can be used to perform a 4-way handshake to the target AP
+  while still connected to the current AP.
+
+  Priority: Low
+  Complexity: C4
+
+- Add support for 802.11u.  This is required for Passpoint 2.0 support.
+
+  Priority: Low
+  Complexity: C8
+
+- Add support for Wireless Network Management (WNM) from 802.11v.  Parts of
+  this are needed for Passpoint support.
+
+  Priority: Low
+  Complexity: C8
+
+- Add support for Tunneled Direct Link Setup (TDLS) from 802.11z.
+
+  Priority: Medium
+  Complexity: C8
+
+- Add support for the STK 4-Way Handshake into eapol.c as described in
+  802.11-2016 Setion 12.7.
+
+  Priority: Medium
+  Complexity: C8
+
+- Add support for WiFi P2P.  This tasks depends on 'STK 4-Way Handshake' task.
+  iwd will require a new P2P D-Bus API to be exposed in order for clients to
+  manage P2P connections.  P2P specific logic for device management and
+  switching between P2P and STA/AP modes for a particular interface will be
+  required.
+
+  Priority: Medium
+  Complexity: C8
+
+- Add support for EAP-LEAP.  This is a Cisco proprietary EAP method that is
+  quite widespread.
+
+  Priority: Medium
+  Complexity: C4
+
+- Add support for EAP-OTP.  OTP stands for 'One Time Password' and can be
+  found in RFC3784.
+
+  Priority: Low
+  Complexity: C4
+
+- Take EAP MSK size into consideration.
+
+  MSK is mandated to be 64 bytes long, and depending on the AKM, different parts
+  of the MSK are used to generate keys.  Some EAP methods produce MSKs with less
+  than 64 bytes of useable data.  For example, LEAP produces only 16 bytes and
+  MSCHAPv2 produces 32 bytes.  If the AKM requires MSK of a certain size, and
+  the EAP method does not provide enough data, then the handshake should be
+  aborted.
+
+  Priority: Medium
+  Complexity: C2
+
+- Implement Enrollee Session Overlap Detection after WSC Protocol Run
+
+  WSC Best Practices v2.0.1, Section 3.15 describes an enhacement to detect
+  PBC session overlaps.  The Enrollee is asked to perform an extra scan without
+  the PBC request in the ProbeRequest frames after EAP-WSC completes
+  successfully.  If another AP in PBC mode is found, then a SessionOverlap
+  error should be reported to the user.
+
+  Priority: Low
+  Complexity: C2
+
+- Implement 4-Address mode when acting as a client
+
+  NL80211 allows one to use 4-address mode in STA role.  In this case the
+  EAPoL packets flow over the bridge interface while the rest of the commands
+  are addressed to the actual interface index.  This can be useful to share
+  the WiFi interface over various VM instances.
+
+  Priority: Low
+  Complexity: C2
+
+- Use NL80211_CMD_CRIT_PROTOCOL_START / CRIT_PROTOCOL_STOP
+
+  Research whether iwd should be making use of these commands in order to
+  make EAP & 4-way handshakes, as well as DHCP exchanges more reliable.
+
+  Priority: Medium
+  Complexity: C2
+
+- DPP Support
+
+  Device Provisioning Protocol is a new specification from WiFi Alliance.
+  This allows devices to be provisioned, typically via a QR code.
+
+  Priority: Low
+  Complexity: C8
+
+- iwctl should register the agent even in non-interactive mode
+
+  When iwctl is started in non-interactive mode it currently does not register
+  the agent.  This can lead to a .NoAgent error being reported when issuing
+  commands through iwctl in this mode.  This behavior is generally okay for PSK
+  networks that only require the agent on the first connection.  For 802.1x
+  networks the Agent can be used to obtain username/password/passphrase details
+  and thus used much more often.  Make sure that iwctl supports this possibility
+  even in non-interactive mode.
+
+  Priority: High
+  Complexity: C1
+
+- Implement EAP Authenticator certificate element matching
+
+  With TLS based EAP methods it is possible for certain Man-In-The-Middle
+  attacks to be performed by having a trusted CA issue a certificate for an
+  unrelated domain and then have an adversary utilize that certificate to spoof
+  trusted Access Points for a certain SSID.  To prevent this it is possible
+  for clients to further limit what certificates they accept by utilizing
+  dNSName sub-element of SubjectAltName in the X.509 certificate (or
+  alternatively the SubjectName CN) of the Authenticator.  This matching can
+  be done by suffix, an exact match, or perhaps even glob matching.
+
+  Priority: Medium
+  Complexity: C8
