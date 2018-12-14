@@ -1,9 +1,9 @@
-start_time        : 1544787011
-last_update       : 1544787051
-fuzzer_pid        : 17335
+start_time        : 1544813351
+last_update       : 1544813379
+fuzzer_pid        : 387
 cycles_done       : 0
-execs_done        : 340
-execs_per_sec     : 8.41
+execs_done        : 212
+execs_per_sec     : 7.92
 paths_total       : 3
 paths_favored     : 1
 paths_found       : 1
@@ -14,15 +14,15 @@ pending_favs      : 1
 pending_total     : 3
 variable_paths    : 0
 stability         : 100.00%
-bitmap_cvg        : 2.23%
+bitmap_cvg        : 2.24%
 unique_crashes    : 0
 unique_hangs      : 0
-last_path         : 1544787032
+last_path         : 1544813374
 last_crash        : 0
 last_hang         : 0
-execs_since_crash : 340
-exec_timeout      : 240
+execs_since_crash : 212
+exec_timeout      : 260
 afl_banner        : test-eapol
 afl_version       : 2.52b
 target_mode       : default
-command_line      : afl-fuzz -i iwd-gm/afl_in -o iwd-gm/afl_out iwd-gm/unit/test-eapol @@
+command_line      : afl-fuzz -i Documents/Thesis/fuzzer_result/afl_in -o Documents/Thesis/fuzzer_result/afl_out Documents/Thesis/iwd-gm/unit/test-eapol @@

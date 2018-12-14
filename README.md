@@ -4,7 +4,7 @@ This repository contains all the material, source code, report and slideshow dev
 
 ## Project structure
 
--iwd-gm (forked from git://git.kernel.org/pub/scm/network/wireless/iwd.git)
+- iwd-gm (forked from git://git.kernel.org/pub/scm/network/wireless/iwd.git)
 
 - ell (forked from git://git.kernel.org/pub/scm/libs/ell/ell.git)
 
