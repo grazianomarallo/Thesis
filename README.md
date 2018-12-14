@@ -2,14 +2,15 @@
 
 This repository contains all the material, source code, report and slideshow developed for my master's thesis.
 
-##Project Structure 
-The repository is so divided:
+## Project structure
 
-•Root: source code
+-iwd-gm (forked from git://git.kernel.org/pub/scm/network/wireless/iwd.git)
 
-•Final Report
+- ell (forked from git://git.kernel.org/pub/scm/libs/ell/ell.git)
 
-•SlideShow
+- Thesis Report
+
+- SlideShow
 
 ## Authors
 
