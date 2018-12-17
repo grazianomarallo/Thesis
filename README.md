@@ -10,7 +10,7 @@ KU Leuven Supervisors: Jan Tobias Muehlberg, Mathy Vanhoef
 - [Testing](#testing)
 - [Author](#author)
 
-#Description
+##Description
 
 Recently have been discovered that WPA2 is vulnerable to key
 reinstallation attacks (KRACKs). In response, software vendors patched their
@@ -35,6 +35,7 @@ that do not properly follow the 802.11 standard. This further complicates an
 implementation of the handshake. All combined, this makes it difficult to
 reason about the correctness of a patch, meaning some patches may be flawed in
 practice.
+
 
 ##Goals
 
