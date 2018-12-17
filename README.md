@@ -1,4 +1,8 @@
-# Security Analysis of the WPA2 KRACK patches [Master's Thesis]
+# Security Analysis of the WPA2 KRACK patches
+
+Master's Thesis @Polito, developed at @KULeuven.
+Polito Supervisor: Antonio Lioy
+KU Leuven Supervisors: Jan Tobias Muehlberg, Mathy Vanhoef
 
 - [Description](#description)
 - [Goals](#goals)
@@ -7,6 +11,7 @@
 - [Author](#author)
 
 #Description
+
 Recently have been discovered that WPA2 is vulnerable to key
 reinstallation attacks (KRACKs). In response, software vendors patched their
 implementations to prevent key reinstallations. However, how can we be sure
@@ -32,6 +37,7 @@ reason about the correctness of a patch, meaning some patches may be flawed in
 practice.
 
 ##Goals
+
 The goal of this thesis is to asses the correctness of patches. By doing that 
 different analysis will be done in order to find several bugs and possibile bug
 patterns in the 4-way Handshake implementation.
