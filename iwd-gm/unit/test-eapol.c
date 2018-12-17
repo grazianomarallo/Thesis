@@ -377,35 +377,45 @@ static const unsigned char eapol_key_data_5[] = {
 	0x05, 0xd6, 0x10, 0xa6, 0x95, 0x51, 0xd6, 0x0b, 0xe6, 0x0a, 0x5b,
 };
 
+//XXX read  frame 3 
+//char * __afl_input_filename = NULL; 
 unsigned char *  __afl_get_key_data_5 (size_t *len){
 
     static unsigned char buffer[2048];
-    FILE *input;
-    int byte_read;
+    int input = 0;
+    int byte_read = 0;
 
-    input = open("/home/parallels/iwd-gm/afl_in/data_message_5", 0);
-    if (input == NULL) {
+    if ( __afl_input_filename != NULL ) {
+      input = open(__afl_input_filename, 0);
+    }
+
+    if (input <= 0) {
         perror("XXX Error: failed file cannot be open! XXX\n");
-        return 1;
     }
     else{
         printf("+++ File open correctly! +++\n");
     }
 
     byte_read = read(input, buffer, 1024);
-    if(byte_read == -1){
+    if(byte_read <= 0){
         perror("XXX Error: Failed to read the input file! XXX");
     }
     else{
         printf("Read: %i\n",byte_read);
     }
-  if (input> 0 &&  byte_read > 0) {
-    *len = byte_read;
-    return(buffer);
-  }
+
+    if (input > 0) {
+        close (input);
+    }
+
+    if (input > 0 &&  byte_read > 0) {
+      *len = byte_read;
+      return(buffer);
+    }
 
     return(NULL);
 };
+
 
 
 static struct eapol_key_data eapol_key_test_5 = {
@@ -416,7 +426,7 @@ static struct eapol_key_data eapol_key_test_5 = {
 	.descriptor_type = EAPOL_DESCRIPTOR_TYPE_80211,
 	.key_descriptor_version = EAPOL_KEY_DESCRIPTOR_VERSION_HMAC_SHA1_AES,
 	.key_type = true,
-	.install = true,
+	.install = true
 	.key_ack = true,
 	.key_mic = true,
 	.secure = true,
