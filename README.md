@@ -10,7 +10,7 @@ KU Leuven Supervisors: Jan Tobias Muehlberg, Mathy Vanhoef
 - [Testing](#testing)
 - [Author](#author)
 
-##Description
+## Description
 
 Recently have been discovered that WPA2 is vulnerable to key
 reinstallation attacks (KRACKs). In response, software vendors patched their
@@ -37,7 +37,7 @@ reason about the correctness of a patch, meaning some patches may be flawed in
 practice.
 
 
-##Goals
+## Goals
 
 The goal of this thesis is to asses the correctness of patches. By doing that 
 different analysis will be done in order to find several bugs and possibile bug
