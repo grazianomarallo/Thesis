@@ -1,0 +1,5 @@
+\babel@toc {english}{}
+\beamer@sectionintoc {1}{4-Way Handshake Protocol }{4}{0}{1}
+\beamer@sectionintoc {2}{KRACK}{11}{0}{2}
+\beamer@sectionintoc {3}{Fuzzing}{18}{0}{3}
+\beamer@sectionintoc {4}{Goal \& Findings}{24}{0}{4}
