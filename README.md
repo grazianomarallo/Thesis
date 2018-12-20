@@ -7,6 +7,7 @@ KU Leuven Supervisors: Jan Tobias Muehlberg, Mathy Vanhoef
 - [Description](#description)
 - [Goals](#goals)
 - [Project Structure](#project-structure)
+- [Building Project](#builgind-project)
 - [Testing](#testing)
 - [Author](#author)
 
@@ -56,10 +57,23 @@ patterns in the 4-way Handshake implementation.
 
 - start\_fuzzing.sh: bash script used in order to start the fuzzer
 
-## Testing
+## Building Project
+
+The project can be build and then tested after AFL and IWD are properly installed.
+Run the bash script "initialise.sh" in order to clone AFL and also build it.
+By running the script iwd will be initialised and built automatically.
+Run the following command:
 
 ```bash
-$ cd <home_dir>
+$ cd Thesis
+$ ./initialised.sh
+```
+## Testing
+
+Once AFL and IWD have been configured, it's possible to run test by issuing the following command:
+
+```bash
+$ cd Thesis
 $ ./start_fuzzing.sh
 ```
 The bash script will create a directory in /tmp (called fuzzer\_result), which will contain a directory with
