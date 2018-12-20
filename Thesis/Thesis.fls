@@ -1,0 +1,285 @@
+PWD /Users/grazianomarallo/Dropbox/KU Leuven/Thesis/Thesis
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/data/miktex/data/le/pdftex/pdflatex.fmt
+INPUT /Users/grazianomarallo/Dropbox/KU Leuven/Thesis/Thesis/Thesis.tex
+OUTPUT Thesis.log
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/tex/latex/toptesi/toptesi.cls
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/tex/latex/toptesi/toptesi.cls
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/tex/latex/tools/trace.sty
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/tex/latex/tools/trace.sty
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/tex/latex/xkeyval/xkeyval.sty
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/tex/latex/xkeyval/xkeyval.sty
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/tex/generic/xkeyval/xkeyval.tex
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/tex/generic/xkeyval/xkvutils.tex
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/tex/generic/xkeyval/keyval.tex
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/tex/latex/base/report.cls
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/tex/latex/base/report.cls
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/tex/latex/base/size12.clo
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/tex/latex/base/size12.clo
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/fonts/tfm/public/cm/cmr12.tfm
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/tex/latex/iftex/iftex.sty
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/tex/latex/iftex/iftex.sty
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/tex/generic/babel/babel.sty
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/tex/generic/babel/babel.sty
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/tex/generic/babel/switch.def
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/tex/latex/arabi/bblopts.cfg
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/tex/latex/arabi/bblopts.cfg
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/tex/latex/babel-english/english.ldf
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/tex/latex/babel-english/english.ldf
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/tex/generic/babel/babel.def
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/tex/generic/babel/txtbabel.def
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/tex/latex/babel-italian/italian.ldf
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/tex/latex/babel-italian/italian.ldf
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/tex/latex/etoolbox/etoolbox.sty
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/tex/latex/etoolbox/etoolbox.sty
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/tex/latex/toptesi/toptesi.sty
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/tex/latex/toptesi/toptesi.sty
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/tex/latex/koma-script/scrextend.sty
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/tex/latex/koma-script/scrextend.sty
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/tex/latex/koma-script/scrkbase.sty
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/tex/latex/koma-script/scrkbase.sty
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/tex/latex/koma-script/scrbase.sty
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/tex/latex/koma-script/scrbase.sty
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/tex/latex/koma-script/scrlfile.sty
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/tex/latex/koma-script/scrlfile.sty
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/tex/latex/tools/xspace.sty
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/tex/latex/tools/xspace.sty
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/tex/latex/l3packages/xparse/xparse.sty
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/tex/latex/l3packages/xparse/xparse.sty
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/tex/latex/l3kernel/expl3.sty
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/tex/latex/l3kernel/expl3.sty
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/tex/latex/l3kernel/expl3-code.tex
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/tex/latex/l3kernel/expl3-code.tex
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/fonts/tfm/public/cm/cmr10.tfm
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/fonts/tfm/public/cm/cmr10.tfm
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/fonts/tfm/public/cm/cmr10.tfm
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/fonts/tfm/public/cm/cmr10.tfm
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/fonts/tfm/public/cm/cmr10.tfm
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/fonts/tfm/public/cm/cmr10.tfm
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/fonts/tfm/public/cm/cmr10.tfm
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/fonts/tfm/public/cm/cmr10.tfm
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/fonts/tfm/public/cm/cmr10.tfm
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/fonts/tfm/public/cm/cmr10.tfm
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/tex/generic/unicode-data/UnicodeData.txt
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/tex/generic/unicode-data/UnicodeData.txt
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/tex/latex/l3kernel/l3pdfmode.def
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/tex/latex/l3kernel/l3pdfmode.def
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/tex/latex/graphics/graphicx.sty
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/tex/latex/graphics/graphicx.sty
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/tex/latex/graphics/graphics.sty
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/tex/latex/graphics/graphics.sty
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/tex/latex/graphics/trig.sty
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/tex/latex/graphics/trig.sty
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/tex/latex/graphics-cfg/graphics.cfg
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/tex/latex/graphics-cfg/graphics.cfg
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/tex/latex/graphics-def/pdftex.def
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/tex/latex/graphics-def/pdftex.def
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/tex/latex/hyperref/hyperref.sty
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/tex/latex/hyperref/hyperref.sty
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/tex/generic/oberdiek/hobsub-hyperref.sty
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/tex/generic/oberdiek/hobsub-hyperref.sty
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/tex/generic/oberdiek/hobsub-hyperref.sty
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/tex/generic/oberdiek/hobsub-generic.sty
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/tex/generic/oberdiek/hobsub-generic.sty
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/tex/generic/ifxetex/ifxetex.sty
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/tex/generic/ifxetex/ifxetex.sty
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/tex/latex/oberdiek/auxhook.sty
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/tex/latex/oberdiek/auxhook.sty
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/tex/latex/oberdiek/kvoptions.sty
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/tex/latex/oberdiek/kvoptions.sty
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/tex/latex/hyperref/pd1enc.def
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/tex/latex/hyperref/pd1enc.def
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/tex/latex/00miktex/hyperref.cfg
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/tex/latex/00miktex/hyperref.cfg
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/tex/latex/url/url.sty
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/tex/latex/url/url.sty
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/tex/latex/hyperref/hpdftex.def
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/tex/latex/hyperref/hpdftex.def
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/tex/latex/oberdiek/rerunfilecheck.sty
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/tex/latex/oberdiek/rerunfilecheck.sty
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/tex/latex/base/inputenc.sty
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/tex/latex/base/inputenc.sty
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/tex/latex/base/latin1.def
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/tex/latex/base/latin1.def
+INPUT commands.tex
+INPUT commands.tex
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/tex/latex/doi/doi.sty
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/tex/latex/doi/doi.sty
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/tex/latex/siunitx/siunitx.sty
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/tex/latex/siunitx/siunitx.sty
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/tex/latex/amsmath/amstext.sty
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/tex/latex/amsmath/amstext.sty
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/tex/latex/amsmath/amsgen.sty
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/tex/latex/amsmath/amsgen.sty
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/tex/latex/tools/array.sty
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/tex/latex/tools/array.sty
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/tex/latex/l3packages/l3keys2e/l3keys2e.sty
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/tex/latex/l3packages/l3keys2e/l3keys2e.sty
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/tex/latex/translator/translator.sty
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/tex/latex/translator/translator.sty
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/tex/latex/translator/translator.sty
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/tex/latex/listings/listings.sty
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/tex/latex/listings/listings.sty
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/tex/latex/listings/lstmisc.sty
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/tex/latex/listings/lstmisc.sty
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/tex/latex/listings/listings.cfg
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/tex/latex/listings/listings.cfg
+INPUT Thesis.aux
+INPUT Thesis.aux
+OUTPUT Thesis.aux
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/tex/context/base/supp-pdf.mkii
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/tex/context/base/supp-pdf.mkii
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/tex/latex/oberdiek/epstopdf-base.sty
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/tex/latex/oberdiek/epstopdf-base.sty
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/tex/latex/oberdiek/grfext.sty
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/tex/latex/oberdiek/grfext.sty
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/tex/latex/toptesi/topfront.sty
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/tex/latex/toptesi/topfront.sty
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/tex/latex/toptesi/toptesi.cfg
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/tex/latex/toptesi/toptesi.cfg
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/tex/latex/toptesi/toptesi.cfg
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/tex/latex/toptesi/topcoman.sty
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/tex/latex/toptesi/topcoman.sty
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/tex/latex/base/textcomp.sty
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/tex/latex/base/textcomp.sty
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/tex/latex/base/ts1enc.def
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/tex/latex/base/ts1enc.def
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/tex/latex/base/ts1enc.dfu
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/tex/latex/base/ts1enc.dfu
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/tex/latex/fancyvrb/fancyvrb.sty
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/tex/latex/fancyvrb/fancyvrb.sty
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/tex/latex/graphics/color.sty
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/tex/latex/graphics/color.sty
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/tex/latex/graphics-cfg/color.cfg
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/tex/latex/graphics-cfg/color.cfg
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/tex/latex/hyperref/nameref.sty
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/tex/latex/hyperref/nameref.sty
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/tex/generic/oberdiek/gettitlestring.sty
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/tex/generic/oberdiek/gettitlestring.sty
+INPUT Thesis.out
+INPUT Thesis.out
+INPUT Thesis.out
+INPUT Thesis.out
+OUTPUT Thesis.pdf
+INPUT ./Thesis.out
+INPUT ./Thesis.out
+OUTPUT Thesis.out
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/tex/latex/translator/translator-basic-dictionary-English.dict
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/tex/latex/translator/translator-basic-dictionary-English.dict
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/tex/latex/siunitx/siunitx-abbreviations.cfg
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/tex/latex/siunitx/siunitx-abbreviations.cfg
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/tex/latex/siunitx/siunitx-binary.cfg
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/tex/latex/siunitx/siunitx-binary.cfg
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/fonts/tfm/public/cm/cmr8.tfm
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/fonts/tfm/public/cm/cmr6.tfm
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/fonts/tfm/public/cm/cmmi12.tfm
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/fonts/tfm/public/cm/cmmi8.tfm
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/fonts/tfm/public/cm/cmmi6.tfm
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/fonts/tfm/public/cm/cmsy10.tfm
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/fonts/tfm/public/cm/cmsy8.tfm
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/fonts/tfm/public/cm/cmsy6.tfm
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/fonts/tfm/public/cm/cmss12.tfm
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/fonts/tfm/public/cm/cmss8.tfm
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/fonts/tfm/public/cm/cmss8.tfm
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/fonts/tfm/public/cm/cmtt12.tfm
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/fonts/tfm/public/cm/cmtt8.tfm
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/fonts/tfm/public/cm/cmtt8.tfm
+INPUT images/logopolito.pdf
+INPUT ./images/logopolito.pdf
+INPUT ./images/logopolito.pdf
+INPUT ./images/logopolito.pdf
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/fonts/tfm/public/cm/cmr12.tfm
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/fonts/tfm/public/cm/cmr17.tfm
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/fonts/tfm/public/cm/cmr17.tfm
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/fonts/tfm/public/cm/cmbx12.tfm
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/fonts/tfm/public/cm/cmbx12.tfm
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/fonts/tfm/public/cm/cmmi12.tfm
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/fonts/tfm/public/cm/cmsy10.tfm
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/fonts/tfm/public/cm/cmss12.tfm
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/fonts/tfm/public/cm/cmss10.tfm
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/fonts/tfm/public/cm/cmss8.tfm
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/fonts/tfm/public/cm/cmtt12.tfm
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/fonts/tfm/public/cm/cmtt10.tfm
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/fonts/tfm/public/cm/cmtt8.tfm
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/fonts/tfm/public/cm/cmcsc10.tfm
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/fonts/tfm/public/cm/cmr17.tfm
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/fonts/tfm/public/cm/cmcsc10.tfm
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/data/pdftex/config/pdftex.map
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/fonts/tfm/public/cm/cmti12.tfm
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/tex/latex/base/ts1cmr.fd
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/tex/latex/base/ts1cmr.fd
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/fonts/tfm/jknappen/ec/tcti2074.tfm
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/fonts/tfm/public/cm/cmcsc10.tfm
+INPUT Thesis.toc
+INPUT Thesis.toc
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/fonts/tfm/public/cm/cmbx12.tfm
+OUTPUT Thesis.toc
+INPUT root/chapter1/chapter_1.tex
+INPUT root/chapter1/chapter_1.tex
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/fonts/tfm/public/cm/cmbx12.tfm
+INPUT images/fuzz_stages.png
+INPUT ./images/fuzz_stages.png
+INPUT ./images/fuzz_stages.png
+INPUT ./images/fuzz_stages.png
+INPUT ./images/fuzz_stages.png
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/fonts/tfm/public/cm/cmr10.tfm
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/fonts/tfm/jknappen/ec/tcrm1200.tfm
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/fonts/tfm/public/cm/cmsl10.tfm
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/fonts/tfm/public/cm/cmbxti10.tfm
+INPUT images/Algo-fuzz.png
+INPUT ./images/Algo-fuzz.png
+INPUT ./images/Algo-fuzz.png
+INPUT ./images/Algo-fuzz.png
+INPUT ./images/Algo-fuzz.png
+INPUT images/fuzz-work.png
+INPUT ./images/fuzz-work.png
+INPUT ./images/fuzz-work.png
+INPUT ./images/fuzz-work.png
+INPUT ./images/fuzz-work.png
+INPUT images/eapol-frame.png
+INPUT ./images/eapol-frame.png
+INPUT ./images/eapol-frame.png
+INPUT ./images/eapol-frame.png
+INPUT ./images/eapol-frame.png
+INPUT images/mess-ex.png
+INPUT ./images/mess-ex.png
+INPUT ./images/mess-ex.png
+INPUT ./images/mess-ex.png
+INPUT ./images/mess-ex.png
+INPUT images/sup-sm.png
+INPUT ./images/sup-sm.png
+INPUT ./images/sup-sm.png
+INPUT ./images/sup-sm.png
+INPUT ./images/sup-sm.png
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/fonts/tfm/public/cm/cmti12.tfm
+INPUT images/mitm.png
+INPUT ./images/mitm.png
+INPUT ./images/mitm.png
+INPUT ./images/mitm.png
+INPUT ./images/mitm.png
+INPUT biblio.tex
+INPUT biblio.tex
+INPUT Thesis.aux
+INPUT ./Thesis.out
+INPUT ./Thesis.out
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/data/fonts/pk/ljfour/jknappen/ec/dpi600/tcrm1200.pk
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/data/fonts/pk/ljfour/jknappen/ec/dpi600/tcrm1200.pk
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/data/fonts/pk/ljfour/jknappen/ec/dpi600/tcti2074.pk
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/data/fonts/pk/ljfour/jknappen/ec/dpi600/tcti2074.pk
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/fonts/type1/public/amsfonts/cm/cmbx12.pfb
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/fonts/type1/public/amsfonts/cm/cmbx12.pfb
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/fonts/type1/public/amsfonts/cm/cmbxti10.pfb
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/fonts/type1/public/amsfonts/cm/cmbxti10.pfb
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/fonts/type1/public/amsfonts/cm/cmcsc10.pfb
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/fonts/type1/public/amsfonts/cm/cmcsc10.pfb
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/fonts/type1/public/amsfonts/cm/cmr10.pfb
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/fonts/type1/public/amsfonts/cm/cmr10.pfb
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/fonts/type1/public/amsfonts/cm/cmr12.pfb
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/fonts/type1/public/amsfonts/cm/cmr12.pfb
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/fonts/type1/public/amsfonts/cm/cmr17.pfb
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/fonts/type1/public/amsfonts/cm/cmr17.pfb
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/fonts/type1/public/amsfonts/cm/cmsl10.pfb
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/fonts/type1/public/amsfonts/cm/cmsl10.pfb
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/fonts/type1/public/amsfonts/cm/cmti12.pfb
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/fonts/type1/public/amsfonts/cm/cmti12.pfb
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/fonts/type1/public/amsfonts/cm/cmtt12.pfb
+INPUT /Users/grazianomarallo/Library/Application Support/MiKTeX/texmfs/install/fonts/type1/public/amsfonts/cm/cmtt12.pfb
