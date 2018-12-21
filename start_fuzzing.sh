@@ -1,6 +1,7 @@
 #!/bin/bash 
 #Author Graziano Marallo
 # Fuzzer Start 
+cwd=$(pwd)
 
 echo "+++ Start Fuzzing +++"
 echo
@@ -48,11 +49,7 @@ echo $message5 >> /tmp/fuzzer_result/$now/input/data_message_5
 echo "+++ STARTING FUZZER +++"
 echo 
 
-cd iwd-gm/
-make 
-cd unit/
-
-afl-fuzz -i /tmp/fuzzer_result/$now/input -o /tmp/fuzzer_result/$now/output   test-eapol @@
+afl-fuzz -i /tmp/fuzzer_result/$now/input -o /tmp/fuzzer_result/$now/output  $cwd/iwd-gm/unit/test-eapol @@
 
 
 
