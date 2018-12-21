@@ -27,6 +27,8 @@ echo
 cd iwd-gm/
 ./bootstrap
 CC=../afl/afl-gcc ./configure
+make
+make test-suite.log
 
 echo 
 echo "*** Building Done ***"
