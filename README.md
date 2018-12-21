@@ -10,6 +10,7 @@ KU Leuven Supervisors: Jan Tobias Muehlberg, Mathy Vanhoef
 - [Building Project](#builgind-project)
 - [Testing](#testing)
 - [Author](#author)
+- [Contributors](#contributors)
 
 ## Description
 
@@ -47,11 +48,11 @@ patterns in the 4-way Handshake implementation.
 
 ## Project Structure
 
-- iwd-gm (forked from git://git.kernel.org/pub/scm/network/wireless/iwd.git)
+- iwd-gm 
 
-- ell (forked from git://git.kernel.org/pub/scm/libs/ell/ell.git)
+- ell 
 
-- fuzzer\_result: store the the result of the fuzzer executions
+- fuzzer\_result: store significant results of the fuzzers executions
 
 - Report: store the slideshow and the final report developed so far
 
@@ -60,8 +61,12 @@ patterns in the 4-way Handshake implementation.
 ## Building Project
 
 The project can be build and then tested after AFL and IWD are properly installed.
-Run the bash script "initialise.sh" in order to clone AFL and also build it.
-By running the script iwd will be initialised and built automatically.
+Run the bash script "initialise.sh" in order to clone AFL and configure it.
+The script automatically build all the source code inside the "iwd-gm" folder.
+(N.B. : while compiling and instrumenting the code, since the harness code implemented
+modified the assertions, the code generate one error that make freeze the compilation.
+Press any key to make it continue and complete the compilation.
+One test, the one cited above, will fail. Don't care about it.)
 Run the following command:
 
 ```bash
@@ -79,6 +84,15 @@ $ ./start_fuzzing.sh
 The bash script will create a directory in /tmp (called fuzzer\_result), which will contain a directory with
 the current date and time of creation. The so created folder will store both input and output for the current execution.
 The input folder is loaded statically at the moment with significant test data. 
+If any modification is done on the code to compile again issue:
+
+```bash
+$ cd Thesis/iwd-gm
+$ make test-suite.log 
+```
+Calling make test-suite.log will create the same result explained in the note above, in the Building Project section.
+Follow the same instruction.
+
 (Future work add new input seeds to the script)
 
 
@@ -87,3 +101,9 @@ The input folder is loaded statically at the moment with significant test data.
 
 * **Graziano Marallo** - *Initial work* - [grazianomarallo](https://github.com/grazianomarallo)
 
+## Contributors
+
+- iwd-gm has been forked from (forked from git://git.kernel.org/pub/scm/network/wireless/iwd.git) 
+  and modified in order to perform fuzzing analysis.
+
+- ell has been forked from (forked from git://git.kernel.org/pub/scm/libs/ell/ell.git) 
