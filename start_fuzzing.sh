@@ -48,8 +48,11 @@ echo $message5 >> /tmp/fuzzer_result/$now/input/data_message_5
 echo "+++ STARTING FUZZER +++"
 echo 
 
-cd ../../Desktop/prova
-afl-fuzz -i /tmp/fuzzer_result/$now/input -o /tmp/fuzzer_result/$now/output  ~/Documents/Thesis/iwd-gm/unit/test-eapol @@
+cd iwd-gm/
+make 
+cd unit/
+
+afl-fuzz -i /tmp/fuzzer_result/$now/input -o /tmp/fuzzer_result/$now/output   test-eapol @@
 
 
 

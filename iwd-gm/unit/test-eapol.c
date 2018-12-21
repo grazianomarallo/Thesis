@@ -378,7 +378,7 @@ static const unsigned char eapol_key_data_5[] = {
 };
 
 //XXX read  frame 3 
-//char * __afl_input_filename = NULL; 
+
 unsigned char *  __afl_get_key_data_5 (size_t *len){
 
     static unsigned char buffer[2048];
@@ -416,8 +416,6 @@ unsigned char *  __afl_get_key_data_5 (size_t *len){
     return(NULL);
 };
 
-
-
 static struct eapol_key_data eapol_key_test_5 = {
 	.frame = eapol_key_data_5,
 	.frame_len = sizeof(eapol_key_data_5),
@@ -426,7 +424,7 @@ static struct eapol_key_data eapol_key_test_5 = {
 	.descriptor_type = EAPOL_DESCRIPTOR_TYPE_80211,
 	.key_descriptor_version = EAPOL_KEY_DESCRIPTOR_VERSION_HMAC_SHA1_AES,
 	.key_type = true,
-	.install = true
+	.install = true,
 	.key_ack = true,
 	.key_mic = true,
 	.secure = true,
