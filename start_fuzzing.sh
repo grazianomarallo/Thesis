@@ -47,7 +47,10 @@ echo $message5 >> /tmp/fuzzer_result/$now/input/data_message_5
 
 #XXX START FUZZER IN NORMALE MODE XXX
 echo "+++ STARTING FUZZER +++"
-echo 
+echo
+
+cd iwd-gw/
+make test-suite.log
 
 afl-fuzz -i /tmp/fuzzer_result/$now/input -o /tmp/fuzzer_result/$now/output  $cwd/iwd-gm/unit/test-eapol @@
 
