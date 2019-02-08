@@ -51,7 +51,7 @@ echo "+++ STARTING FUZZER +++"
 echo
 
 
-afl-fuzz -i /tmp/fuzzer_result/$now/input -o /tmp/fuzzer_result/$now/output  $cwd/iwd-gm/unit/test-eapol @@
+$cwd/afl/afl-fuzz -i /tmp/fuzzer_result/$now/input -o /tmp/fuzzer_result/$now/output  $cwd/iwd-gm/unit/test-eapol @@
 
 
 

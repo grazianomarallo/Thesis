@@ -234,6 +234,10 @@ unsigned char *  __afl_get_key_data (size_t *len){
 
     if ( __afl_input_filename != NULL ) {
       input = open(__afl_input_filename, 0);
+    } else {
+      perror("WWW Warning: no input file; using eapol_key_data_3. WWW\n");
+      *len = sizeof(eapol_key_data_3);
+      return (eapol_key_data_3);
     }
 
     if (input <= 0) {
@@ -365,6 +369,10 @@ unsigned char *  __afl_get_key_data_5 (size_t *len){
 
     if ( __afl_input_filename != NULL ) {
       input = open(__afl_input_filename, 0);
+    } else {
+      perror("WWW Warning: no input file; using eapol_key_data_5. WWW\n");
+      *len = sizeof(eapol_key_data_5);
+      return (eapol_key_data_5);
     }
 
     if (input <= 0) {

@@ -1,7 +1,9 @@
 # Security Analysis of the WPA2 KRACK patches
 
-Master's Thesis @Polito, developed at @KULeuven.
+Master Thesis @Polito, developed at @KULeuven.
+
 Polito Supervisor: Antonio Lioy
+
 KU Leuven Supervisors: Jan Tobias Muehlberg, Mathy Vanhoef
 
 - [Description](#description)
@@ -14,18 +16,18 @@ KU Leuven Supervisors: Jan Tobias Muehlberg, Mathy Vanhoef
 
 ## Description
 
-Recently have been discovered that WPA2 is vulnerable to key
+Recently has been discovered that WPA2 is vulnerable to key
 reinstallation attacks (KRACKs). In response, software vendors patched their
 implementations to prevent key reinstallations. However, how can we be sure
 those patches are correct, and indeed prevent all key reinstallations? What if
 they are flawed, and it is still possible to attack implementations? In this
 thesis this questions will be addressed, and perform a security analysis of
 patches that are supposed to prevent key reinstallation attacks. Fuzzing technique
-will be applied in order to perform severl analysis.
+will be applied in order to perform several analysis.
 
 - _Context_:  When connecting to a protected Wi-Fi network, a handshake is
 executed that provides both mutual authentication and session key negotiation.
-Recently, we discovered that this handshake is vulnerable to key reinstallation
+A recent discovery prove that this handshake is vulnerable to key reinstallation
 attacks. In response, vendors patched their implementations to prevent key
 reinstallations. However, these patches are non-trivial, and hard to get
 correct. Therefore it is essential that someone audits these patches to assure
@@ -60,7 +62,7 @@ patterns in the 4-way Handshake implementation.
 
 ## Building Project
 
-The project can be build and then tested after AFL and IWD are properly installed.
+The project can be build and then tested after AFL and IWD have been properly installed.
 Run the bash script "initialise.sh" in order to clone AFL and configure it.
 The script automatically build all the source code inside the "iwd-gm" folder.
 (N.B. : while compiling and instrumenting the code, since the harness code implemented
