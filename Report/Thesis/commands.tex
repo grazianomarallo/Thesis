@@ -33,8 +33,7 @@ escapechar=`
 \newcommand{\txw}{TeXworks\xspace}
 \newcommand{\mik}{MikTex\xspace}
 \newcommand{\html}{HTML\xspace}
-\newcommand{\krack}{KRACK\xspace}
-\newcommand{\fwh}{4-Way Handshake\xspace}
+\newcommand{\xhtml}{XHTML\xspace}
 
 % esempio di creazione di un'abbreviazione con un parametro (il cui uso è indicato da #1)
 \newcommand{\cmd}[1]{\texttt{#1}\xspace}
@@ -54,3 +53,26 @@ escapechar=`
 % abbreviazioni in inglese
 \newcommand{\ie}{i.e.\xspace}
 \newcommand{\eg}{e.g.\xspace}
+
+
+
+%%% TODO: XXX My commands XXX
+% Shortcuts 
+\newcommand{\bt}[1]{\textbf{#1}}  %%bold text
+\newcommand{\ita}[1]{\textit{#1}}  %%italic text
+\newcommand{\bit}[1]{\textbf{\textit{#1}}} %%bold italic
+\newcommand{\q}[1]{``#1''} %%bold italic
+\newcommand{\plchld}[1]{\bt{\color{red}This chapter/section has to be write yet.}} %%placeholder
+% Recurrent terms
+\newcommand{\krack}{KRACK\xspace}
+\newcommand{\fwh}{4-Way Handshake\xspace}
+
+%Placeholder for images
+\newcommand{\dummyfig}[1]{
+  \centering
+  \fbox{
+    \begin{minipage}[c][0.33\textheight][c]{0.5\textwidth}
+      \centering{#1}
+    \end{minipage}
+  }
+}

@@ -1,0 +1,55 @@
+% !TEX encoding = IsoLatin
+
+Questo capitolo e' stato inserito per tenere traccia delle modifiche apportate al documento durante il tempo e 
+contenere i report quindicinali sul lavoro svolto.
+
+
+Modifche rispetto alla versione precedente:
+\begin{itemize}
+  \item Fix della bibliografia. (Bibtex)
+  \item Fix di alcuni typos nel documento
+  \item Inseriti dei placeholder nei capitoli ancora da scrivere 
+  \item Creato il capitolo introduttivo
+\end{itemize}
+
+
+
+
+\section{Report}\label{sec:Report}
+
+\begin{description}
+    \item[Lavoro svolto]: 
+    Avendo terminato lo studio della letteratura (citata in bibliografia) che mi era stata fornita dal mio supervisor, ho concentrato la mia attenzione sulla parte pratica. Per effettuare una prima analisi del \fwh sto utilizzando un'implementazione 
+    open source di un Wirless Daemon (IWD). Nello specifico i miei supervisor mi hanno suggerito di analizzare il codice sorgente contenuto nel file
+    \q{iwd/unit/test-eapol.c}. In quest'ultimo essenzialmente vengono effettuati una serie di test per verificare se ogni step del \fwh viene completato con successo. Dopo un'iniziale analisi, ho individuato nel codice la chiamate alla funzione
+    che testa lo scambio della PTK(Pairwise Temporary Key). Nella funzione ho individuato il punto in cui il primo pacchetto del messaggio 3 viene riempito con dati chiave dell' EAPOL frame, successivamente anche il secondo frame.
+    Come punto di partenza ho pensato di sostituire ai dati che vengono passati normalmente dalla funzione originale, dati letti da un file. In questo modo facendo leggere i dati da un file e possibile sfruttare AFL e ottenere una mutazione 
+    dell'input sperando di incorrere in qualche bug da poter poi analizzare.
+
+    Per fare quanto detto è stato necessario creare un \q{harness code}. Quest'ultimo sostanzialmente è una sorta di \q{imbracatura}, o se vogliamo, un codice ausilario che permette al codice di essere sottoposto all'analisi del fuzzer.
+    Le modifiche effettuate sono le seguenti:
+    \begin{enumerate}
+        \item modifica del main per leggere come primo argomento sulla command line un file in input
+        \item impedire la lettura del frame 1 del messagio 3 dalla struttura c predefinita;
+        \item fornire al fuzzer in input un file contenente dati chiave dell' EAPOL frame (usati originariamente dalla struttura);
+        \item effettuare controlli sul file per evitare di incorrere in errori indesiderati (\ie file non trovato, lettura non riuscita);
+        \item ripetere gli step 3 e 4 per il frame 2 del messaggio 3;
+        \item rimpiazzare le chiamate alla funzioni originali con le funzioni ausilarie create;
+    \end{enumerate}
+
+    Dopo aver effettuato qualche primo test, il fuzzer non riesce ad ottenere dei risultati validi anche dopo diverse ore. Per questo motivo ho pensato di semplificare parte dei test che vengono effettuati, 
+    in modo da evitare che vengano effettuati cicli inutili e modificare il codice in modo da poter ottenere risultati significativi.
+
+
+    \item[Piano di lavoro]: 
+    \begin{itemize}
+        \item Semplificare unit test per ottenere performance migliori durante l'analisi. 
+        \item Selezionare uno dei test EAPoL/WPA2 4-Way Handshake all'interno del codice e renderlo il main target dell'analisi.
+        \item Fare injection di bug all'interno del codice di libreria testata (branches and paths differenti). Per esempio pensavo di inserire qualche buffer overwrite e verificare se è possibile trovarli tramite il fuzzer.
+    \end{itemize}
+    
+
+
+\end{description}
+
+

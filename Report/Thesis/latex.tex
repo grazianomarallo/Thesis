@@ -1,0 +1,362 @@
+% !TEX encoding = IsoLatin
+
+\section{Scrittura di un capitolo}
+
+Dividere la tesi in capitoli (col comando \cmd{\bs chapter}) ed il capitolo in parti logiche mediante gli appositi comandi (\cmd{\bs section}, \cmd{\bs subsection} e \cmd{\bs subsubsection}).
+
+Cercare inoltre di scrivere in  buon italiano perché la tesi è un documento formale che viene archiviato per lungo tempo e costituisce parte della carriera di uno studente.
+
+Questo capitolo di esempio contiene informazioni circa l'uso del sistema \ltx per la scrittura di testi scientifici (molto utile anche per la composizione della tesi di laurea).
+Si consiglia di non limitarsi solo a leggere questo testo ma di esaminare il file \file{.tex}  corrispondente per imparare rapidamente i comandi \ltx tramite gli esempi contenuti in tale file sorgente.
+
+\section{Installazione di un sistema \ltx}
+
+Esistono tanti sistemi per elaborare testi scritti in \ltx. Per sistemi Windows si consiglia l'uso di \mik, che può essere scaricato dal seguente sito:
+
+\url{http://www.miktex.org/}
+
+\mik installa automaticamente anche \txw, un IDE (Integrated Development Environment) per \ltx che permette di scrivere il sorgente ed ottenere velocemente il PDF corrispondente, che viene mostrato in una finestra separata. \txw è integrato con un correttore ortografico ed è dotato di auto-completamento delle parole (ad esempio scrivendo \cmd{bit} e premendo quindi TAB viene generato automaticamente l'ambiente \cmd{itemize} per inserire una lista non ordinata); si veda la sezione 6.3 del \href{http://www.leliseron.org/texworks/}{manuale} di \txw per un elenco completo.
+Notare anche che facendo click col tasto destro nella finestra che visualizza il PDF è possibile saltare automaticamente al punto corrispondente nella finestra di edit e viceversa.
+
+\section{Convenzioni sui nomi dei file}
+
+Poiché i diversi sistemi operativi hanno regole diverse circa i caratteri ammessi nei nomi dei file, per portabilità nei diversi ambienti operativi è bene che tutti i file che compongono la tesi usino un sosttoinsieme di caratteri.
+In particolare si suggerisce di usare solo caratteri alfanumerici  ed il carattere di sottolineatura, iniziando sempre il nome del file con un carattere che sia alfabetico o la sottolineatura.
+
+%%%%%%%%%%
+
+\section{Comporre testi con \ltx}
+
+In questa sezione vengono fornite alcune informazioni generali sull'uso del linguaggio \ltx per comporre testi complessi.
+
+%%%%%%%%%%
+
+\subsection{Testo normale}
+
+Le lettere accentate\index{accenti} si possono scrivere direttamente (mediante i tasti presenti sulla propria tastiera) se si è specificata la codifica ISO-8859-1 in \mik:
+\begin{verbatim}
+  Edit > Preferences > Editor > Encoding > ISO-8859-1
+\end{verbatim}
+Altrimenti si possono usare le sequenze di escape (attenzione a quella per la lettera i accentata):
+\`a, \`e, \'e, \`{\i}, \`o, \`u.
+
+Si ricordi che in Italiano l'accento è quasi sempre grave. L'accento acuto si usa in pochi casi specifici, quali le parole perché, poiché e finché, o la coppia né \ldots né.
+
+I segni di interpunzione devono essere attaccati alla parola che li precede e separati con uno spazio dalla parola che li segue:
+\begin{quote}
+(giusto) ``caspita, che bella notizia!''
+\\
+(sbagliato) ``caspita , che bella notizia!''
+\\
+(sbagliato) ``caspita ,che bella notizia!''
+\end{quote}
+
+L'apostrofo\index{apostrofo} deve essere attaccato sia alla parola che lo procede sia a quella che lo segue:
+\begin{quote}
+(giusto) ``l'oro è un metallo prezioso''
+\\
+(sbagliato) ``l' oro è un metallo prezioso''
+\\
+(sbagliato) ``l 'oro è un metallo prezioso''
+\\
+(sbagliato) ``l ' oro è un metallo prezioso''
+\end{quote}
+
+Lasciando una riga vuota si genera automaticamente un nuovo paragrafo,\index{paragrafo} ossia si va a capo, si lascia un piccolo spazio verticale e si indenta la prima riga del paragrafo.
+E' importante cercare di organizzare il proprio testo in paragrafi che contengano insieme di frasi correlate. Quando si cambia argomento, si inizia un nuovo paragrafo. Si puo considerare questo testo come un buon esempio di suddivisione in paragrafi.
+
+L'uso del comando \cmd{\bs\bs} per forzare un ritorno a capo è fortemente deprecato. In sua vece bisogna usare il comando corrispondente all'effetto che si desidera ottenere: ad esempio, se è terminato un paragrafo basta lasciare una riga vuota, se si vuole creare un elenco basta usare uno dei comandi per la creazione di una lista.
+
+Attenzione ai doppi apici \index{virgolette} che devono essere creati usando due volte il tipo di apice appropriato (aperto o chiuso), come nel seguente caso:
+\begin{quote}
+il film ``Il Ciclone'' è stato diretto ed interpretato da Leonardo Pieraccioni.
+\end{quote}
+Se alcune parole ricorrono frequentemente nel testo e sono scritte in un modo particolare allora conviene definire un'opportuna abbreviazione nel preambolo del file, ossia prima di \cmd{\bs begin\{document\}}. Come esempi si vedano in questo file le definizioni e l'uso delle abbreviazioni \cmd{\bs ltx} per generare la parola \ltx e \cmd{\bs cmd} per presentare in modo opportuno i comandi.
+
+E' anche facile creare delle note\index{note} a piè di pagina\footnote{\ldots ma vanno usate con parsimonia.} che vengono numerate automaticamente.
+
+Non bisogna dimenticare di usare un correttore ortografico. Per installare il dizionario necessario scaricare dal sito \url{http://wiki.services.openoffice.org/wiki/Dictionaries} il file ZIP corrispondente alla lingua prescelta (nel caso sia la lingua Inglese installare il dizionario British e non American) e quindi estrarre tutti i file nella  cartella
+\begin{center}
+\cmd{C:\bs Program Files\bs MiKTeX 2.9\bs hunspell\bs dicts}
+\end{center}
+Il correttore si attiva quindi scegliendo il menù:
+\begin{verbatim}
+  Edit > Spelling > lingua_desiderata
+\end{verbatim}
+Le parole errate compariranno evidenziate con una sottolineatura in rosso: sarà così possibile modificarle direttamente oppure -- cliccandoci sopra col tasto destro -- scegliere tra le opzioni di correzione proposte.
+
+E' possibile scrivere parti della tesi in lingue diverse, specificando il linguaggio usato (importante in modo che il programma vada a capo in modo corretto). Segue una citazione in inglese:
+\selectlanguage{english}
+\begin{quotation}
+The man in the rubber boots and a thick coat to protect against the evening chill walked purposefully about a farm here, scattering pheasants as he went. He could have been an English gentleman out for a bit of hunting, except he carried no gun.
+
+In his current circumstance, the WikiLeaks founder Julian Assange is more hunted than hunter, fighting extradition to Sweden on accusations of sexual misconduct while struggling to maintain the influence of WikiLeaks even as he remains here at Ellingham Hall, the country manor house of Vaughan Smith, a former soldier and journalist who runs a restaurant and club for journalists in London. 
+\end{quotation}
+\selectlanguage{italian}
+Adesso si riprende il normale testo in Italiano, che seguirà le regole di composizione della lingua Italiana.
+
+\index{citazioni!testuali}
+Per inserire citazioni testuali (ossia porzioni di testo) si può usare l'ambiente \cmd{quote} (citazione breve) oppure quello \cmd{quotation} (per citazioni lunghe, che posso essere composte da più paragrafi), come appena fatto qui sopra per la citazione in inglese.
+
+\index{URL}
+Per inserire collegamenti a pagine o documenti web si usano i comandi \cmd{\bs url} e \cmd{\bs href} del package \file{hyperref} come nei due esempi seguenti:
+\begin{description}
+\item[uso di \cmd{\bs href}]\mbox{}\\
+(sorgente) \verb+Nel \href{http://www.polito.it/}{sito web} del Politecnico di Torino+
+\\
+(risultato) Nel \href{http://www.polito.it/}{sito web} del Politecnico di Torino
+\item[uso di \cmd{\bs url}]\mbox{}\\
+(sorgente) \verb+Il sito web del Politecnico di Torino è \url{http://www.polito.it/}+
+\\
+(risultato) Il sito web del Politecnico di Torino è \url{http://www.polito.it/}
+\end{description}
+
+\index{citazioni!bibliografiche}
+Infine è possibile citare testi o siti che sono stati consultati per la tesi: articoli a congresso \cite{psisec}, articoli su rivista \cite{tpa}, capitoli di libri \cite{tc}, siti o pagine web \cite{openssl} e RFC (come \rfc{5246} \cite{tls12} che definisce la versione 1.2 del protocollo TLS).
+Si noti che le voci della bibliografia devono essere elencate nell'apposita sezione (comando \cmd{\bs thebibliography}) secondo l'ordine in cui vengono citate.
+Per bibliografie più complesse è possibile l'uso di BibTex, ma è sconsigliato se non si supera la decina di citazioni.
+Per ulteriori informazioni si veda la Sez.~\ref{sec:bibliografia}.
+
+%%%%%%%%%%
+
+\subsection{Liste}
+
+\index{liste!non ordinate}
+Usare liste puntate per elenchi in cui l'ordine non è importante, come nel caso degli esami obbligatori da superare per essere ammessi al secondo anno:
+\begin{itemize}
+\item
+Analisi Matematica I;
+\item
+Fisica I;
+\item
+un esame a scelta tra Chimica ed Informatica.
+\end{itemize}
+Notare che normalmente ogni elemento della lista è costituito da un'unica frase, terminata da punto-e-virgola, tranne l'ultimo elemento che è terminato da un punto. Ogni punto inizia con lettera minuscola (a meno che la parola iniziale sia un sigla o un nome proprio). E' fortemente sconsigliato l'uso di una lista se uno o più punti contengono più di una singola frase. In questo caso conviene scrivere paragrafi separati oppure creare delle sottosezioni.
+
+\index{liste!ordinate}
+Le liste numerate si creano con l'ambiente \cmd{enumerate} e sono utili per elencare elementi aventi un ordine di priorità, come nel caso della ricetta per cucinare la pastasciutta:
+\begin{enumerate}
+\item
+prendere una pentola;
+\item
+riempirla di acqua;
+\item
+metterla sul fuoco e portare l'acqua ad ebollizione;
+\item
+quando l'acqua bolle, buttare la pasta;
+\item
+quando la pasta è cotta, scolarla, condirla e \ldots mangiarla!
+\end{enumerate}
+\index{liste!di descrizioni}
+Si possono anche fare delle liste che servono per descrivere generici oggetti, usando l'ambiente \cmd{description}.
+L'oggetto descritto viene automaticamente posizionato ad inizio riga e scritto in grassetto, come nel seguente esempio:
+\begin{description}
+\item[pentola]
+oggetto metallico usato per cuocere cibi;
+\item[mela]
+frutto che fa molto bene alla salute;
+\item[Sarchiapone] animale immaginario usato in una gag di Walter Chiari e poi ripreso in un programma radiofonico da Renzo Arbore.
+\end{description}
+
+%%%%%%%%%%
+
+\subsection{Formule matematiche ed unità di misura}
+
+\index{formule matematiche}
+Le formule matematiche si possono scrivere direttamente nel corpo del testo racchiudendole tra due simboli \verb+$+
+(come in questo esempio per il calcolo della circonferenza, $c = 2 \pi r$)
+oppure scrivere la formula su una riga centrata racchiudendola tra \verb+\[+ e \verb+\]+:
+\[
+c = 2 \pi r
+\]
+Apici, pedici, frazioni, puntini e sommatorie sono anche semplici da fare:
+\[
+k = a_0 + a_1 \frac{1}{x} + a_2 \frac{1}{x^2} + \dots = \sum_{i=0}^N a_i \frac{1}{x^i} = \sum_{i=0}^N a_i x^{-i}
+\]
+Ecco ora un esempio di limite:
+\[
+\lim_{x\to\infty}f(x)=0
+\]
+\index{unità di misura}
+Quando si usano delle grandezze fare attenzione alle unità di misura: usare sempre il SI e scrivere correttamente i simboli (ad esempio, il simbolo del chilo è la lettera ``k'' minuscola non la ``K'' maiuscola).
+Per evitare errori e lasciare il giusto spazio tra quantità e simbolo si suggerisce l'uso del package \cmd{siunitx} che aggiunge i comandi \cmd{\bs si} per unità isolate o \cmd{\bs SI} per quantità numerica seguita dalla sua unità di misura.
+Ecco un esempio d'uso per citare unità isolate:
+\begin{quote}
+\ldots fornire il risultato in \si{\square\centi\metre}.
+\end{quote}
+ma è anche possibile indicare l'unità su quantità numeriche specifiche, citate in-line (ad esempio, un sacco di patate da \SI{10}{\kilo\gram}) o all'interno di una formula matematica:
+\[
+v = \frac{s}{t} = \frac{ \SI{100}{\meter} }{ \SI{5}{\second} } = \SI{20}{\meter\per\second}
+\]
+
+Nel caso di unità relative al sistema binario è possibile adottare sia la vecchia notazione, che usa gli stessi prefissi del SI ma sottointende l'uso delle potenze di 2, sia la nuova notazione, in cui i prefissi del sistema binario sotto caratterizzati da una ``i'' minuscola.
+Ad esempio:
+\[
+\SI{1}{\tera\byte}\ \mbox{(vecchia notazione)} =
+\SI{1}{\tebi\byte}\ \mbox{(nuova notazione)} =
+2^{30} \si{\byte}
+\]
+
+%%%%%%%%%%
+
+\subsection{Tabelle e figure}
+
+\index{tabelle}
+In \ltx le tabelle si compongono descrivendo le righe di cui sono composte:
+\begin{center}
+\begin{tabular}{|l|c|c|}% posizionamento del testo nelle colonne l:left c:center r:right
+\hline
+\textit{modello} & \textit{velocità} & \textit{consumi} \\
+                 & [ \si{km/h} ]          & [ l/\SI{100}{km} ] \\
+\hline
+Fiat 500 & 150 & 19 \\
+Alfa Giulietta & 210 & 21.5 \\
+Ferrari Testarossa & 320 & 5.7 \\
+\hline
+\end{tabular}
+\end{center}
+Normalmente è meglio non inserire le tabelle direttamente nel testo ma creare un oggetto separato, con una didascalia ed un numero per citarlo ove necessario. Ad esempio è stata creata in questo modo la tabella~\ref{tab:voti} che riporta i voti conseguiti in alcuni esami da un ipotetico studente ma è slegata da questo specifico paragrafo. In questo modo \ltx sistemerà la tabella in un punto opportuno del testo, evitando di lasciare spazio verticale inutilizzato.
+Si noti l'uso del carattere ``tilde'' (\textasciitilde) per tenere legato il numero della tabella (o figura o altro elemento flottante) alla parola che lo precede.
+
+\begin{table}[tbh] % per piazzare la tabella t:top b:bottom h:here in ordine di preferenza; h è sconsigliato
+\begin{center}
+\begin{tabular}{|l|c|c|}
+\hline
+\textit{esame} & \textit{data} & \textit{voto} \\
+\hline
+Analisi I & 27/1/2009 & 18 \\
+Informatica & 14/2/2009 & 30 \\
+Fisica I & 15/7/2009 & 27 \\
+\hline
+\end{tabular}
+% \caption contiene il testo della didascalia: limitarsi ad un una sola riga
+% notare l'uso di \label per creare un'etichetta per citare la figura tramite \ref
+% N.B. quando ci sono label o indici bisogna sempre elaborare due volte il file latex perché la prima crea i riferimenti e la seconda li inserisce
+\caption{Voti riportati negli esami sinora sostenuti.\label{tab:voti}}
+\end{center}
+\end{table}
+
+\index{figure}
+Per quanto riguarda le figure, conviene disegnarle con un apposito programma (es. PowerPoint) e poi salvarle in un file che verrà richiamato nel file \ltx.
+Si consiglia di prestare attenzione ai font usati (suggeriti Arial o Helvetica), alla dimensione (minimo \SI{10}{pt}) e di generare un formato grafico ad alta definizione (PDF è il preferito, altrimenti PNG o JPG ad alta qualità).
+Il file grafico verrà poi incluso in \ltx per generare la figura, come nell'esempio della figura~\ref{fig:popTorino} che riporta il grafico della variazione di popolazione della città di Torino.
+Si noti che questo grafico è di bassa qualità (pixel percepibili ad occhio nudo) perché salvato come JPG a bassa risoluzione (solo \SI{96}{DPI}).
+Per i formati raster si dovrebbe sempre usare una risoluzione di almeno \SI{300}{DPI}.
+%
+\begin{figure}[tbh]% per piazzare la tabella t:top b:bottom h:here, in ordine di preferenza; h è sconsigliato
+%\centerline{\includegraphics[width=0.9\textwidth]{torino.png}}
+\caption{Popolazione di Torino, in migliaia di abitanti (fonte: \href{http://it.wikipedia.org/wiki/Torino}{wikipedia}).\label{fig:popTorino}}
+\end{figure}
+%
+Nel caso che la figura non abbia già la dimensione desiderata si può ingrandirla o rimpicciolirla usando i parametri \cmd{width} (larghezza), \cmd{height} (altezza) o \cmd{scale}.
+Quando si indica larghezza o altezza conviene farlo come una frazione della pagina; ad esempio per avere una figura che occupa il 90\% della larghezza pagina si scrive \cmd{width=0.9\bs textwidth} mentre si scrive \cmd{height=0.5\bs texteight} per una figura che deve occupare il 50\% dell'altezza della pagina.
+Il parametro \cmd{scale} permette invece di indicare la dimensione come percentuale di quella originale della figura.
+Ad esempio se la figura originale contiene testo con font a \SI{20}{pt} conviene scalarla al 50\% (in modo che la figura abbia font a \SI{10}{pt}) usando il parametro \cmd{scale=0.5}. L'uso di \cmd{scale} è fortemente consigliato nel caso che la figura contenga del testo, in modo da armonizzarne la dimensione con quello del corpo della pagina.
+
+Se un'immagine è stata copiata da una fonte esterna, tale fonte deve essere indicata nella didascalia (come fatto ad esempio nella figura~\ref{fig:popTorino}).
+
+\begin{figure}[tb]
+\HRule
+\begin{lstlisting}
+#include <stdio.h>
+
+int main ()
+{
+   printf ("Ciao!\n");
+   return 0;
+}
+\end{lstlisting}
+\HRule
+\caption{Esempio di programma inserito tramite \cmd{lstlisting}.\label{fig:prog}}
+\end{figure}
+Nel caso che sia necessario includere del codice sorgente (cosa da fare con estrema parsimonia e solo in caso sia realmente necessario, ossia non includere codice solo per fare volume) si può usare l'ambiente \cmd{lstlisting} che include testo rispettandone la formattazione originale ed usando un font a spaziatura fissa, come nell'esempio in Fig.~\ref{fig:prog}.
+E' anche possibile numerare le righe del programma, come nell'esempio in Fig.~\ref{fig:prog-num}, ma la numerazione è da usarsi solo se nel testo si deve far riferimento a specifiche sezioni del programma.
+
+\begin{figure}[tb]
+\HRule
+\begin{lstlisting}[numbers=left]
+#include <stdio.h>
+
+int main ()
+{
+   printf ("Ciao!\n");
+   return 0;
+}
+\end{lstlisting}
+\HRule
+\caption{Esempio di programma inserito tramite \cmd{lstlisting} con  numerazione delle righe.\label{fig:prog-num}}
+\end{figure}
+
+Per citare piccoli pezzi di codice si può usare direttamente l'ambiente \cmd{lstlisting} nel testo (invece che in una figura separata), come nel seguente esempio relativo al codice \html per centrare un testo:
+\begin{lstlisting}
+<center>
+Esempio di testo centrato.
+</center>
+\end{lstlisting}
+Quando invece si vuol citare del codice (molto corto) all'interno di una riga si può usare \cmd{\bs code} come in questo caso in cui dico che in \html per centrare del testo si può usare il tag \code{<center>} ma è deprecato (meglio usare uno stile CSS).
+
+%%%%%
+
+\section{La bibliografia\label{sec:bibliografia}}
+
+Anche se siamo nell'era di Internet e dei motori di ricerca, è buona norma citare con precisione le fonti a cui si è attinto per scrivere la tesi. 
+
+I nomi degli autori devono essere specificati con l'iniziale del nome, seguita da punto e quindi dal cognome.
+
+Nel caso di articoli su rivista, deve essere indicato il titolo dell'articolo, il nome della rivista, il numero del fascicolo (solo se la rivista è numerata), il mese e l'anno di pubblicazione,  la pagina di inizio e fine dell'articolo.
+
+Nel caso di articoli pubblicati a congresso, convegno o workshop, deve essere indicato il titolo dell'articolo, il nome del congresso, il luogo del congresso (città seguita dalla nazione tra parentesi tonde), la data e la pagina di inizio e fine dell'articolo.
+Nel caso di città negli USA, occorre indicare anche lo stato, ad esempio ``Portland (OR, USA)''.
+
+Nal caso di libri si indicano gli autori, il titolo del libro, l'editore e l'anno di pubblicazione. Se si vuole citare uno specifico capitolo o insieme di pagine, si inserisce tale indicazione nel testo del documento (come indicato più avanti) e non nella voce bibliografica.
+
+Se si citano documenti pubblici (es. standard, RFC, report tecnici, pagine web) occorre fornire oltre ai dati identificativi anche la URL tramite cui è possibile accedere al documento.
+
+Qualunque sia la tipologia di articolo, è molto importante citare -- se disponibile -- il \tdef{DOI} (Digital Object Identifier). Questo è un codice universale che identifica univocamente una pubblicazione, sia essa a stampa o in formato elettronico. Specificando il DOI come se fosse una pagina all'interno del sito \url{http://dx.doi.org/} si viene ridiretti automaticamente alla pubblicazione corrispondente. Normalmente tutte le pubblicazioni recenti e di qualità hanno un DOI assegnato, mentre per quelle più vecchie o di minore qualità il DOI è raramente disponibile.
+
+Si veda la bibliografia presente in questo testo come esempio di corretta e completa citazione di vari tipi di riferimenti bibliografici.
+Si noti che ogni elemento della bibliografia non è terminato dal carattere punto.
+
+Le citazioni si inseriscono nel testo usando il comando \cmd{\bs cite} seguito in parentesi graffe dalla sigla usata per identificare il riferimento bibliografico.
+Il comando \cmd{\bs cite} deve essere separato con uno spazio dalla parola che lo precede:
+\begin{quote}
+(giusto) \verb+il protocollo TLS \cite{tls12} è usato per la sicurezza del web+
+\\
+(sbagliato) \verb+il protocollo TLS\cite{tls12} è usato per la sicurezza del web+
+\end{quote}
+In questo esempio \cmd{tls12} è la sigla usata nella sezione della bibliografia come identificativo mnemonico dello standard TLS (per il dettaglio del formato bibliografico si veda il relativo sorgente nel file \file{biblio.tex}).
+
+Quando si vuole citare una specifica parte di un riferimento bibliografico (es. una figura o un capitolo) si inserisce tra parentesi quadre (prima delle graffe) l'indicazione della specifica parte, come nel seguente esempio:
+\begin{quote}
+(sorgente) \verb+Il record protocol di TLS \cite[Sez.~5]{tls12} è usato per \ldots+
+\\
+(risultato) Il record protocol di TLS \cite[Sez.~5]{tls12} è usato per \ldots
+\end{quote}
+
+Se la bibliografia è corta (non più di dieci-venti voci bibliografiche) allora la si può comporre ``a mano'' usando l'ambiente \cmd{\bs thebibliography} ed indicando gli elementi della bibliografia tramite \cmd{\bs bibitem}.
+Nel caso di bibliografie più complesse è consigliato l'uso di BibTeX usando il file di stile \file{torsec.bst}.
+
+Si osservi che Wikipedia, ancorché molto utile, non è una fonte attendibile in quanto il suo contenuto varia nel tempo e può non essere stato adeguatamente verificato.
+Se ne sconsiglia quindi l'uso in una tesi di laurea.
+
+%%%%%%%%%%
+
+\section{Nomi dei file}
+Tutti i nomi dei file che compongono la tesi (inclusi quelli di supporto, come figure e grafici) non devono contenere il carattere ``spazio'' in quanto tale carattere è permsso in alcuni filesystem (es. NTFS di Windows) ma causa problemi in altri (es. EXTFS di Linux).
+Quindi per portabilità se ne deve sempre evitare l'uso.
+
+%%%%%%%%%%
+
+\section{Conclusioni}
+
+Queste sono solo delle brevi note sull'uso di \ltx per comporre semplici testi.
+Per necessità più complesse si conmsiglia di consultare leggere la documentazione che viene installata assieme a \ltx.
+In particolare con \mik (versione 2.9) la documentazione viene installata nella cartella
+\begin{center}
+\file{C:\bs Program~Files\bs MiKTeX~2.9\bs doc}
+\end{center}
+ed in particolare quella relativa ai vari package nella sottocartella \file{latex\bs nome-del-package}; ad esempio, la documentazione del package \cmd{siunitx} si trova nella cartella
+\begin{center}
+\file{C:\bs Program~Files\bs MiKTeX~2.9\bs doc\bs latex\bs siunitx}
+\end{center}
+Inoltre è sempre possibile consultare l'ampia documentazione disponibile in rete.

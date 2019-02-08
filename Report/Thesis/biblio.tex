@@ -1,56 +1,80 @@
 % !TEX encoding = IsoLatin
-\begin{thebibliography}{9} % less than 10 cit
-%\begin{thebibliography}{99} %  10 to 99 cit
 
+% La bibliografia, da inserirsi solo se ci sono state citazioni.
+% In questo caso ricordarsi che bisogna sempre elaborare due volte il file .TEX
+% perché la prima volta viene generata la bibliografia mentre la seconda volta viene inclusa
 
-%%FUZZING PAPER
-\bibitem{fzn}
-Li, Jun and Zhao, Bodong and Zhang, Chao,
-``Fuzzing: a survey'',
-Cybersecurity,
-Vol.\ 1,
-2018,
-pp.\ 1-13,
-\doi{10.1186/s42400-018-0002-y}
+% NOTA: citare il DOI non è obbligatorio ma MOLTO desiderabile
 
-%%ASIACS PAPER
-%citation on paper
-\bibitem{asc}
-%author
-Vanhoef, M and Schepers, D and Piessens, F,
-%title
-``Discovering logical vulnerabilities in the Wi-Fi handshake using model-based testing'',
-% name of the journaò
-ASIA CCS 2017 - Proceedings of the 2017 ACM Asia Conference on Computer and Communications Security,
-% %volume and number of the journal (may not be present)
-%Vol.\ 1,
-% year and month of publishing
-2017,
-% page of the article
-pp.\ 360-371,
+\begin{thebibliography}{9} % se ci sono meno di 10 citazioni
+%\begin{thebibliography}{99} % se ci sono da 10 a 99 citazioni
+%\begin{thebibliography}{999} % se ci sono da 100 a 999 citazioni
+
+% esempio citazione articolo a congresso
+\bibitem{psisec}
+% nomi autori
+I.Enrici, M.Ancilli, A.Lioy,
+% titolo articolo
+``A psychological approach to information technology security'',
+% nome del congresso
+HSI-2010: 3rd Int. Conf. on Human System Interactions,
+% luogo (stato) e data del congresso
+Rzeszòw (Poland), May 13-15, 2010,
+% pagine dell'articolo
+pp.\ 459-466,
 % DOI
-\doi{110.1145/3052973}
+\doi{10.1109/HSI.2010.5514528}
 
-
-%%KRACK PAPER
-%citation on paper
-\bibitem{krk}
-%author
-Vanhoef, M and Piessens, F,
-%title
-``Key reinstallation attacks: Forcing nonce Reuse in WPA2'',
-% name of the journaò
-Proceedings of the ACM Conference on Computer and Communications Security,
-% %volume and number of the journal (may not be present)
-%Vol.\ 1,
-% year and month of publishing
-2017,
-% page of the article
-pp.\ 1313-1328,
+% esempio citazione articolo su rivista
+\bibitem{tpa}
+% autori dell'articolo
+G.Cabiddu, E.Cesena, R.Sassu, D.Vernizzi, G.Ramunno, A.Lioy,
+% titolo dell'articolo
+``Trusted Platform Agent'',
+% nome della rivista
+IEEE Software,
+% volume e numero della rivista (alcune riviste non ce l'hanno)
+Vol.\ 28, No.\ 2,
+% mese e anno di pubblicazione della rivista
+March-April 2011,
+% pagine dell'articolo
+pp.\ 35-41,
 % DOI
-\doi{10.1145/3133956}
+\doi{10.1109/MS.2010.160}
 
 
+% esempio citazione capitolo di un libro fatto come collezione di contributi da autori diversi
+\bibitem{tc}
+A.Lioy, G.Ramunno, % autori del capitolo
+``Trusted Computing'' % titolo del capitolo
+nel libro % in the book
+``Handbook of Information and Communication Security'' % titolo del libro
+a cura di % edited by
+P.Stavroulakis, M.Stamp, % nomi dei curatori
+Springer, % nome editore
+2010, % anno di pubblicazione
+pp.\ 697-717, % pagine del capitolo
+\doi{10.1007/978-3-642-04117-4_32}
 
+ % esempio citazione pagina web di un progetto
+\bibitem{openssl}
+% nome del progetto
+The OpenSSL project,
+ % URI della pagina web
+\url{http://www.openssl.org/}
+
+% esempio citazione RFC
+\bibitem{tls12}
+T.Dierks, E.Rescorla,
+``The Transport Layer Security (TLS) Protocol Version 1.2'',
+\rfc{5246}, August 2008,
+\doi{10.17487/RFC5246}
+
+ % esempio citazione libro
+\bibitem{seceng}
+Ross J. Anderson,
+``Security engineering'',
+Wiley, 2008,
+ISBN: 978-0-470-06852-6
 
 \end{thebibliography}
