@@ -224,28 +224,6 @@ static const unsigned char eapol_key_data_3[] = {
 
 //XXX Harness code: get input from file instead of
 //XXX reading from the struct
-/*
-unsigned char *  __afl_get_key_datajt (size_t *len){
-
-    static unsigned char buffer[2048];
-
-//  memcpy(buffer, eapol_key_data_3, sizeof(eapol_key_data_3));
-//  *len = sizeof(eapol_key_data_3);
-
-  int file =open("/tmp/fuzz/test"  , 0);
-  int r    = read(file, buffer, 1024);
-
-  printf ("file: %i, read: %i\n", file, r);
-  if (file > 0 && r > 0) {
-    *len = r;
-    return(buffer);
-  }
-
-
-    return(NULL);
-};
-*/
-
 char * __afl_input_filename = NULL;
  
 unsigned char *  __afl_get_key_data (size_t *len){
@@ -2232,7 +2210,7 @@ static bool test_nonce(uint8_t nonce[])
 }
 
 
-//XXX FUNCTION TO ANALYSE 
+//XXX FUNCTION UNDER ANALYSIS
 static void eapol_sm_test_ptk(const void *data)
 {
 	const unsigned char psk[] = {
@@ -2281,21 +2259,28 @@ static void eapol_sm_test_ptk(const void *data)
 
 	handshake_state_set_authenticator_rsn(hs, ap_rsne);
 	eapol_start(sm);
+
 //XXX msg3 --- 
-	__eapol_set_tx_packet_func(verify_step2);
+	
+    printf("!!!!!!!!!!! verify step2 on message 3 \n");
+    __eapol_set_tx_packet_func(verify_step2);
     size_t __afl_key_len;
     unsigned char * __afl_key = __afl_get_key_data(&__afl_key_len);
 	__eapol_rx_packet(1, aa, ETH_P_PAE, __afl_key,__afl_key_len, false);
 
    //XXX the following assert is commented because it cannot be verified in any case
-//    assert(verify_step2_called);
+  //assert(verify_step2_called);
+    printf("!!!!!!!!!!!!  Message 3 done \n");
 //XXX msg4 ---
+
+     printf("!!!!!!!!!!!  verify step4 on message message 4 \n");
 	__eapol_set_tx_packet_func(verify_step4);
     size_t __afl_key_len2;
 	unsigned char * __afl_key2 = __afl_get_key_data_5(&__afl_key_len2);
-        __eapol_rx_packet(1, aa, ETH_P_PAE, __afl_key2 ,__afl_key_len2, false);
+    __eapol_rx_packet(1, aa, ETH_P_PAE, __afl_key2 ,__afl_key_len2, false);
 //	assert(verify_step4_called);
-
+   printf("!!!!!!!!!!!!  Message 4 done \n");
+    
 	eapol_sm_free(sm);
 	handshake_state_free(hs);
 	eapol_exit();
@@ -3582,7 +3567,7 @@ int main(int argc, char *argv[])
 			!l_checksum_is_supported(L_CHECKSUM_SHA1, true))
 		goto done;
 
-	l_test_add("/EAPoL Key/MIC Test 1",
+/*	l_test_add("/EAPoL Key/MIC Test 1",
 			eapol_key_mic_test, &eapol_key_mic_test_1);
 	l_test_add("/EAPoL Key/MIC Test 2",
 			eapol_key_mic_test, &eapol_key_mic_test_2);
@@ -3602,9 +3587,9 @@ int main(int argc, char *argv[])
 
 	l_test_add("EAPoL/WPA 4-Way & GTK Handshake",
 			&eapol_wpa_handshake_test, NULL);
-
+*/
 	l_test_add("EAPoL/WPA2 PTK State Machine", &eapol_sm_test_ptk, NULL);
-
+/*
 	l_test_add("EAPoL IGTK & 4-Way Handshake",
 			&eapol_sm_test_igtk, NULL);
 
@@ -3635,7 +3620,7 @@ int main(int argc, char *argv[])
 
 	l_test_add("EAPoL/FT-Using-PSK 4-Way Handshake",
 			&eapol_ft_handshake_test, NULL);
-
+*/
 done:
 	return l_test_run();
 }
