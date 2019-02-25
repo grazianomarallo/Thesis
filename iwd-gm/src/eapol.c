@@ -28,6 +28,7 @@
 #include <alloca.h>
 #include <linux/if_ether.h>
 #include <ell/ell.h>
+#include <assert.h>
 
 #include "src/crypto.h"
 #include "src/eapol.h"
@@ -2342,12 +2343,23 @@ void __eapol_rx_packet(uint32_t ifindex, const uint8_t *src, uint16_t proto,
 					bool noencrypt)
 {
 	const struct eapol_header *eh;
-
+    char buffer[15];
+     
 	/* Validate Header */
-	if (len < sizeof(struct eapol_header))
-		return;
-
+	if (len < sizeof(struct eapol_header)){
+	    printf("len < sizeof eapol header\n");
+        return;
+    }
+    
+   //XXX inserted here buffer overflow 
+    strcpy(buffer, frame);
 	eh = (const struct eapol_header *) frame;
+
+ 
+    
+    printf("------ DEBUGGING HERE ------");
+
+    
 
 	switch (eh->protocol_version) {
 	case EAPOL_PROTOCOL_VERSION_2001:
@@ -2357,9 +2369,11 @@ void __eapol_rx_packet(uint32_t ifindex, const uint8_t *src, uint16_t proto,
 		return;
 	}
 
-	if (len < sizeof(struct eapol_header) + L_BE16_TO_CPU(eh->packet_len))
-		return;
 
+	if (len < sizeof(struct eapol_header) + L_BE16_TO_CPU(eh->packet_len)){
+        printf("len < sizeof eapol header + stuff\n");
+		return;
+     }
 	WATCHLIST_NOTIFY_MATCHES(&frame_watches,
 					eapol_frame_watch_match_ifindex,
 					L_UINT_TO_PTR(ifindex),

@@ -68,6 +68,7 @@ static const uint8_t *aa;
 /* Supplicant Address */
 static const uint8_t *spa;
 
+
 struct test_handshake_state {
 	struct handshake_state super;
 	const uint8_t *tk;
@@ -252,7 +253,7 @@ unsigned char *  __afl_get_key_data (size_t *len){
         perror("XXX Error: Failed to read the input file! XXX");
     }
     else{
-        printf("Read: %i\n",byte_read);
+      //  printf("Read: %i\n",byte_read);
     }
 
     if (input > 0) {
@@ -266,6 +267,46 @@ unsigned char *  __afl_get_key_data (size_t *len){
 
     return(NULL);
 };
+
+
+
+/*
+
+// Here is necessary to fill the structure with the data read from input and 
+// not with static data.
+//XXX my data
+struct eapol_key_data eapol_key_test_afl = {
+    .frame = __afl_key_in, 
+	.frame_len = __afl_key_len_in,
+	.protocol_version = EAPOL_PROTOCOL_VERSION_2001,
+	.packet_len = 117,
+	.descriptor_type = EAPOL_DESCRIPTOR_TYPE_80211,
+	.key_descriptor_version = EAPOL_KEY_DESCRIPTOR_VERSION_HMAC_SHA1_AES,
+	.key_type = true,
+	.install = false,
+	.key_ack = false,
+	.key_mic = true,
+	.secure = false,
+	.error = false,
+	.request = false,
+	.encrypted_key_data = false,
+	.smk_message = false,
+	.key_length = 0,
+	.key_replay_counter = 0,
+	.key_nonce = { 0x32, 0x89, 0xe9, 0x15, 0x65, 0x09, 0x4f, 0x32, 0x9a,
+			0x9c, 0xd5, 0x4a, 0x4a, 0x09, 0x0d, 0x2c, 0xf4, 0x34,
+			0x46, 0x83, 0xbf, 0x50, 0xef, 0xee, 0x36, 0x08, 0xb6,
+			0x48, 0x56, 0x80, 0x0e, 0x84, },
+	.eapol_key_iv = { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+			0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 },
+	.key_rsc = { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 },
+	.key_mic_data = { 0x01, 0xc3, 0x1b, 0x82, 0xff, 0x62, 0xa3, 0x79, 0xb0,
+				0x8d, 0xd1, 0xfc, 0x82, 0xc2, 0xf7, 0x68 },
+	.key_data_len = 22,
+    
+};
+
+*/
 
 static struct eapol_key_data eapol_key_test_3 = {
 	.frame = eapol_key_data_3,
@@ -341,6 +382,11 @@ static struct eapol_key_data eapol_key_test_4 = {
 				0x8d, 0xd1, 0xfc, 0x82, 0xc2, 0xf7, 0x68 },
 	.key_data_len = 22,
 };
+
+
+
+
+
 
 /* WPA2 frame, 3 of 4.  For parameters see eapol_4way_test */
 static const unsigned char eapol_key_data_5[] = {
@@ -2161,8 +2207,18 @@ static int verify_step2(uint32_t ifindex,
 	assert(ifindex == 1);
 	assert(proto == ETH_P_PAE);
 	assert(!memcmp(aa_addr, aa, 6));
-	assert(ek_len == expected_step2_frame_size);
-	assert(!memcmp(ek, expected_step2_frame, expected_step2_frame_size));
+
+	if((ek_len != expected_step2_frame_size)){
+        printf("step2 different frame size\n");
+        exit(0);
+    }
+    if(memcmp(ek, expected_step2_frame, expected_step2_frame_size) != 0){
+         printf("step2 memcmp failed\n");
+         exit(0);
+    }
+
+ //   assert(ek_len == expected_step2_frame_size); 
+//	assert(!memcmp(ek, expected_step2_frame, expected_step2_frame_size));
 
 	verify_step2_called = true;
 
@@ -2181,8 +2237,17 @@ static int verify_step4(uint32_t ifindex,
 	assert(ifindex == 1);
 	assert(!memcmp(aa_addr, aa, 6));
 	assert(proto == ETH_P_PAE);
-	assert(ek_len == expected_step4_frame_size);
-	assert(!memcmp(ek, expected_step4_frame, expected_step4_frame_size));
+	if((ek_len != expected_step4_frame_size)){
+        printf("step4 different frame size\n");
+        exit(0);
+    }
+       if(memcmp(ek, expected_step2_frame, expected_step2_frame_size) != 0){ 
+         printf("step4 memcmp failed\n");
+         exit(0);
+    }
+   
+ //   assert(ek_len == expected_step4_frame_size);
+    //assert(!memcmp(ek, expected_step4_frame, expected_step4_frame_size));
 
 	verify_step4_called = true;
 
@@ -2217,7 +2282,29 @@ static bool test_nonce(uint8_t nonce[])
 	return true;
 }
 
+/* Random WPA EAPoL frame, using 2001 protocol 
+static const unsigned char eapol_key_data_test = {
+	0x01, 0x03, 0x00, 0x5f, 0xfe, 0x00, 0x89, 0x00, 0x20, 0x00, 0x00, 0x00,
+	0x00, 0x00, 0x00, 0x00, 0x01, 0xd5, 0xe2, 0x13, 0x9b, 0x1b, 0x1c, 0x1e,
+	0xcb, 0xf4, 0xc7, 0x9d, 0xb3, 0x70, 0xcd, 0x1c, 0xea, 0x07, 0xf1, 0x61,
+	0x76, 0xed, 0xa6, 0x78, 0x8a, 0xc6, 0x8c, 0x2c, 0xf4, 0xd7, 0x6f, 0x2b,
+	0xf7, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+	0x00, 0x00, 0x00,0x01, 0x03, 0x00, 0x5f, 0xfe, 0x00, 0x89, 0x00, 0x20, 
+    0x00, 0x00, 0x00, 0x00, 0x01, 0xd5, 0xe2, 0x13, 0x9b, 0x1b, 0x1c, 0x1e,
+	0xcb, 0xf4, 0xc7, 0x9d, 0xb3, 0x70, 0xcd, 0x1c, 0xea, 0x07, 0xf1, 0x61,
+	0x76, 0xed, 0xa6, 0x78, 0x8a, 0xc6, 0x8c, 0x2c, 0xf4, 0xd7, 0x6f, 0x2b,
+	0xf7, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+	0x00, 0x00, 0x00,0x00, 0x00, 0x00,
 
+};
+
+*/
 //XXX FUNCTION UNDER ANALYSIS
 static void eapol_sm_test_ptk(const void *data)
 {
@@ -2235,17 +2322,26 @@ static void eapol_sm_test_ptk(const void *data)
 	bool r;
 	struct handshake_state *hs;
 	struct eapol_sm *sm;
-
-	eapol_init();
-
+    
+    eapol_init();
+    size_t __afl_key_len;
+    unsigned char * __afl_key = __afl_get_key_data(&__afl_key_len);
+    char buffer[50];
+     
+    printf("XXXX DEBUG INFO XXXX\n\n");
+    printf("afl_key_data read: %s\n",__afl_key);
+    printf("afl_key_len: %d\n", __afl_key_len );
+	
 	snonce = eapol_key_test_4.key_nonce;
 	__handshake_set_get_nonce_func(test_nonce);
 
+
+    printf(" DEBUG INFO :eapol 4 %d \n size: %d\n nonce: %d \n", eapol_key_data_4,sizeof(eapol_key_data_4), eapol_key_test_4.key_nonce);
 	aa = ap_address;
 	spa = sta_address;
 	verify_step2_called = false;
-	expected_step2_frame = eapol_key_data_4;
-	expected_step2_frame_size = sizeof(eapol_key_data_4);
+	expected_step2_frame = __afl_key;
+	expected_step2_frame_size = __afl_key_len;
 	verify_step4_called = false;
 	expected_step4_frame = eapol_key_data_6;
 	expected_step4_frame_size = sizeof(eapol_key_data_6);
@@ -2262,32 +2358,40 @@ static void eapol_sm_test_ptk(const void *data)
 	handshake_state_set_supplicant_address(hs, spa);
 
 	r =  handshake_state_set_supplicant_rsn(hs,
-				eapol_key_data_4 + sizeof(struct eapol_key));
-	assert(r);
+				__afl_key + sizeof(struct eapol_key));
+	
+    
+    //assert(r);
+   
+    if(!r){
+        printf("DEBUG INFO : handshake_state_set_supplicant failed\n");
+    }
 
 	handshake_state_set_authenticator_rsn(hs, ap_rsne);
 	eapol_start(sm);
 
 //XXX msg3 --- 
 	
-    printf("!!!!!!!!!!! verify step2 on message 3 \n");
+    //printf("!!!!!!!!!!! verify step2 on message 3 \n");
     __eapol_set_tx_packet_func(verify_step2);
-    size_t __afl_key_len;
-    unsigned char * __afl_key = __afl_get_key_data(&__afl_key_len);
-	__eapol_rx_packet(1, aa, ETH_P_PAE, __afl_key,__afl_key_len, false);
+   // printf("verify: %d  \n", verify_step2_called );
+   // printf("Before packet afl_key_data read: %s\n",__afl_key);
+////////////////   strcpy(buffer, __afl_key_len);
+	__eapol_rx_packet(1, aa, ETH_P_PAE,__afl_key, __afl_key_len, false);
 
    //XXX the following assert is commented because it cannot be verified in any case
-  //assert(verify_step2_called);
-    printf("!!!!!!!!!!!!  Message 3 done \n");
+   // assert(verify_step2_called);
+   // printf("!!!!!!!!!!!!  Message 3 done \n");
+  
 //XXX msg4 ---
 
-     printf("!!!!!!!!!!!  verify step4 on message message 4 \n");
+    // printf("!!!!!!!!!!!  verify step4 on message message 4 \n");
 	__eapol_set_tx_packet_func(verify_step4);
-    size_t __afl_key_len2;
-	unsigned char * __afl_key2 = __afl_get_key_data_5(&__afl_key_len2);
-    __eapol_rx_packet(1, aa, ETH_P_PAE, __afl_key2 ,__afl_key_len2, false);
-//	assert(verify_step4_called);
-   printf("!!!!!!!!!!!!  Message 4 done \n");
+//    size_t __afl_key_len2;
+//	unsigned char * __afl_key2 = __afl_get_key_data_5(&__afl_key_len2);
+    __eapol_rx_packet(1, aa, ETH_P_PAE, eapol_key_data_6,sizeof(eapol_key_data_6), false);
+   //assert(verify_step4_called);
+   //printf("!!!!!!!!!!!!  Message 4 done \n");
     
 	eapol_sm_free(sm);
 	handshake_state_free(hs);
@@ -3505,20 +3609,21 @@ int main(int argc, char *argv[])
     }
 
 	l_test_init(&argc, &argv);
-
+/*
 	l_test_add("/EAPoL Key/Key Frame 1",
 			eapol_key_test, &eapol_key_test_1);
 	l_test_add("/EAPoL Key/Key Frame 2",
 			eapol_key_test, &eapol_key_test_2);
 	l_test_add("/EAPoL Key/Key Frame 3",
 			eapol_key_test, &eapol_key_test_3);
+            */
 	l_test_add("/EAPoL Key/Key Frame 4",
 			eapol_key_test, &eapol_key_test_4);
-	l_test_add("/EAPoL Key/Key Frame 5",
-			eapol_key_test, &eapol_key_test_5);
+	//l_test_add("/EAPoL Key/Key Frame 5",
+	//		eapol_key_test, &eapol_key_test_5);
 	l_test_add("/EAPoL Key/Key Frame 6",
 			eapol_key_test, &eapol_key_test_6);
-	l_test_add("/EAPoL Key/Key Frame 7",
+/*	l_test_add("/EAPoL Key/Key Frame 7",
 			eapol_key_test, &eapol_key_test_7);
 	l_test_add("/EAPoL Key/Key Frame 8",
 			eapol_key_test, &eapol_key_test_8);
@@ -3570,7 +3675,7 @@ int main(int argc, char *argv[])
 			eapol_key_test, &eapol_key_test_31);
 	l_test_add("/EAPoL Key/Key Frame 32",
 			eapol_key_test, &eapol_key_test_32);
-
+*/
 	if (!l_checksum_is_supported(L_CHECKSUM_MD5, true) ||
 			!l_checksum_is_supported(L_CHECKSUM_SHA1, true))
 		goto done;
