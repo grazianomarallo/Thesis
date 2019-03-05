@@ -69,12 +69,12 @@ static const uint8_t *aa;
 static const uint8_t *spa;
 
 ///XXX Global variable for data read from AFL
-size_t __afl_key_len;
+char * __afl_input_filename = NULL;
 unsigned char * __afl_key;
 unsigned char * __afl_key1;
-int len_frame1;
-int len_frame2;
-char * __afl_input_filename = NULL;
+size_t len_frame1;
+size_t len_frame2;
+
 
 
 
@@ -505,7 +505,7 @@ void * __afl_get_key_data (){
         exit(EXIT_FAILURE);
     }
     len_frame1 = atoi(buffer);
-    printf("Frame 1 is : %d\n",len_frame1);
+    printf("Frame 1 is : %ld\n",len_frame1);
 
 
     byte_read1 = read(fd, buffer, len_frame1);
@@ -530,7 +530,7 @@ void * __afl_get_key_data (){
         exit(EXIT_FAILURE);
     }
     len_frame2 = atoi(buffer);
-    printf("Frame 2 is : %d\n",len_frame2);
+    printf("Frame 2 is : %ld\n",len_frame2);
 
     byte_read2 = read(fd, buffer, len_frame2);
     if(byte_read2 <= 0){
@@ -549,7 +549,6 @@ void * __afl_get_key_data (){
     if (fd > 0) {
         close (fd);
     }
-
     return(NULL);
 };
 
@@ -2322,21 +2321,20 @@ static void eapol_sm_test_ptk(const void *data)
     struct eapol_sm *sm;
 
     eapol_init();
-    size_t __afl_key_len;
+    ///calling afl to read data from the input file
     __afl_get_key_data();
 
     snonce = eapol_key_test_4.key_nonce;
     __handshake_set_get_nonce_func(test_nonce);
 
 
-    //printf(" DEBUG INFO :eapol 4 %d \n size: %d\n nonce: %d \n", eapol_key_data_4,sizeof(eapol_key_data_4), eapol_key_test_4.key_nonce);
     aa = ap_address;
     spa = sta_address;
     verify_step2_called = false;
     expected_step2_frame = __afl_key;
     expected_step2_frame_size = len_frame1;
     verify_step4_called = false;
-    expected_step4_frame = __afl_key;
+    expected_step4_frame = __afl_key1;
     expected_step4_frame_size = len_frame2;
 
     hs = test_handshake_state_new(1);
@@ -2350,11 +2348,10 @@ static void eapol_sm_test_ptk(const void *data)
     handshake_state_set_authenticator_address(hs, aa);
     handshake_state_set_supplicant_address(hs, spa);
 
+    ///NOTE: if change eapol_key_data_4 with __afl_key the the if statement will always be verified
     r =  handshake_state_set_supplicant_rsn(hs,eapol_key_data_4 + sizeof(struct eapol_key));
 
-
     //assert(r);
-
     if(!r){
         printf("DEBUG INFO : handshake_state_set_supplicant failed\n");
     }
@@ -2362,19 +2359,19 @@ static void eapol_sm_test_ptk(const void *data)
     handshake_state_set_authenticator_rsn(hs, ap_rsne);
     eapol_start(sm);
 
-//XXX msg3 ---
+    //XXX msg3 ---
     __eapol_set_tx_packet_func(verify_step2);
-     printf("eapol rx packet frame1 : %s \n len  %d\n",__afl_key, len_frame1);
+     printf("eapol rx packet frame1 : %s \n len  %ld\n",__afl_key, len_frame1);
     __eapol_rx_packet(1, aa, ETH_P_PAE,__afl_key, len_frame1, false);
     //XXX the following assert is commented because it cannot be verified in any case
     // assert(verify_step2_called);
 
-//XXX msg4 ---
+    //XXX msg4 ---
 
 
     __eapol_set_tx_packet_func(verify_step4);
-    printf("eapol rx packet frame 2: %s \nlen  %d\n",__afl_key1, len_frame2);
-    __eapol_rx_packet(1, aa, ETH_P_PAE, __afl_key1,len_frame2, false);
+    printf("eapol rx packet frame 2: %s \nlen  %ld\n",__afl_key1, len_frame2);
+    __eapol_rx_packet(1, aa, ETH_P_PAE, __afl_key1, len_frame2, false);
     //assert(verify_step4_called);
 
     eapol_sm_free(sm);
