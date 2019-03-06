@@ -95,6 +95,7 @@ void __watchlist_prune_stale(struct watchlist *watchlist);
 		(watchlist)->in_notify = false;				\
 		if ((watchlist)->stale_items)				\
 			__watchlist_prune_stale(watchlist);		\
+			printf("--- Watchlist--- \n"); \
 	} while	(false)
 
 #define WATCHLIST_NOTIFY_NO_ARGS(watchlist, type)			\

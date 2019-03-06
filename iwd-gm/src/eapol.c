@@ -2343,37 +2343,43 @@ void __eapol_rx_packet(uint32_t ifindex, const uint8_t *src, uint16_t proto,
 					bool noencrypt)
 {
 	const struct eapol_header *eh;
-    char buffer[15];
-     
+ 
 	/* Validate Header */
 	if (len < sizeof(struct eapol_header)){
-	    printf("len < sizeof eapol header\n");
+	    printf("--- Frame len < sizeof eapol header --- \n");
         return;
     }
     
-   //XXX inserted here buffer overflow 
-    strcpy(buffer, frame);
+
 	eh = (const struct eapol_header *) frame;
 
  
     
-    printf("------ DEBUGGING HERE ------");
-
+    printf("------ DEBUGGING HERE  ------\n Frame len: %li\n", len);
+    printf("Protocol version  %d \n", eh->protocol_version);
     
 
 	switch (eh->protocol_version) {
 	case EAPOL_PROTOCOL_VERSION_2001:
-	case EAPOL_PROTOCOL_VERSION_2004:
+	case EAPOL_PROTOCOL_VERSION_2004: {
+        printf("--- Protocol valid path ---\n");
+       // assert (false);
 		break;
-	default:
+             }
+	default: {
+        printf("--- Default case path ---\n");
 		return;
+             }
 	}
 
 
 	if (len < sizeof(struct eapol_header) + L_BE16_TO_CPU(eh->packet_len)){
-        printf("len < sizeof eapol header + stuff\n");
+        printf("--- Frame len < sizeof eapol header + packet_len ---\n");
+        //assert (false);
 		return;
      }
+
+    printf("--- Executing Watchlist ---\n");
 	WATCHLIST_NOTIFY_MATCHES(&frame_watches,
 					eapol_frame_watch_match_ifindex,
 					L_UINT_TO_PTR(ifindex),
