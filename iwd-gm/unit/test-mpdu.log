@@ -1,0 +1,6 @@
+TEST: /Management Frame/Deauthentication Frame 1
+TEST: /IE order/Good 1
+TEST: /IE order/Good 2
+TEST: /IE order/Bad 1
+TEST: /IE order/Bad 2
+PASS unit/test-mpdu (exit status: 0)

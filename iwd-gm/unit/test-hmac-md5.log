@@ -1,0 +1,7 @@
+TEST: /hmac-md5/Test case 1
+HMAC   = 74e6f7298a9c2d168935f58c001bad88 (16 octects)
+Result = 74e6f7298a9c2d168935f58c001bad88
+TEST: /hmac-md5/Test case 2
+HMAC   = 80070713463e7749b90c2dc24911e275 (16 octects)
+Result = 80070713463e7749b90c2dc24911e275
+PASS unit/test-hmac-md5 (exit status: 0)

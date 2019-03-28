@@ -1,0 +1,6 @@
+TEST: MSHAPv2 nt_password-hash
+TEST: MSHAPv2 generate_nt_response
+TEST: MSHAPv2 get_master_key
+TEST: MSHAPv2 get_asym_state_key
+TEST: MSHAPv2 authenticator_response
+PASS unit/test-eap-mschapv2 (exit status: 0)

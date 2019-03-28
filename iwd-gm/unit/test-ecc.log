@@ -1,0 +1,15 @@
+TEST: ECC add test
+TEST: ECC sub test
+TEST: ECC mult test
+TEST: ECC inv test
+TEST: ECC inv test
+TEST: ECC exp test
+TEST: ECC point add test
+TEST: ECC point mult test
+TEST: ECC legendre
+TEST: ECC legendre
+TEST: ECC legendre
+TEST: ECC legendre
+TEST: ECC legendre
+TEST: ECC legendre
+PASS unit/test-ecc (exit status: 0)

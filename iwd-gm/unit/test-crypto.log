@@ -1,0 +1,24 @@
+TEST: /Passphrase Generator/PSK Test Case 1
+Passphrase  = "password"
+SSID        = { 'I', 'E', 'E', 'E' }
+SSID Length = 4
+PSK         = f42c6fc52df0ebef9ebb4b90b38a5f902e83fe1b135a70e23aed762e9710a12e
+Result      = f42c6fc52df0ebef9ebb4b90b38a5f902e83fe1b135a70e23aed762e9710a12e
+TEST: /Passphrase Generator/PSK Test Case 2
+Passphrase  = "ThisIsAPassword"
+SSID        = { 'T', 'h', 'i', 's', 'I', 's', 'A', 'S', 'S', 'I', 'D' }
+SSID Length = 11
+PSK         = 0dc0d6eb90555ed6419756b9a15ec3e3209b63df707dd508d14581f8982721af
+Result      = 0dc0d6eb90555ed6419756b9a15ec3e3209b63df707dd508d14581f8982721af
+TEST: /Passphrase Generator/PSK Test Case 3
+Passphrase  = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+SSID        = { 'Z', 'Z', 'Z', 'Z', 'Z', 'Z', 'Z', 'Z', 'Z', 'Z', 'Z', 'Z', 'Z', 'Z', 'Z', 'Z', 'Z', 'Z', 'Z', 'Z', 'Z', 'Z', 'Z', 'Z', 'Z', 'Z', 'Z', 'Z', 'Z', 'Z', 'Z', 'Z' }
+SSID Length = 32
+PSK         = becb93866bb8c3832cb777c2f559807c8c59afcb6eae734885001300a981cc62
+Result      = becb93866bb8c3832cb777c2f559807c8c59afcb6eae734885001300a981cc62
+TEST: /PTK Derivation/PTK Test Case 1
+TEST: /PTK Derivation/PTK Test Case 2
+TEST: /PTK Derivation/PTK Test Case 3
+TEST: /PTK Derivation/PTK Test Case 4
+TEST: /AES Key-wrap/Wrap & unwrap
+PASS unit/test-crypto (exit status: 0)

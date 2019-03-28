@@ -1,0 +1,13 @@
+TEST: /cmac-aes/Example 1
+Tag    = bb1d6929e95937287fa37d129b756746 (16 octects)
+Result = bb1d6929e95937287fa37d129b756746
+TEST: /cmac-aes/Example 2
+Tag    = 070a16b46b4d4144f79bdd9dd04a287c (16 octects)
+Result = 070a16b46b4d4144f79bdd9dd04a287c
+TEST: /cmac-aes/Exmaple 3
+Tag    = dfa66747de9ae63030ca32611497c827 (16 octects)
+Result = dfa66747de9ae63030ca32611497c827
+TEST: /cmac-aes/Exmaple 4
+Tag    = 51f0bebf7e3b9d92fc49741779363cfe (16 octects)
+Result = 51f0bebf7e3b9d92fc49741779363cfe
+PASS unit/test-cmac-aes (exit status: 0)

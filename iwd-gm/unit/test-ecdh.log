@@ -1,0 +1,4 @@
+TEST: ECDH Basic
+TEST: ECDH Compliant key
+TEST: ECDH test vector
+PASS unit/test-ecdh (exit status: 0)

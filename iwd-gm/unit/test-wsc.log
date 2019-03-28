@@ -1,0 +1,15 @@
+Key crypto not supported, skipping other tests...
+TEST: /wsc/iter/sanity-check
+TEST: /wsc/parse/beacon 1
+TEST: /wsc/parse/probe response 1
+TEST: /wsc/parse/probe request 1
+TEST: /wsc/build/probe request 1
+TEST: /wsc/pin/valid pin
+TEST: /wsc/pin/valid checksum
+TEST: /wsc/pin/generate
+TEST: /wsc/gen_uuid/1
+TEST: /wsc/parse/m1 1
+TEST: /wsc/parse/m1 2
+TEST: /wsc/build/m1 1
+TEST: /wsc/build/m1 2
+PASS unit/test-wsc (exit status: 0)

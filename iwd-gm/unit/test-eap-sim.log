@@ -1,0 +1,7 @@
+TEST: EAP-SIM next attribute test
+TEST: EAP-SIM add attribute test
+TEST: EAP-SIM calculate MAC test
+TEST: EAP-SIM PRNG test
+TEST: EAP-AKA' Test Case 1
+TEST: EAP-AKA' Test Case 2
+PASS unit/test-eap-sim (exit status: 0)

@@ -30,6 +30,7 @@
 #include <linux/if_ether.h>
 #include <ell/ell.h>
 #include <fcntl.h> //include for the open function
+#include <regex.h>
 
 #include "src/util.h"
 #include "src/eapol.h"
@@ -70,10 +71,11 @@ static const uint8_t *spa;
 
 ///XXX Global variable for data read from AFL
 char * __afl_input_filename = NULL;
-unsigned char * __afl_key;
-unsigned char * __afl_key1;
+uint8_t * __afl_key;
+uint8_t  * __afl_key1;
 size_t len_frame1;
 size_t len_frame2;
+#define BUF_LEN 2048
 
 
 
@@ -464,26 +466,236 @@ static const unsigned char eapol_key_data_7[] = {
     }
 
     return(NULL);
-};*/
+}; */
 
+int match(char *string, char *pattern)
+{
+    regex_t re;
+
+    if (regcomp(&re, pattern, REG_EXTENDED|REG_NOSUB) != 0) return 0;
+    int status = regexec(&re, string, 0, NULL, 0);
+    regfree(&re);
+    if (status != 0) return 0;
+    return 1;
+}
+
+/// WORKING SOLUTION
 
 void * __afl_get_key_data (){
+    FILE * fp;
+    len_frame1 =0;
+    len_frame2= 0;
+    int i;
+    unsigned char *tmparray;
+    int idx = 0;
+    int data,data1;
+    int count=0;
+    unsigned long position;
+    char del[3];
+    const char *reg;
 
-    static unsigned char buffer[2048];
+
+    fp = fopen(__afl_input_filename , "r");
+    if (fp == NULL){
+        perror("!!! Warning: no input file for AFL. Tests will be executed with static data!!!\n");
+        __afl_key = eapol_key_data_4;
+        __afl_key1= eapol_key_data_6;
+        len_frame1= sizeof(eapol_key_data_4);
+        len_frame2= sizeof(eapol_key_data_6);
+        return(NULL);
+    }
+    else{
+        printf("+++ File open correctly! +++\n");
+    }
+
+    reg= "===";
+
+
+    tmparray = (char *)malloc(sizeof(char)* BUF_LEN);
+    while (fscanf(fp, "%*c%*c%x,", &data) == 1) {
+        tmparray[idx++] = (unsigned char)data;
+        count++;
+    }
+
+    len_frame1= count;
+
+    __afl_key = (char *)malloc(sizeof(char)* len_frame1);
+    for(int i=0; i < len_frame1 ;i++){
+        __afl_key[i] = tmparray[i];
+        printf("%d ", __afl_key[i]);
+    }
+    printf("\n\n");
+
+    //compute the position of the file
+    fflush(fp);
+    position = ftell(fp);
+
+    //position the fp to the previous position (the first =) and skip the following to
+    fseek(fp, position-2 , SEEK_SET);
+    fread(del, sizeof(char), 3, fp);
+    if( (match(del,reg) )){
+        printf("Matching!\n");
+    }
+    else {
+        perror("XXX Delimiter not found XXX");
+        exit(EXIT_FAILURE);
+    }
+
+    fseek(fp, position+2 , SEEK_SET);
+
+
+    count =0;
+    idx=0;
+
+    while (fscanf(fp, "%*c%*c%x,", &data) == 1) {
+        tmparray[idx++] = (unsigned char)data;
+        count++;
+    }
+
+    len_frame2= count;
+
+
+    __afl_key1 = (char *)malloc(sizeof(char)* (len_frame2));
+    for(int i=0; i < len_frame2 ;i++){
+        __afl_key1[i] = tmparray[i];
+        printf("%d ", __afl_key1[i]);
+
+    }
+
+
+    fclose(fp);
+
+    return(NULL);
+};
+
+
+ ///reading from file using delimeters "====="
+/*
+void * __afl_get_key_data (){
+    FILE * fp;
+    char * line = NULL;
+    size_t len = 0;
+    ssize_t read;
+    int count=0;
+    len_frame1 =0;
+    len_frame2= 0;
+    regex_t regex;
+    const char *reg;
+    char *buffer;
+    //static unsigned char buffer[2048];
+
+
+
+    fp = fopen(__afl_input_filename , "r");
+    if (fp == NULL){
+        perror("!!! Warning: no input file for AFL. Tests will be executed with static data!!!\n");
+        __afl_key = eapol_key_data_4;
+        __afl_key1= eapol_key_data_6;
+        len_frame1= sizeof(eapol_key_data_4);
+        len_frame2= sizeof(eapol_key_data_6);
+        return(NULL);
+    }
+    else{
+        printf("+++ File open correctly! +++\n");
+    }
+
+    buffer = (char *) malloc(BUF_LEN *sizeof(char));
+
+    reg= "^([0-9]|[1-8][0-9]|9[0-9]|[1-8][0-9]{2}|9[0-8][0-9]|99[0-9]|10[01][0-9]|102[0-4])$";
+
+
+
+    if ((read = getline(&line, &len, fp)) != -1 ){
+        if( (regmatch(line,reg) )){
+            len_frame1= atoi(line);
+      //      printf("Len read %d\n",len_frame1);
+        }
+        else {
+            perror("XXX Format of first frame size is not correct XXX");
+            exit(EXIT_FAILURE);
+        }
+
+    }
+
+    read =0;
+    //scrivere da count- read a count
+    int to_write;
+    __afl_key = (char *)malloc(len_frame1 * sizeof(char));
+
+    for(;;){
+        if ((read = getline(&line, &len, fp)) != -1 ){
+            count+=read;
+            memcpy(__afl_key,line,read);
+            printf("afl :\n%s  line : %s \n %d \n", __afl_key,line,count);
+            if(count >= len_frame1)
+                break;
+        }
+    }
+
+    printf("Frame1 :\n%s  %d \n\n", __afl_key,count);
+
+
+    count =0;
+    read=0;
+
+
+    if ((read = getline(&line, &len, fp)) != -1 ){
+        if( (regmatch(line,reg) )){
+            len_frame2= atoi(line);
+           // printf("Len read %d\n",len_frame2);
+        }
+        else {
+            perror("XXX Format of first frame size is not correct XXX");
+            exit(EXIT_FAILURE);
+        }
+
+    }
+
+    buffer = (char *) malloc(BUF_LEN * sizeof(char));
+    read =0;
+    for(;;){
+        if ((read = getline(&line, &len, fp)) != -1 ){
+            count+=read;
+            strcat(buffer,line);
+            if(count >= len_frame2)
+                break;
+        }
+    }
+
+    __afl_key1 = (char *)malloc(len_frame2 * sizeof(char));
+    memcpy(__afl_key1,buffer,len_frame2);
+    //printf("Frame2 :\n%s  %d \n", __afl_key1,count);
+    free(buffer);
+
+
+    fclose(fp);
+    if (line)
+        free(line);
+
+    return(NULL);
+};
+*/
+
+
+
+/*
+void * __afl_get_key_data (){
     int fd = 0;
     int l=0;
-    int byte_read1 = 0;
-    int byte_read2 = 0;
+    int byte_read = 0;
+
     len_frame1 =0;
-    len_frame2=0;
+    len_frame2= 0;
+    char *reg;
+    char *buf, *buf1;
+    char *token;
+    int tmp;
 
-
+    fd = open(__afl_input_filename, 0);
     if ( __afl_input_filename != NULL ) {
         fd = open(__afl_input_filename, 0);
     } else {
         perror("!!! Warning: no input file for AFL. Tests will be executed with static data!!!\n");
-        //__afl_key = malloc(sizeof(eapol_key_data));
-        //__afl_key1 = malloc(sizeof(eapol_key_data));
         __afl_key = eapol_key_data_4;
         __afl_key1= eapol_key_data_6;
         len_frame1= sizeof(eapol_key_data_4);
@@ -493,65 +705,47 @@ void * __afl_get_key_data (){
 
     if (fd <= 0) {
         perror("XXX Error: failed file cannot be open! XXX\n");
+        exit(EXIT_FAILURE);
     }
     else{
         printf("+++ File open correctly! +++\n");
     }
 
 
-    l = read(fd,buffer, sizeof(int));
-    if ( l <= 0){
-        printf("File format is wrong. Aborting!\n");
-        exit(EXIT_FAILURE);
-    }
-    len_frame1 = atoi(buffer);
-    printf("Frame 1 is : %ld\n",len_frame1);
+    reg= "^([0-9]|[1-8][0-9]|9[0-9]|[1-8][0-9]{2}|9[0-8][0-9]|99[0-9]|10[01][0-9]|102[0-4])$";
 
 
-    byte_read1 = read(fd, buffer, len_frame1);
-    if(byte_read1 <= 0){
+    buf = (char *) malloc(sizeof(char)*BUF_LEN);
+    buf1 = (char *) malloc(sizeof(char)*BUF_LEN);
+
+
+    l = read(fd,buf, BUF_LEN);
+    if (l <= 0) {
         perror("XXX Error: Failed to read the input file for frame 1! XXX");
-    }
-    else{
-        printf("Read: %i\n",byte_read1);
-        //  printf("buff: %s\n", buffer);
-    }
-
-
-    if (fd > 0 &&  byte_read1 > 0) {
-        __afl_key = malloc(sizeof(int) * len_frame1);
-        memcpy(__afl_key,buffer,len_frame1);
-    }
-
-
-    l = read(fd,buffer, sizeof(int));
-    if ( l <= 0) {
-        printf("File format is wrong. Aborting!\n");
         exit(EXIT_FAILURE);
     }
-    len_frame2 = atoi(buffer);
-    printf("Frame 2 is : %ld\n",len_frame2);
 
-    byte_read2 = read(fd, buffer, len_frame2);
-    if(byte_read2 <= 0){
-        perror("XXX Error: Failed to read the input file for frame 2! XXX");
-    }
-    else{
-        printf("Read: %i\n",byte_read2);
-        // printf("buff: %s\n",buffer);
+    token = strtok(buf,",");
+int prova;
+    while(token != NULL){
+        token = strtok(NULL,",");
+        printf("%s ",token);
+        prova= (int) atoi(token);
+        printf("%d ", prova);
+        //__afl_key[i] =
+
     }
 
-    if (fd > 0 &&  byte_read2 > 0) {
-        __afl_key1 = malloc(sizeof(int) * len_frame2);
-        memcpy(__afl_key1,buffer,len_frame2);
-    }
 
     if (fd > 0) {
         close (fd);
     }
+
+
     return(NULL);
 };
 
+*/
 static struct eapol_key_data eapol_key_test_7 = {
         .frame = eapol_key_data_7,
         .frame_len = sizeof(eapol_key_data_7),
@@ -2225,7 +2419,7 @@ static int verify_step2(uint32_t ifindex,
     assert(ifindex == 1);
     assert(proto == ETH_P_PAE);
     assert(!memcmp(aa_addr, aa, 6));
-
+/*
     if((ek_len != expected_step2_frame_size)){
         printf("step2 different frame size\n");
         exit(0);
@@ -2234,9 +2428,9 @@ static int verify_step2(uint32_t ifindex,
         printf("step2 memcmp failed\n");
         exit(0);
     }
-
-    //   assert(ek_len == expected_step2_frame_size);
-//	assert(!memcmp(ek, expected_step2_frame, expected_step2_frame_size));
+*/
+       assert(ek_len == expected_step2_frame_size);
+	assert(!memcmp(ek, expected_step2_frame, expected_step2_frame_size));
 
     verify_step2_called = true;
 
@@ -2255,6 +2449,7 @@ static int verify_step4(uint32_t ifindex,
     assert(ifindex == 1);
     assert(!memcmp(aa_addr, aa, 6));
     assert(proto == ETH_P_PAE);
+    /*
     if((ek_len != expected_step4_frame_size)){
         printf("step4 different frame size\n");
         exit(0);
@@ -2263,9 +2458,9 @@ static int verify_step4(uint32_t ifindex,
         printf("step4 memcmp failed\n");
         exit(0);
     }
-
-    //   assert(ek_len == expected_step4_frame_size);
-    //assert(!memcmp(ek, expected_step4_frame, expected_step4_frame_size));
+*/
+       assert(ek_len == expected_step4_frame_size);
+    assert(!memcmp(ek, expected_step4_frame, expected_step4_frame_size));
 
     verify_step4_called = true;
 
@@ -2322,6 +2517,7 @@ static void eapol_sm_test_ptk(const void *data)
 
     eapol_init();
     ///calling afl to read data from the input file
+    printf("--- DEBUG IN eapol_sm_test_ptk --- \n\n");
     __afl_get_key_data();
 
     snonce = eapol_key_test_4.key_nonce;
@@ -2348,29 +2544,31 @@ static void eapol_sm_test_ptk(const void *data)
     handshake_state_set_authenticator_address(hs, aa);
     handshake_state_set_supplicant_address(hs, spa);
 
-    ///NOTE: if change eapol_key_data_4 with __afl_key the the if statement will always be verified
-    r =  handshake_state_set_supplicant_rsn(hs,eapol_key_data_4 + sizeof(struct eapol_key));
 
-    //assert(r);
+    r =  handshake_state_set_supplicant_rsn(hs,__afl_key + sizeof(struct eapol_key));
+
+    assert(r);
+  /*
     if(!r){
         printf("DEBUG INFO : handshake_state_set_supplicant failed\n");
     }
-
+*/
     handshake_state_set_authenticator_rsn(hs, ap_rsne);
     eapol_start(sm);
 
     //XXX msg3 ---
     __eapol_set_tx_packet_func(verify_step2);
-     printf("eapol rx packet frame1 : %s \n len  %ld\n",__afl_key, len_frame1);
+    // printf("eapol rx packet frame1 : %s \n Frame len  %ld\n",__afl_key, len_frame1);
     __eapol_rx_packet(1, aa, ETH_P_PAE,__afl_key, len_frame1, false);
     //XXX the following assert is commented because it cannot be verified in any case
     // assert(verify_step2_called);
-
     //XXX msg4 ---
+
+    printf("\n\n XXX Working on second frame XXX \n\n");
 
 
     __eapol_set_tx_packet_func(verify_step4);
-    printf("eapol rx packet frame 2: %s \nlen  %ld\n",__afl_key1, len_frame2);
+  //  printf("eapol rx packet frame 2: %s \nlen  %ld\n",__afl_key1, len_frame2);
     __eapol_rx_packet(1, aa, ETH_P_PAE, __afl_key1, len_frame2, false);
     //assert(verify_step4_called);
 

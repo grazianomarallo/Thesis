@@ -1,0 +1,7 @@
+TEST: /hmac-sha256/Test case 1
+HMAC   = b613679a0814d9ec772f95d778c35fc5ff1697c493715653c6c712144292c5ad (32 octects)
+Result = b613679a0814d9ec772f95d778c35fc5ff1697c493715653c6c712144292c5ad
+TEST: /hmac-sha256/Test case 2
+HMAC   = f7bc83f430538424b13298e6aa6fb143ef4d59a14946175997479dbc2d1a3cd8 (32 octects)
+Result = f7bc83f430538424b13298e6aa6fb143ef4d59a14946175997479dbc2d1a3cd8
+PASS unit/test-hmac-sha256 (exit status: 0)

@@ -1,0 +1,2 @@
+TEST: /util/ssid_to_utf8/
+PASS unit/test-ssid-to-utf8 (exit status: 0)

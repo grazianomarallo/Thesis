@@ -1,0 +1,7 @@
+TEST: /arc4_skip/Test offset 0
+TEST: /arc4_skip/Test offset 16
+TEST: /arc4_skip/Test offset 240
+TEST: /arc4_skip/Test offset 256
+TEST: /arc4_skip/Test offset 2032
+TEST: /arc4_skip/Test offset 2048
+PASS unit/test-arc4 (exit status: 0)

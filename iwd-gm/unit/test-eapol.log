@@ -1,0 +1,25 @@
+!!! Warning: no input file for AFL. Tests will be executed with static data!!!
+: Bad address
+TEST: /EAPoL Key/Key Frame 4
+TEST: /EAPoL Key/Key Frame 6
+TEST: EAPoL/WPA2 PTK State Machine
+--- DEBUG IN eapol_sm_test_ptk --- 
+
+------ DEBUGGING HERE  ------
+ Frame len: 121
+Protocol version  1 
+--- Protocol valid path ---
+--- Executing Watchlist ---
+--- Watchlist--- 
+
+
+ XXX Working on second frame XXX 
+
+------ DEBUGGING HERE  ------
+ Frame len: 99
+Protocol version  1 
+--- Protocol valid path ---
+--- Executing Watchlist ---
+--- Watchlist--- 
+Exit from test
+PASS unit/test-eapol (exit status: 0)

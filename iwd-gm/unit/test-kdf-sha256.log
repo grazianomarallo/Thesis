@@ -1,0 +1,4 @@
+TEST: /kdf-sha256/Test case 1
+PRF    = 9efd6eb02758cb7370a86f8a305375d41f8f21c2e47447f584f7d2291143d4d4 (32 octects)
+Result = 9efd6eb02758cb7370a86f8a305375d41f8f21c2e47447f584f7d2291143d4d4
+PASS unit/test-kdf-sha256 (exit status: 0)

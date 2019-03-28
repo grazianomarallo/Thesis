@@ -1,0 +1,6 @@
+TEST: /SSID Security/Open
+TEST: /SSID Security/WPA
+TEST: /SSID Security/WPA2
+TEST: /SSID Security/8021x
+TEST: /SSID Security/WEP
+PASS unit/test-ssid-security (exit status: 0)

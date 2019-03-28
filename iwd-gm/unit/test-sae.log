@@ -1,0 +1,16 @@
+peer scalar or element matched own, discarding frame
+bad packet length
+bad length
+confirm did not match
+TEST: SAE commit timeout
+TEST: SAE confirm timeout
+TEST: SAE anti-clogging
+TEST: SAE early confirm
+TEST: SAE reflection
+TEST: SAE malformed commit
+TEST: SAE malformed confirm
+TEST: SAE bad group
+TEST: SAE bad confirm
+TEST: SAE confirm after accept
+TEST: SAE end-to-end
+PASS unit/test-sae (exit status: 0)
