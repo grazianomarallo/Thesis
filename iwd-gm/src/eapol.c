@@ -2044,6 +2044,7 @@ void __eapol_update_replay_counter(uint32_t ifindex, const uint8_t *spa,
 
 void __eapol_set_tx_packet_func(eapol_tx_packet_func_t func)
 {
+    printf("\n__eapol_set_tx_packet_func has been called\n\n");
 	tx_packet = func;
 }
 
@@ -2346,12 +2347,14 @@ void __eapol_rx_packet(uint32_t ifindex, const uint8_t *src, uint16_t proto,
  
 	/* Validate Header */
 	if (len < sizeof(struct eapol_header)){
-	    printf("--- Frame len < sizeof eapol header --- \n");
+	    printf("--- Frame len %d < sizeof eapol header %ld --- \n", len, sizeof(struct eapol_header) );
+	   // assert(false);
         return;
     }
     
 
 	eh = (const struct eapol_header *) frame;
+
 
  
     
@@ -2363,19 +2366,21 @@ void __eapol_rx_packet(uint32_t ifindex, const uint8_t *src, uint16_t proto,
 	case EAPOL_PROTOCOL_VERSION_2001:
 	case EAPOL_PROTOCOL_VERSION_2004: {
         printf("--- Protocol valid path ---\n");
-       // assert (false);
+
 		break;
              }
 	default: {
         printf("--- Default case path ---\n");
+        // assert (false);
 		return;
              }
 	}
 
 
+	printf(" %d, %d", sizeof(struct eapol_header), L_BE16_TO_CPU(eh->packet_len));
 	if (len < sizeof(struct eapol_header) + L_BE16_TO_CPU(eh->packet_len)){
-        printf("--- Frame len < sizeof eapol header + packet_len ---\n");
-        //assert (false);
+        printf("--- Frame len %d < sizeof eapol header + packet_len %ld ---\n",len,(sizeof(struct eapol_header) + L_BE16_TO_CPU(eh->packet_len)) );
+       // assert (false);
 		return;
      }
 

@@ -777,6 +777,7 @@ AUTOCONF = ${SHELL} /home/parallels/Documents/Thesis/iwd-gm/build-aux/missing au
 AUTOHEADER = ${SHELL} /home/parallels/Documents/Thesis/iwd-gm/build-aux/missing autoheader
 AUTOMAKE = ${SHELL} /home/parallels/Documents/Thesis/iwd-gm/build-aux/missing automake-1.15
 AWK = mawk
+#CC= gcc
 CC = /home/parallels/afl/afl-gcc 
 CCDEPMODE = depmode=gcc3
 CFLAGS =  -Wall -O2 -fsigned-char -fno-exceptions -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=2
