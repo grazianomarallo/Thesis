@@ -1,7 +1,36 @@
 !!! Warning: no input file for AFL. Tests will be executed with static data!!!
 : Bad address
+!!! Warning: no input file for AFL. Tests will be executed with static data!!!
+: Bad address
 TEST: EAPoL/WPA2 PTK State Machine
 --- DEBUG IN eapol_sm_test_ptk --- 
+
+
+__eapol_set_tx_packet_func has been called
+
+------ DEBUGGING HERE  ------
+ Frame len: 121
+Protocol version  1 
+--- Protocol valid path ---
+ 4, 117--- Executing Watchlist ---
+--- Watchlist--- 
+
+
+ XXX Working on second frame XXX 
+
+
+__eapol_set_tx_packet_func has been called
+
+------ DEBUGGING HERE  ------
+ Frame len: 99
+Protocol version  1 
+--- Protocol valid path ---
+ 4, 95--- Executing Watchlist ---
+--- Watchlist--- 
+Exit from test
+TEST: EAPoL IGTK & 4-Way Handshake
+
+--- DEBUG IN eapol_sm_test_igtk --- 
 
 
 __eapol_set_tx_packet_func has been called
@@ -16,18 +45,15 @@ XXX function verify_step2 called XXX
 --- Watchlist--- 
 step 2 true
 
-
- XXX Working on second frame XXX 
-
-
 __eapol_set_tx_packet_func has been called
 
 ------ DEBUGGING HERE  ------
- Frame len: 155
+ Frame len: 215
 Protocol version  2 
 --- Protocol valid path ---
- 4, 151--- Executing Watchlist ---
+ 4, 211--- Executing Watchlist ---
 
 XXX function verify_step4 called XXX
-step4 different frame size
-FAIL unit/test-eapol (exit status: 1)
+--- Watchlist--- 
+step 4 true
+PASS unit/test-eapol (exit status: 0)

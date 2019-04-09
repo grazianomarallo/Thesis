@@ -29,6 +29,7 @@
 #include <linux/if_ether.h>
 #include <ell/ell.h>
 #include <assert.h>
+#include <stdio.h>
 
 #include "src/crypto.h"
 #include "src/eapol.h"
@@ -2347,8 +2348,8 @@ void __eapol_rx_packet(uint32_t ifindex, const uint8_t *src, uint16_t proto,
  
 	/* Validate Header */
 	if (len < sizeof(struct eapol_header)){
-	    printf("--- Frame len %d < sizeof eapol header %d --- \n", len, sizeof(struct eapol_header) );
-	    //assert(false);
+	    printf("--- Frame len %ld < sizeof eapol header %ld --- \n", len, sizeof(struct eapol_header) );
+	   // assert(false);
         return;
     }
     
@@ -2377,9 +2378,9 @@ void __eapol_rx_packet(uint32_t ifindex, const uint8_t *src, uint16_t proto,
 	}
 
 
-	printf(" %d, %d", sizeof(struct eapol_header), L_BE16_TO_CPU(eh->packet_len));
+	printf(" %ld, %d", sizeof(struct eapol_header), L_BE16_TO_CPU(eh->packet_len));
 	if (len < sizeof(struct eapol_header) + L_BE16_TO_CPU(eh->packet_len)){
-        printf("--- Frame len %d < sizeof eapol header + packet_len %d ---\n",len,(sizeof(struct eapol_header) + L_BE16_TO_CPU(eh->packet_len)) );
+        printf("--- Frame len %ld < sizeof eapol header + packet_len %ld ---\n",len,(sizeof(struct eapol_header) + L_BE16_TO_CPU(eh->packet_len)) );
        // assert (false);
 		return;
      }

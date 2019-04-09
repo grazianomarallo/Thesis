@@ -777,11 +777,15 @@ AUTOCONF = ${SHELL} /home/parallels/Documents/Thesis/iwd-gm/build-aux/missing au
 AUTOHEADER = ${SHELL} /home/parallels/Documents/Thesis/iwd-gm/build-aux/missing autoheader
 AUTOMAKE = ${SHELL} /home/parallels/Documents/Thesis/iwd-gm/build-aux/missing automake-1.15
 AWK = mawk
+#XXX change compiler for afl-cov
 #CC= gcc
 CC = /home/parallels/afl/afl-gcc 
 CCDEPMODE = depmode=gcc3
 CFLAGS =  -Wall -O2 -fsigned-char -fno-exceptions -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=2
+#XXX Run without any protection from the compiler
 #CFLAGS = -fno-stack-protector -D_FORTIFY_SOURCE=0
+#XXX Compile the code for afl-cov usage
+#CFLAGS= -fprofile-arcs -ftest-coverage
 CPP = /home/parallels/afl/afl-gcc -E
 CPPFLAGS = 
 CYGPATH_W = echo

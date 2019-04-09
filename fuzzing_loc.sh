@@ -30,6 +30,7 @@ echo
 #cp  ~/Documents/Thesis/data_message/data_message_4 ~/Documents/Thesis/fuzzer_result/$now/input/
 #cp  ~/Documents/Thesis/data_message/data_message_6 ~/Documents/Thesis/fuzzer_result/$now/input/
 cp  ~/Documents/Thesis/data_message/data_message_35.bin ~/Documents/Thesis/fuzzer_result/$now/input/
+cp  ~/Documents/Thesis/data_message/data_message2931.bin ~/Documents/Thesis/fuzzer_result/$now/input/
 
 
 #XXX START FUZZER IN NORMALE MODE XXX
