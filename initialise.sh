@@ -18,6 +18,10 @@ echo
 echo "*** Building IWD ***"
 echo 
 
+#!!! NOTE !!!
+#if debian system run also this
+#sudo apt install libtool libreadline-dev libdbus-glib-1-dev
+
 cd ~/Thesis/iwd-gm/
 ./bootstrap
 CC=~/afl/afl-gcc ./configure
