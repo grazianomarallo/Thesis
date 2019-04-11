@@ -6,12 +6,12 @@ echo
 echo "*** Cloning American Fuzzy Lop (AFL)  ***" 
 cd ~/
 git clone https://github.com/mirrorer/afl.git
-echo ~/afl
+echo 
 echo "*** Done! ***" 
 echo
 
 echo "*** Building AFL ***"
-cd 
+cd ~/afl
 make
 echo "*** AFL built: OK! *** "
 echo 
