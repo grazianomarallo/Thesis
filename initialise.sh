@@ -4,30 +4,22 @@
 
 echo 
 echo "*** Cloning American Fuzzy Lop (AFL)  ***" 
+cd ~/
 git clone https://github.com/mirrorer/afl.git
 echo
 echo "*** Done! ***" 
 echo
 
-# JT: I don't want to push deleted files...
-#echo "Removing Report"
-#rm -r Report
-
 echo "*** Building AFL ***"
-
-cd afl/
 make
-
 echo "*** AFL built: OK! *** "
-cd ..
 echo 
-
 echo "*** Building IWD ***"
 echo 
 
-cd iwd-gm/
+cd ~/Thesis/iwd-gm/
 ./bootstrap
-CC=../afl/afl-gcc ./configure
+CC=~/afl/afl-gcc ./configure
 make
 make test-suite.log
 
