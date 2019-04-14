@@ -1,1 +1,1 @@
-/home/parallels/iwd/../ell/ell/idle.c
+/home/ubuntu/Thesis/iwd-gm/../ell/ell/idle.c

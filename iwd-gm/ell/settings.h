@@ -1,1 +1,1 @@
-/home/parallels/iwd/../ell/ell/settings.h
+/home/ubuntu/Thesis/iwd-gm/../ell/ell/settings.h

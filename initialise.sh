@@ -22,6 +22,17 @@ echo
 #if debian system run also this
 #sudo apt install libtool libreadline-dev libdbus-glib-1-dev
 
+echo "***  AFL Coverage  ***"
+cd ~/
+git clone https://github.com/mrash/afl-cov.git
+cd ~/afl-cov
+sudo apt-get install lcov
+echo
+echo "*** Done! ***"
+echo
+
+
+
 cd ~/Thesis/iwd-gm/
 ./bootstrap
 CC=~/afl/afl-gcc ./configure

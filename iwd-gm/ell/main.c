@@ -1,1 +1,1 @@
-/home/parallels/iwd/../ell/ell/main.c
+/home/ubuntu/Thesis/iwd-gm/../ell/ell/main.c

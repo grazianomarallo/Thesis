@@ -1,1 +1,1 @@
-/home/parallels/iwd/../ell/ell/dbus-service.c
+/home/ubuntu/Thesis/iwd-gm/../ell/ell/dbus-service.c

@@ -73,10 +73,10 @@ static const uint8_t *spa;
 char * __afl_input_filename = NULL;
 uint8_t * __afl_key;
 uint8_t  * __afl_key1;
-uint8_t  * __afl_key2;
+//uint8_t  * __afl_key2;
 size_t len_frame1;
 size_t len_frame2;
-size_t len_frame3;
+//size_t len_frame3;
 #define BUF_LEN 2048
 
 
@@ -135,65 +135,6 @@ struct eapol_key_data {
     uint8_t key_mic_data[16];
     uint16_t key_data_len;
 };
-
-
-//XXX define a new struct to handle the input data from AFL instead of using the static one
-typedef struct eapol_key_data ekd;
-ekd *ekda;
-
-void create_eapol_key_data_afl(){
-
-    int i;
-
-    ekda =(ekd *) malloc(sizeof(ekd));
-    ekda->frame =  __afl_key;
-    ekda->frame_len = sizeof(__afl_key);
-    ekda->protocol_version = EAPOL_PROTOCOL_VERSION_2001;
-    ekda->packet_len = 117;
-    ekda->descriptor_type = EAPOL_DESCRIPTOR_TYPE_80211;
-    ekda->key_descriptor_version = EAPOL_KEY_DESCRIPTOR_VERSION_HMAC_SHA1_AES;
-    ekda->key_type = true;
-    ekda->install = false;
-    ekda->key_ack = false;
-    ekda->key_mic = true;
-    ekda->secure = false;
-    ekda->error = false;
-    ekda->request = false;
-    ekda->encrypted_key_data = false;
-    ekda->smk_message = false;
-    ekda->key_length = 0;
-    ekda->key_replay_counter = 0;
-    uint8_t arr1[32] ={0x32, 0x89, 0xe9, 0x15, 0x65, 0x09, 0x4f, 0x32, 0x9a,
-                0x9c, 0xd5, 0x4a, 0x4a, 0x09, 0x0d, 0x2c, 0xf4, 0x34,
-                0x46, 0x83, 0xbf, 0x50, 0xef, 0xee, 0x36, 0x08, 0xb6,
-                0x48, 0x56, 0x80, 0x0e, 0x84 };
-    for(i=0; i < sizeof(arr1); i++){
-        ekda->key_nonce[i] = arr1[i];
-    }
-    uint8_t arr2[16] = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-                        0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 };
-    for(i=0; i < sizeof(arr2); i++){
-        ekda->eapol_key_iv[i] = arr2[i];
-    }
-
-    uint8_t arr3[8]={ 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 };
-    uint8_t arr4[16]={0x01, 0xc3, 0x1b, 0x82, 0xff, 0x62, 0xa3, 0x79, 0xb0,
-                      0x8d, 0xd1, 0xfc, 0x82, 0xc2, 0xf7, 0x68 };
-
-    for(i=0; i < sizeof(arr3); i++){
-        ekda->key_rsc[i] = arr3[i];
-    }
-
-    for(i=0; i < sizeof(arr4); i++){
-        ekda->key_mic_data [i] = arr4[i];
-    }
-
-    ekda->key_data_len = 22;
-
-}
-
-
-
 
 
 /* WPA2 frame, 2 of 4.  For parameters see eapol_4way_test */
@@ -428,6 +369,52 @@ static struct eapol_key_data eapol_key_test_29 = {
         .key_mic_data = { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
                           0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, },
         .key_data_len = 0,
+};
+
+
+/* WPA frame, 2 of 4.  For parameters see eapol_sm_test_igtk */
+static const unsigned char eapol_key_data_30[] = {
+        0x01, 0x03, 0x00, 0x7b, 0x02, 0x01, 0x09, 0x00, 0x00, 0x00, 0x00, 0x00,
+        0x00, 0x00, 0x00, 0x00, 0x01, 0x3e, 0x5e, 0xb7, 0x47, 0x91, 0xf4, 0x2a,
+        0x39, 0x3a, 0x6a, 0xbc, 0xeb, 0x9c, 0x25, 0x27, 0x0f, 0x61, 0xb4, 0x24,
+        0x8c, 0xf2, 0x97, 0xdf, 0x22, 0xef, 0x67, 0x15, 0x87, 0xad, 0x22, 0xc3,
+        0xd8, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+        0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+        0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x92, 0x76, 0xec,
+        0x87, 0x1e, 0x42, 0x7a, 0x66, 0x3f, 0x45, 0xb2, 0x7f, 0x7c, 0xd7, 0xe3,
+        0xb9, 0x00, 0x1c, 0x30, 0x1a, 0x01, 0x00, 0x00, 0x0f, 0xac, 0x02, 0x01,
+        0x00, 0x00, 0x0f, 0xac, 0x02, 0x01, 0x00, 0x00, 0x0f, 0xac, 0x02, 0x80,
+        0x00, 0x00, 0x00, 0x00, 0x0f, 0xac, 0x06,
+};
+
+static struct eapol_key_data eapol_key_test_30 = {
+        .frame = eapol_key_data_30,
+        .frame_len = sizeof(eapol_key_data_30),
+        .protocol_version = EAPOL_PROTOCOL_VERSION_2001,
+        .packet_len = 123,
+        .descriptor_type = EAPOL_DESCRIPTOR_TYPE_80211,
+        .key_descriptor_version = EAPOL_KEY_DESCRIPTOR_VERSION_HMAC_MD5_ARC4,
+        .key_type = true,
+        .install = false,
+        .key_ack = false,
+        .key_mic = true,
+        .secure = false,
+        .error = false,
+        .request = false,
+        .encrypted_key_data = false,
+        .smk_message = false,
+        .key_length = 0,
+        .key_replay_counter = 1,
+        .key_nonce = { 0x3e, 0x5e, 0xb7, 0x47, 0x91, 0xf4, 0x2a, 0x39, 0x3a,
+                       0x6a, 0xbc, 0xeb, 0x9c, 0x25, 0x27, 0x0f, 0x61, 0xb4,
+                       0x24, 0x8c, 0xf2, 0x97, 0xdf, 0x22, 0xef, 0x67, 0x15,
+                       0x87, 0xad, 0x22, 0xc3, 0xd8 },
+        .eapol_key_iv = { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+                          0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 },
+        .key_rsc = { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 },
+        .key_mic_data = { 0x92, 0x76, 0xec, 0x87, 0x1e, 0x42, 0x7a, 0x66, 0x3f,
+                          0x45, 0xb2, 0x7f, 0x7c, 0xd7, 0xe3, 0xb9 },
+        .key_data_len = 28,
 };
 
 
@@ -701,27 +688,6 @@ static int verify_step4(uint32_t ifindex,
 
     return 0;
 }
-
-static int verify_step2_gtk(uint32_t ifindex,
-                            const uint8_t *aa_addr, uint16_t proto,
-                            const struct eapol_frame *ef, bool noencrypt,
-                            void *user_data)
-{
-    const struct eapol_key *ek = (const struct eapol_key *) ef;
-    size_t ek_len = sizeof(struct eapol_key) +
-                    L_BE16_TO_CPU(ek->key_data_len);
-
-    assert(ifindex == 1);
-    assert(!memcmp(aa_addr, aa, 6));
-    assert(proto == ETH_P_PAE);
-    assert(ek_len == expected_gtk_step2_frame_size);
-    assert(!memcmp(ek, expected_gtk_step2_frame, expected_gtk_step2_frame_size));
-
-    verify_gtk_step2_called = true;
-
-    return 0;
-}
-
 static bool test_nonce(uint8_t nonce[])
 {
     memcpy(nonce, snonce, 32);
@@ -729,71 +695,6 @@ static bool test_nonce(uint8_t nonce[])
     return true;
 }
 
-/*
-static void eapol_sm_test_ptk(const void *data)
-{
-    const unsigned char psk[] = {
-            0xbf, 0x9a, 0xa3, 0x15, 0x53, 0x00, 0x12, 0x5e,
-            0x7a, 0x5e, 0xbb, 0x2a, 0x54, 0x9f, 0x8c, 0xd4,
-            0xed, 0xab, 0x8e, 0xe1, 0x2e, 0x94, 0xbf, 0xc2,
-            0x4b, 0x33, 0x57, 0xad, 0x04, 0x96, 0x65, 0xd9 };
-    const unsigned char ap_rsne[] = {
-            0x30, 0x14, 0x01, 0x00, 0x00, 0x0f, 0xac, 0x04,
-            0x01, 0x00, 0x00, 0x0f, 0xac, 0x04, 0x01, 0x00,
-            0x00, 0x0f, 0xac, 0x02, 0x00, 0x00 };
-    static uint8_t ap_address[] = { 0x24, 0xa2, 0xe1, 0xec, 0x17, 0x04 };
-    static uint8_t sta_address[] = { 0xa0, 0xa8, 0xcd, 0x1c, 0x7e, 0xc9 };
-    bool r;
-    struct handshake_state *hs;
-    struct eapol_sm *sm;
-
-    eapol_init();
-
-    snonce = eapol_key_test_4.key_nonce;
-    __handshake_set_get_nonce_func(test_nonce);
-
-    aa = ap_address;
-    spa = sta_address;
-    verify_step2_called = false;
-    expected_step2_frame = eapol_key_data_4;
-    expected_step2_frame_size = sizeof(eapol_key_data_4);
-    verify_step4_called = false;
-    expected_step4_frame = eapol_key_data_6;
-    expected_step4_frame_size = sizeof(eapol_key_data_6);
-
-    hs = test_handshake_state_new(1);
-    sm = eapol_sm_new(hs);
-    eapol_register(sm);
-
-    // key_data_3 uses 2004 while key_data_3 uses 2001, so force 2001
-    eapol_sm_set_protocol_version(sm, EAPOL_PROTOCOL_VERSION_2001);
-
-    handshake_state_set_pmk(hs, psk, sizeof(psk));
-    handshake_state_set_authenticator_address(hs, aa);
-    handshake_state_set_supplicant_address(hs, spa);
-
-    r =  handshake_state_set_supplicant_rsn(hs,
-                                            eapol_key_data_4 + sizeof(struct eapol_key));
-    assert(r);
-
-    handshake_state_set_authenticator_rsn(hs, ap_rsne);
-    eapol_start(sm);
-
-    __eapol_set_tx_packet_func(verify_step2);
-    __eapol_rx_packet(1, aa, ETH_P_PAE, eapol_key_data_3,
-                      sizeof(eapol_key_data_3), false);
-    assert(verify_step2_called);
-
-    __eapol_set_tx_packet_func(verify_step4);
-    __eapol_rx_packet(1, aa, ETH_P_PAE, eapol_key_data_5,
-                      sizeof(eapol_key_data_5), false);
-    assert(verify_step4_called);
-
-    eapol_sm_free(sm);
-    handshake_state_free(hs);
-    eapol_exit();
-}
-*/
 
 //XXX FUNCTION UNDER ANALYSIS
 static void eapol_sm_test_ptk(const void *data)
@@ -867,7 +768,6 @@ static void eapol_sm_test_ptk(const void *data)
         printf("step 2 true\n");
     }
 
-    //free(__afl_key);
 
 
     //XXX msg4 ---
@@ -883,7 +783,6 @@ static void eapol_sm_test_ptk(const void *data)
         printf("step 4 true\n");
     }
 
-    //free(__afl_key1);
     eapol_sm_free(sm);
     handshake_state_free(hs);
     printf("Exit from test\n");
@@ -913,6 +812,7 @@ static void eapol_sm_test_igtk(const void *data)
     eapol_init();
     printf("\n--- DEBUG IN eapol_sm_test_igtk --- \n\n");
 
+    //__afl_get_key_data_ptk();
     __afl_get_key_data_igtk();
 
     snonce = eapol_key_test_30.key_nonce;
@@ -953,7 +853,6 @@ static void eapol_sm_test_igtk(const void *data)
         printf("step 2 true\n");
     }
 
-   // free(__afl_key);
 
     __eapol_set_tx_packet_func(verify_step4);
     __eapol_rx_packet(1, aa, ETH_P_PAE, __afl_key1,
@@ -962,7 +861,7 @@ static void eapol_sm_test_igtk(const void *data)
     if(verify_step4_called == true){
         printf("step 4 true\n");
     }
-  //  free(__afl_key1);
+ 
     eapol_sm_free(sm);
     handshake_state_free(hs);
 
@@ -989,9 +888,7 @@ int main(int argc, char *argv[])
 
 
     l_test_add("EAPoL/WPA2 PTK State Machine", &eapol_sm_test_ptk, NULL);
-
-	l_test_add("EAPoL IGTK & 4-Way Handshake",
-			&eapol_sm_test_igtk, NULL);
+    l_test_add("EAPoL IGTK & 4-Way Handshake",&eapol_sm_test_igtk, NULL);
 
     done:
     return l_test_run();

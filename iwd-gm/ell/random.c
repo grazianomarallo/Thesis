@@ -1,1 +1,1 @@
-/home/parallels/iwd/../ell/ell/random.c
+/home/ubuntu/Thesis/iwd-gm/../ell/ell/random.c

@@ -1,1 +1,1 @@
-/home/parallels/iwd/../ell/ell/netlink.c
+/home/ubuntu/Thesis/iwd-gm/../ell/ell/netlink.c

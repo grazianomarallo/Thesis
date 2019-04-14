@@ -1,1 +1,1 @@
-/home/parallels/iwd/../ell/ell/cert.c
+/home/ubuntu/Thesis/iwd-gm/../ell/ell/cert.c

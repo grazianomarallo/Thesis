@@ -1,1 +1,1 @@
-/home/parallels/iwd/../ell/ell/log.c
+/home/ubuntu/Thesis/iwd-gm/../ell/ell/log.c

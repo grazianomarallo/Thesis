@@ -1,1 +1,1 @@
-/home/parallels/iwd/../ell/ell/hwdb.h
+/home/ubuntu/Thesis/iwd-gm/../ell/ell/hwdb.h

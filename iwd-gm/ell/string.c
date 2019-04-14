@@ -1,1 +1,1 @@
-/home/parallels/iwd/../ell/ell/string.c
+/home/ubuntu/Thesis/iwd-gm/../ell/ell/string.c
