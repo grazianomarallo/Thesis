@@ -54,6 +54,9 @@ echo "+++ STARTING FUZZER +++"
 echo
 
 
-~/afl/afl-fuzz -i ~/Thesis/fuzzer_result/$day/$time/input -o ~/Thesis/fuzzer_result/$day/$time/output  ~/Thesis/iwd-gm/unit/test-eapol @@
-
+if [ $1 = "-n" ]; then
+     ~/afl/afl-fuzz -i ~/Thesis/fuzzer_result/$day/$time/input -o ~/Thesis/fuzzer_result/$day/$time/output  ~/Thesis/iwd-gm/unit/test-eapol @@
+else
+     ~/afl/afl-fuzz -m none -i ~/Thesis/fuzzer_result/$day/$time/input -o ~/Thesis/fuzzer_result/$day/$time/output  ~/Thesis/iwd-gm/unit/test-eapol @@
+fi
 

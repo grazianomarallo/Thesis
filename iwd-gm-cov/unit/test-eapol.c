@@ -247,7 +247,7 @@ static const unsigned char eapol_key_data_7[] = {
 
 
 void * __afl_get_key_data_ptk( ){
-    FILE * fp;
+    FILE *fp = NULL;
     int i;
     int data;
     int count=0;
@@ -273,9 +273,9 @@ void * __afl_get_key_data_ptk( ){
         printf("+++ File open correctly! +++\n");
     }
 
-    fseek(fp, 0, SEEK_END);
-    sz = ftell(fp);
-    rewind(fp);
+    //fseek(fp, 0, SEEK_END);
+    //sz = ftell(fp);
+    //rewind(fp);
 
 
 
@@ -321,7 +321,7 @@ void * __afl_get_key_data_ptk( ){
     printf("\n------------------------------------------------------\n");
 
     fclose(fp);
-
+    fp = NULL;
     return(NULL);
 };
 
@@ -515,7 +515,7 @@ static struct eapol_key_data eapol_key_test_32 = {
 
 
 void * __afl_get_key_data_igtk( ){
-    FILE * fp1;
+    FILE *fp1=NULL;
     int i;
     int data;
     int count=0;
@@ -575,7 +575,7 @@ void * __afl_get_key_data_igtk( ){
     printf("\n------------------------------------------------------\n");
 
     fclose(fp1);
-
+    fp1=NULL;
     return(NULL);
 };
 
