@@ -47,6 +47,9 @@ echo "+++ Creating input seeds +++"
 echo
 cp  ~/Thesis/data_message/data_message_35.bin ~/Thesis/fuzzer_result/$day/$time/input/
 cp  ~/Thesis/data_message/data_message2931.bin ~/Thesis/fuzzer_result/$day/$time/input/
+#cp  ~/Thesis/data_message/data_message_krack.bin ~/Thesis/fuzzer_result/$day/$time/input/
+#cp  ~/Thesis/data_message2/data_message_krack_replay.bin ~/Thesis/fuzzer_result/$day/$time/input/
+
 
 
 #XXX START FUZZER IN NORMALE MODE XXX

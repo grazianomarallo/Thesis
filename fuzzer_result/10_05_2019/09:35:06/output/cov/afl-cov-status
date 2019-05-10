@@ -1,0 +1,3 @@
+afl_cov_pid     : 5915
+afl_cov_version : 0.6.2
+command_line    : /home/ubuntu/afl-cov/afl-cov -d /home/ubuntu/Thesis/fuzzer_result/10_05_2019/09:35:06/output --coverage-cmd ./test-eapol AFL_FILE --code-dir .

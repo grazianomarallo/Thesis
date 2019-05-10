@@ -1,0 +1,11 @@
+# id:NNNNNN*_file, cycle, src_file, coverage_type, fcn/line
+id:000000,orig:data_message_krack.bin, 0, /home/ubuntu/Thesis/iwd-gm-cov/unit/test-eapol.c, function, __afl_get_key_data_igtk()
+id:000000,orig:data_message_krack.bin, 0, /home/ubuntu/Thesis/iwd-gm-cov/unit/test-eapol.c, function, __afl_get_key_data_ptk()
+id:000000,orig:data_message_krack.bin, 0, /home/ubuntu/Thesis/iwd-gm-cov/unit/test-eapol.c, function, eapol_sm_test_igtk()
+id:000000,orig:data_message_krack.bin, 0, /home/ubuntu/Thesis/iwd-gm-cov/unit/test-eapol.c, function, eapol_sm_test_ptk()
+id:000000,orig:data_message_krack.bin, 0, /home/ubuntu/Thesis/iwd-gm-cov/unit/test-eapol.c, function, main()
+id:000000,orig:data_message_krack.bin, 0, /home/ubuntu/Thesis/iwd-gm-cov/unit/test-eapol.c, function, test_handshake_state_free()
+id:000000,orig:data_message_krack.bin, 0, /home/ubuntu/Thesis/iwd-gm-cov/unit/test-eapol.c, function, test_handshake_state_new()
+id:000000,orig:data_message_krack.bin, 0, /home/ubuntu/Thesis/iwd-gm-cov/unit/test-eapol.c, function, test_nonce()
+id:000000,orig:data_message_krack.bin, 0, /home/ubuntu/Thesis/iwd-gm-cov/unit/test-eapol.c, function, verify_step2()
+id:000000,orig:data_message_krack.bin, 0, /home/ubuntu/Thesis/iwd-gm-cov/unit/test-eapol.c, function, verify_step4()

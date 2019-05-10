@@ -1,0 +1,207 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>LCOV - trace.lcov_info_final - unit/test-prf-sha1.c</title>
+  <link rel="stylesheet" type="text/css" href="../gcov.css">
+</head>
+
+<body>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="title">LCOV - code coverage report</td></tr>
+    <tr><td class="ruler"><img src="../glass.png" width=3 height=3 alt=""></td></tr>
+
+    <tr>
+      <td width="100%">
+        <table cellpadding=1 border=0 width="100%">
+          <tr>
+            <td width="10%" class="headerItem">Current view:</td>
+            <td width="35%" class="headerValue"><a href="../index.html">top level</a> - <a href="index.html">unit</a> - test-prf-sha1.c<span style="font-size: 80%;"> (source / <a href="test-prf-sha1.c.func-sort-c.html">functions</a>)</span></td>
+            <td width="5%"></td>
+            <td width="15%"></td>
+            <td width="10%" class="headerCovTableHead">Hit</td>
+            <td width="10%" class="headerCovTableHead">Total</td>
+            <td width="15%" class="headerCovTableHead">Coverage</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Test:</td>
+            <td class="headerValue">trace.lcov_info_final</td>
+            <td></td>
+            <td class="headerItem">Lines:</td>
+            <td class="headerCovTableEntry">0</td>
+            <td class="headerCovTableEntry">21</td>
+            <td class="headerCovTableEntryLo">0.0 %</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Date:</td>
+            <td class="headerValue">2019-05-10 14:36:39</td>
+            <td></td>
+            <td class="headerItem">Functions:</td>
+            <td class="headerCovTableEntry">0</td>
+            <td class="headerCovTableEntry">2</td>
+            <td class="headerCovTableEntryLo">0.0 %</td>
+          </tr>
+          <tr><td><img src="../glass.png" width=3 height=3 alt=""></td></tr>
+        </table>
+      </td>
+    </tr>
+
+    <tr><td class="ruler"><img src="../glass.png" width=3 height=3 alt=""></td></tr>
+  </table>
+
+  <table cellpadding=0 cellspacing=0 border=0>
+    <tr>
+      <td><br></td>
+    </tr>
+    <tr>
+      <td>
+<pre class="sourceHeading">          Line data    Source code</pre>
+<pre class="source">
+<a name="1"><span class="lineNum">       1 </span>            : /*</a>
+<span class="lineNum">       2 </span>            :  *
+<span class="lineNum">       3 </span>            :  *  Wireless daemon for Linux
+<span class="lineNum">       4 </span>            :  *
+<span class="lineNum">       5 </span>            :  *  Copyright (C) 2013-2014  Intel Corporation. All rights reserved.
+<span class="lineNum">       6 </span>            :  *
+<span class="lineNum">       7 </span>            :  *  This library is free software; you can redistribute it and/or
+<span class="lineNum">       8 </span>            :  *  modify it under the terms of the GNU Lesser General Public
+<span class="lineNum">       9 </span>            :  *  License as published by the Free Software Foundation; either
+<span class="lineNum">      10 </span>            :  *  version 2.1 of the License, or (at your option) any later version.
+<span class="lineNum">      11 </span>            :  *
+<span class="lineNum">      12 </span>            :  *  This library is distributed in the hope that it will be useful,
+<span class="lineNum">      13 </span>            :  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+<span class="lineNum">      14 </span>            :  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+<span class="lineNum">      15 </span>            :  *  Lesser General Public License for more details.
+<span class="lineNum">      16 </span>            :  *
+<span class="lineNum">      17 </span>            :  *  You should have received a copy of the GNU Lesser General Public
+<span class="lineNum">      18 </span>            :  *  License along with this library; if not, write to the Free Software
+<span class="lineNum">      19 </span>            :  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+<span class="lineNum">      20 </span>            :  *
+<span class="lineNum">      21 </span>            :  */
+<span class="lineNum">      22 </span>            : 
+<span class="lineNum">      23 </span>            : #ifdef HAVE_CONFIG_H
+<span class="lineNum">      24 </span>            : #include &lt;config.h&gt;
+<span class="lineNum">      25 </span>            : #endif
+<span class="lineNum">      26 </span>            : 
+<span class="lineNum">      27 </span>            : #include &lt;stdio.h&gt;
+<span class="lineNum">      28 </span>            : #include &lt;string.h&gt;
+<span class="lineNum">      29 </span>            : #include &lt;assert.h&gt;
+<span class="lineNum">      30 </span>            : #include &lt;ell/ell.h&gt;
+<span class="lineNum">      31 </span>            : 
+<span class="lineNum">      32 </span>            : #include &quot;src/crypto.h&quot;
+<span class="lineNum">      33 </span>            : 
+<span class="lineNum">      34 </span>            : struct prf_data {
+<span class="lineNum">      35 </span>            :         const char *key;
+<span class="lineNum">      36 </span>            :         unsigned int key_len;
+<span class="lineNum">      37 </span>            :         const char *prefix;
+<span class="lineNum">      38 </span>            :         unsigned int prefix_len;
+<span class="lineNum">      39 </span>            :         const char *data;
+<span class="lineNum">      40 </span>            :         unsigned int data_len;
+<span class="lineNum">      41 </span>            :         const char *prf;
+<a name="42"><span class="lineNum">      42 </span>            : };</a>
+<span class="lineNum">      43 </span>            : 
+<span class="lineNum">      44 </span><span class="lineNoCov">          0 : static void prf_test(const void *data)</span>
+<span class="lineNum">      45 </span>            : {
+<span class="lineNum">      46 </span><span class="lineNoCov">          0 :         const struct prf_data *test = data;</span>
+<span class="lineNum">      47 </span>            :         unsigned int prf_len;
+<span class="lineNum">      48 </span>            :         unsigned char output[512];
+<span class="lineNum">      49 </span>            :         char prf[128];
+<span class="lineNum">      50 </span>            :         unsigned int i;
+<span class="lineNum">      51 </span>            :         bool result;
+<span class="lineNum">      52 </span>            : 
+<span class="lineNum">      53 </span><span class="lineNoCov">          0 :         prf_len = strlen(test-&gt;prf) / 2;</span>
+<span class="lineNum">      54 </span>            : 
+<span class="lineNum">      55 </span><span class="lineNoCov">          0 :         printf(&quot;PRF    = %s (%d octects)\n&quot;, test-&gt;prf, prf_len);</span>
+<span class="lineNum">      56 </span>            : 
+<span class="lineNum">      57 </span><span class="lineNoCov">          0 :         result = prf_sha1(test-&gt;key, test-&gt;key_len, test-&gt;prefix,</span>
+<span class="lineNum">      58 </span><span class="lineNoCov">          0 :                                 test-&gt;prefix_len, test-&gt;data, test-&gt;data_len,</span>
+<span class="lineNum">      59 </span>            :                                                 output, prf_len);
+<span class="lineNum">      60 </span>            : 
+<span class="lineNum">      61 </span><span class="lineNoCov">          0 :         assert(result == true);</span>
+<span class="lineNum">      62 </span>            : 
+<span class="lineNum">      63 </span><span class="lineNoCov">          0 :         for (i = 0; i &lt; prf_len; i++)</span>
+<span class="lineNum">      64 </span><span class="lineNoCov">          0 :                 sprintf(prf + (i * 2), &quot;%02x&quot;, output[i]);</span>
+<span class="lineNum">      65 </span>            : 
+<span class="lineNum">      66 </span><span class="lineNoCov">          0 :         printf(&quot;Result = %s\n&quot;, prf);</span>
+<span class="lineNum">      67 </span>            : 
+<span class="lineNum">      68 </span><span class="lineNoCov">          0 :         assert(strcmp(test-&gt;prf, prf) == 0);</span>
+<span class="lineNum">      69 </span><span class="lineNoCov">          0 : }</span>
+<span class="lineNum">      70 </span>            : 
+<span class="lineNum">      71 </span>            : static const struct prf_data test_case_1 = {
+<span class="lineNum">      72 </span>            :         .key            = &quot;\x0b\x0b\x0b\x0b\x0b\x0b\x0b\x0b\x0b\x0b&quot;
+<span class="lineNum">      73 </span>            :                           &quot;\x0b\x0b\x0b\x0b\x0b\x0b\x0b\x0b\x0b\x0b&quot;,
+<span class="lineNum">      74 </span>            :         .key_len        = 20,
+<span class="lineNum">      75 </span>            :         .prefix         = &quot;prefix&quot;,
+<span class="lineNum">      76 </span>            :         .prefix_len     = 6,
+<span class="lineNum">      77 </span>            :         .data           = &quot;Hi There&quot;,
+<span class="lineNum">      78 </span>            :         .data_len       = 8,
+<span class="lineNum">      79 </span>            :         .prf            = &quot;bcd4c650b30b9684951829e0d75f9d54&quot;
+<span class="lineNum">      80 </span>            :                           &quot;b862175ed9f00606e17d8da35402ffee&quot;
+<span class="lineNum">      81 </span>            :                           &quot;75df78c3d31e0f889f012120c0862beb&quot;
+<span class="lineNum">      82 </span>            :                           &quot;67753e7439ae242edb8373698356cf5a&quot;,
+<span class="lineNum">      83 </span>            : };
+<span class="lineNum">      84 </span>            : 
+<span class="lineNum">      85 </span>            : static const struct prf_data test_case_2 = {
+<span class="lineNum">      86 </span>            :         .key            = &quot;Jefe&quot;,
+<span class="lineNum">      87 </span>            :         .key_len        = 4,
+<span class="lineNum">      88 </span>            :         .prefix         = &quot;prefix&quot;,
+<span class="lineNum">      89 </span>            :         .prefix_len     = 6,
+<span class="lineNum">      90 </span>            :         .data           = &quot;what do ya want for nothing?&quot;,
+<span class="lineNum">      91 </span>            :         .data_len       = 28,
+<span class="lineNum">      92 </span>            :         .prf            = &quot;51f4de5b33f249adf81aeb713a3c20f4&quot;
+<span class="lineNum">      93 </span>            :                           &quot;fe631446fabdfa58244759ae58ef9009&quot;
+<span class="lineNum">      94 </span>            :                           &quot;a99abf4eac2ca5fa87e692c440eb4002&quot;
+<span class="lineNum">      95 </span>            :                           &quot;3e7babb206d61de7b92f41529092b8fc&quot;,
+<span class="lineNum">      96 </span>            : };
+<span class="lineNum">      97 </span>            : 
+<span class="lineNum">      98 </span>            : static const struct prf_data test_case_3 = {
+<span class="lineNum">      99 </span>            :         .key            = &quot;\xaa\xaa\xaa\xaa\xaa\xaa\xaa\xaa\xaa\xaa&quot;
+<span class="lineNum">     100 </span>            :                           &quot;\xaa\xaa\xaa\xaa\xaa\xaa\xaa\xaa\xaa\xaa&quot;,
+<span class="lineNum">     101 </span>            :         .key_len        = 20,
+<span class="lineNum">     102 </span>            :         .prefix         = &quot;prefix&quot;,
+<span class="lineNum">     103 </span>            :         .prefix_len     = 6,
+<span class="lineNum">     104 </span>            :         .data           = &quot;\xdd\xdd\xdd\xdd\xdd\xdd\xdd\xdd\xdd\xdd&quot;
+<span class="lineNum">     105 </span>            :                           &quot;\xdd\xdd\xdd\xdd\xdd\xdd\xdd\xdd\xdd\xdd&quot;
+<span class="lineNum">     106 </span>            :                           &quot;\xdd\xdd\xdd\xdd\xdd\xdd\xdd\xdd\xdd\xdd&quot;
+<span class="lineNum">     107 </span>            :                           &quot;\xdd\xdd\xdd\xdd\xdd\xdd\xdd\xdd\xdd\xdd&quot;
+<span class="lineNum">     108 </span>            :                           &quot;\xdd\xdd\xdd\xdd\xdd\xdd\xdd\xdd\xdd\xdd&quot;,
+<span class="lineNum">     109 </span>            :         .data_len       = 50,
+<span class="lineNum">     110 </span>            :         .prf            = &quot;e1ac546ec4cb636f9976487be5c86be1&quot;
+<span class="lineNum">     111 </span>            :                           &quot;7a0252ca5d8d8df12cfb0473525249ce&quot;
+<span class="lineNum">     112 </span>            :                           &quot;9dd8d177ead710bc9b590547239107ae&quot;
+<span class="lineNum">     113 </span>            :                           &quot;f7b4abd43d87f0a68f1cbd9e2b6f7607&quot;,
+<a name="114"><span class="lineNum">     114 </span>            : };</a>
+<span class="lineNum">     115 </span>            : 
+<span class="lineNum">     116 </span><span class="lineNoCov">          0 : int main(int argc, char *argv[])</span>
+<span class="lineNum">     117 </span>            : {
+<span class="lineNum">     118 </span><span class="lineNoCov">          0 :         l_test_init(&amp;argc, &amp;argv);</span>
+<span class="lineNum">     119 </span>            : 
+<span class="lineNum">     120 </span><span class="lineNoCov">          0 :         if (!l_checksum_is_supported(L_CHECKSUM_SHA1, true)) {</span>
+<span class="lineNum">     121 </span><span class="lineNoCov">          0 :                 printf(&quot;SHA1 support missing, skipping...\n&quot;);</span>
+<span class="lineNum">     122 </span><span class="lineNoCov">          0 :                 goto done;</span>
+<span class="lineNum">     123 </span>            :         }
+<span class="lineNum">     124 </span>            : 
+<span class="lineNum">     125 </span><span class="lineNoCov">          0 :         l_test_add(&quot;/prf-sha1/Test case 1&quot;, prf_test, &amp;test_case_1);</span>
+<span class="lineNum">     126 </span><span class="lineNoCov">          0 :         l_test_add(&quot;/prf-sha1/Test case 2&quot;, prf_test, &amp;test_case_2);</span>
+<span class="lineNum">     127 </span><span class="lineNoCov">          0 :         l_test_add(&quot;/prf-sha1/Test case 3&quot;, prf_test, &amp;test_case_3);</span>
+<span class="lineNum">     128 </span>            : 
+<span class="lineNum">     129 </span>            : done:
+<span class="lineNum">     130 </span><span class="lineNoCov">          0 :         return l_test_run();</span>
+<span class="lineNum">     131 </span>            : }
+</pre>
+      </td>
+    </tr>
+  </table>
+  <br>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="ruler"><img src="../glass.png" width=3 height=3 alt=""></td></tr>
+    <tr><td class="versionInfo">Generated by: <a href="http://ltp.sourceforge.net/coverage/lcov.php" target="_parent">LCOV version 1.12</a></td></tr>
+  </table>
+  <br>
+
+</body>
+</html>

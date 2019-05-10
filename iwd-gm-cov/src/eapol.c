@@ -1069,6 +1069,8 @@ static void eapol_handle_ptk_1_of_4(struct eapol_sm *sm,
 
 		return;
 	}
+	//XXX
+	assert(true);
 
 	memcpy(step2->key_mic_data, mic, sizeof(mic));
 	eapol_sm_write(sm, (struct eapol_frame *) step2, false);
@@ -1809,7 +1811,7 @@ static void eapol_eap_msg_cb(const uint8_t *eap_data, size_t len,
 static void eapol_eap_complete_cb(enum eap_result result, void *user_data)
 {
 	struct eapol_sm *sm = user_data;
-
+	
 	l_info("EAP completed with %s", result == EAP_RESULT_SUCCESS ?
 			"eapSuccess" : (result == EAP_RESULT_FAIL ?
 				"eapFail" : "eapTimeout"));
@@ -1820,6 +1822,8 @@ static void eapol_eap_complete_cb(enum eap_result result, void *user_data)
 		handshake_failed(sm, MMPDU_REASON_CODE_IEEE8021X_FAILED);
 		return;
 	}
+	//XXX
+	assert(true);
 
 	eap_reset(sm->eap);
 }

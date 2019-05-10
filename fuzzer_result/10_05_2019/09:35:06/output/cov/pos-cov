@@ -1,0 +1,36 @@
+# All functions / lines in this file were executed by at
+# least one AFL test case. See the cov/id-delta-cov file
+# for more information.
+File: /home/ubuntu/Thesis/iwd-gm-cov/unit/test-eap-sim.c
+File: /home/ubuntu/Thesis/iwd-gm-cov/src/wscutil.h
+File: /home/ubuntu/Thesis/iwd-gm-cov/unit/test-kdf-sha256.c
+File: /home/ubuntu/Thesis/iwd-gm-cov/unit/test-sae.c
+File: /home/ubuntu/Thesis/iwd-gm-cov/unit/test-ssid-security.c
+File: /home/ubuntu/Thesis/iwd-gm-cov/ell/util.h
+File: /home/ubuntu/Thesis/iwd-gm-cov/unit/test-eap-mschapv2.c
+File: /home/ubuntu/Thesis/iwd-gm-cov/unit/test-ecdh.c
+File: /home/ubuntu/Thesis/iwd-gm-cov/unit/test-arc4.c
+File: /home/ubuntu/Thesis/iwd-gm-cov/unit/test-ssid-to-utf8.c
+File: /home/ubuntu/Thesis/iwd-gm-cov/unit/test-hmac-sha1.c
+File: /home/ubuntu/Thesis/iwd-gm-cov/unit/test-prf-sha1.c
+File: /home/ubuntu/Thesis/iwd-gm-cov/unit/test-crypto.c
+File: /home/ubuntu/Thesis/iwd-gm-cov/unit/test-wsc.c
+File: /home/ubuntu/Thesis/iwd-gm-cov/unit/test-client.c
+File: /home/ubuntu/Thesis/iwd-gm-cov/unit/test-cmac-aes.c
+File: /home/ubuntu/Thesis/iwd-gm-cov/src/ie.h
+File: /home/ubuntu/Thesis/iwd-gm-cov/unit/test-eapol.c
+    function: __afl_get_key_data_igtk()
+    function: __afl_get_key_data_ptk()
+    function: eapol_sm_test_igtk()
+    function: eapol_sm_test_ptk()
+    function: main()
+    function: test_handshake_state_free()
+    function: test_handshake_state_new()
+    function: test_nonce()
+    function: verify_step2()
+    function: verify_step4()
+File: /home/ubuntu/Thesis/iwd-gm-cov/unit/test-mpdu.c
+File: /home/ubuntu/Thesis/iwd-gm-cov/unit/test-ie.c
+File: /home/ubuntu/Thesis/iwd-gm-cov/unit/test-hmac-md5.c
+File: /home/ubuntu/Thesis/iwd-gm-cov/unit/test-ecc.c
+File: /home/ubuntu/Thesis/iwd-gm-cov/unit/test-hmac-sha256.c
