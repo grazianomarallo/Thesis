@@ -250,23 +250,21 @@ void * __afl_get_key_data_ptk( ){
     FILE *fp = NULL;
     int i;
     int data;
-    int count=0;
-    int expected_byte=0;
-    int sz;
+ //   int count=0;
+ //   int expected_byte=0;
+ //   int sz;
     size_t ret;
 
     fp = fopen(__afl_input_filename , "rb");
     if (fp == NULL){
         perror("!!! Warning: no input file for AFL. Tests will be executed with static data!!!\n");
-        __afl_key = eapol_key_data_4;
-        // __afl_key = eap1;
-        __afl_key1= eapol_key_data_6;
-       // __afl_key1=eap2;
-        //printf("%d %d", sizeof(eap1), sizeof(eapol_key_data_4));
+//       memcpy(__afl_key, eapol_key_data_4, sizeof(eapol_key_data_4));
+//	memcpy(__afl_key1, eapol_key_data_6, sizeof(eapol_key_data_6));
+
+	__afl_key =(uint8_t*) eapol_key_data_4;
+        __afl_key1= (uint8_t*)eapol_key_data_6;
         len_frame1= sizeof(eapol_key_data_4);
-        //len_frame1= sizeof(eap1);
         len_frame2= sizeof(eapol_key_data_6);
-       // len_frame2= sizeof(eap2);
         return(NULL);
     }
     else{
@@ -281,8 +279,13 @@ void * __afl_get_key_data_ptk( ){
 
 
     //printf("Reading Frame 1\n");
-    fread(&len_frame1, sizeof(size_t), 1, fp);
-    if(len_frame1 <= 0 || len_frame1 > 1024 ){
+    ret = fread(&len_frame1, sizeof(size_t), 1, fp);
+    if(ret <= 0 ){
+	printf("\n Read len failed!\n");
+    	exit(EXIT_FAILURE);
+	}
+
+    if(len_frame1 <= 0  ){
         printf("\nLen frame1 is either < 0 or > of file size! %ld\n",len_frame1 );
         exit(EXIT_FAILURE);
 
@@ -290,18 +293,28 @@ void * __afl_get_key_data_ptk( ){
 
     printf("Frame 1 len: %ld\n\n",len_frame1);
 
-    __afl_key = (char *)malloc(sizeof(char)* len_frame1);
+    __afl_key = (uint8_t *)malloc(sizeof(uint8_t)* len_frame1);
     for (i=0 ; i <= len_frame1; i++){
-        fread(&data, sizeof(uint8_t), 1, fp);
-        __afl_key[i] = data;
+        ret = fread(&data, sizeof(uint8_t), 1, fp);
+       if(ret <= 0 ){
+	printf("\n Read data failed!\n");
+    	exit(EXIT_FAILURE);
+	}
+//	memcpy(__afl_key[i], data, sizeof(uint8_t));
+	 __afl_key[i] = data;
         printf("%d ", __afl_key[i]);
     }
 
 
 
     //  printf("\nReading Frame 2\n");
-    fread(&len_frame2, sizeof(size_t), 1, fp);
-    if(len_frame2 <= 0 || len_frame2 > 1024){
+    ret = fread(&len_frame2, sizeof(size_t), 1, fp);
+    if(ret <= 0 ){
+	printf("\n Read len failed!\n");
+    	exit(EXIT_FAILURE);
+	}
+
+    if(len_frame2 <= 0 ){
         printf("\nLen frame2 is either < 0 or > of file size! %ld\n",len_frame2);
         exit(EXIT_FAILURE);
         //return -1;
@@ -309,10 +322,15 @@ void * __afl_get_key_data_ptk( ){
     printf("\n------------------------------------------------------\n");
     printf("\n");
     printf("Frame 2 len: %ld\n\n",len_frame2);
-    __afl_key1 = (char *)malloc(sizeof(char)* len_frame2);
+    __afl_key1 = (uint8_t *)malloc(sizeof(uint8_t)* len_frame2);
     for (i=0 ; i <= len_frame2; i++){
-        fread(&data, sizeof(uint8_t), 1, fp);
-        __afl_key1[i] = data;
+        ret = fread(&data, sizeof(uint8_t), 1, fp);
+       if(ret <= 0 ){
+		printf("\n Read data failed!\n");
+    		exit(EXIT_FAILURE);
+	}
+//	memcpy(__afl_key1[i], data, sizeof(data));
+	 __afl_key1[i] = data;
         printf("%d ", __afl_key1[i]);
     }
 
@@ -518,16 +536,18 @@ void * __afl_get_key_data_igtk( ){
     FILE *fp1=NULL;
     int i;
     int data;
-    int count=0;
-    int expected_byte=0;
-    int sz;
+    //int count=0;
+    //int expected_byte=0;
+  //  int sz;
     size_t ret;
 
     fp1 = fopen(__afl_input_filename , "rb");
     if (fp1 == NULL){
         perror("!!! Warning: no input file for AFL. Tests will be executed with static data!!!\n");
-        __afl_key = eapol_key_data_29;
-        __afl_key1= eapol_key_data_31;
+ // 	memcpy(__afl_key, eapol_key_data_29, sizeof(eapol_key_data_29));
+ //       memcpy(__afl_key1, eapol_key_data_31, sizeof(eapol_key_data_31));
+	__afl_key =(uint8_t *) eapol_key_data_29;
+        __afl_key1= (uint8_t *)eapol_key_data_31;
         len_frame1= sizeof(eapol_key_data_29);
         len_frame2= sizeof(eapol_key_data_31);
         return(NULL);
@@ -538,8 +558,12 @@ void * __afl_get_key_data_igtk( ){
 
 
     //printf("Reading Frame 1\n");
-    fread(&len_frame1, sizeof(size_t), 1, fp1);
-    if(len_frame1 <= 0 || len_frame1 > 1024 ){
+    ret = fread(&len_frame1, sizeof(size_t), 1, fp1);
+    if(ret <= 0 ){
+	printf("\n Read len failed!\n");
+    	exit(EXIT_FAILURE);
+	}
+    if(len_frame1 <= 0 ){
         printf("\nLen frame1 is either < 0 or > of file size! %ld\n",len_frame1 );
         exit(EXIT_FAILURE);
 
@@ -547,17 +571,28 @@ void * __afl_get_key_data_igtk( ){
 
     printf("Frame 1 len: %ld\n\n",len_frame1);
 
-    __afl_key = (char *)malloc(sizeof(char)* len_frame1);
+    __afl_key = (uint8_t *)malloc(sizeof(uint8_t)* len_frame1);
     for (i=0 ; i <= len_frame1; i++){
-        fread(&data, sizeof(uint8_t), 1, fp1);
+        ret =fread(&data, sizeof(uint8_t), 1, fp1);
+	if(ret <= 0 ){
+		printf("\n Read data failed!\n");
+    		exit(EXIT_FAILURE);
+	}
+//	memcpy(__afl_key[i], data, sizeof(data));
+
         __afl_key[i] = data;
         printf("%d ", __afl_key[i]);
     }
 
 
     //  printf("\nReading Frame 2\n");
-    fread(&len_frame2, sizeof(size_t), 1, fp1);
-    if(len_frame2 <= 0 || len_frame2 > 1024){
+    ret = fread(&len_frame2, sizeof(size_t), 1, fp1);
+    if(ret <= 0 ){
+	printf("\n Read len failed!\n");
+    	exit(EXIT_FAILURE);
+    }
+
+    if(len_frame2 <= 0 ){
         printf("\nLen frame2 is either < 0 or > of file size! %ld\n",len_frame2);
         exit(EXIT_FAILURE);
         //return -1;
@@ -565,10 +600,16 @@ void * __afl_get_key_data_igtk( ){
     printf("\n------------------------------------------------------\n");
     printf("\n");
     printf("Frame 2 len: %ld\n\n",len_frame2);
-    __afl_key1 = (char *)malloc(sizeof(char)* len_frame2);
+    __afl_key1 = (uint8_t *)malloc(sizeof(uint8_t)* len_frame2);
     for (i=0 ; i <= len_frame2; i++){
-        fread(&data, sizeof(uint8_t), 1, fp1);
-        __afl_key1[i] = data;
+        ret = fread(&data, sizeof(uint8_t), 1, fp1);
+	if(ret <= 0 ){
+		printf("\n Read data failed!\n");
+    		exit(EXIT_FAILURE);
+	}
+//       	memcpy(__afl_key1[i], data, sizeof(data));
+
+	__afl_key1[i] = data;
         printf("%d ", __afl_key1[i]);
     }
     printf("\n");
