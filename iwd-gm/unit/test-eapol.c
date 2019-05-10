@@ -259,12 +259,8 @@ void * __afl_get_key_data_ptk( ){
     if (fp == NULL){
         perror("!!! Warning: no input file for AFL. Tests will be executed with static data!!!\n");
         __afl_key = eapol_key_data_4;
-        // __afl_key = eap1;
         __afl_key1= eapol_key_data_6;
-
         __afl_key2= eapol_key_data_6;
-
-       // __afl_key1=eap2;
         //printf("%d %d", sizeof(eap1), sizeof(eapol_key_data_4));
         len_frame1= sizeof(eapol_key_data_4);
         //len_frame1= sizeof(eap1);
@@ -330,7 +326,7 @@ void * __afl_get_key_data_ptk( ){
     }
     printf("\n------------------------------------------------------\n");
     printf("\n");
-    printf("Frame 2 len: %ld\n\n",len_frame3);
+    printf("Frame 3 len: %ld\n\n",len_frame3);
     __afl_key2 = (char *)malloc(sizeof(char)* len_frame3);
     for (i=0 ; i <= len_frame3; i++){
         fread(&data, sizeof(uint8_t), 1, fp);

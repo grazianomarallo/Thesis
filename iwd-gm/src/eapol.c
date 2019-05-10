@@ -104,6 +104,11 @@ bool eapol_verify_mic(enum ie_rsn_akm_suite akm, const uint8_t *kck,
 	struct iovec iov[3];
 	struct l_checksum *checksum = NULL;
 
+	//XXX : we remove checksums, signature checks, and in this case
+	// message authentication checks. This is because it's impossible
+	// for AFL to guess all 16+ bytes of the checksum correctly.
+	return true;
+
 	iov[0].iov_base = (void *) frame;
 	iov[0].iov_len = offsetof(struct eapol_key, key_mic_data);
 
@@ -1069,8 +1074,6 @@ static void eapol_handle_ptk_1_of_4(struct eapol_sm *sm,
 
 		return;
 	}
-	//XXX
-	assert(true);
 
 	memcpy(step2->key_mic_data, mic, sizeof(mic));
 	eapol_sm_write(sm, (struct eapol_frame *) step2, false);
@@ -1316,8 +1319,10 @@ static void eapol_handle_ptk_3_of_4(struct eapol_sm *sm,
 	 * or if the ANonce value in message 3 differs from the ANonce value
 	 * in message 1."
 	 */
-	if (memcmp(sm->handshake->anonce, ek->key_nonce, sizeof(ek->key_nonce)))
-		return;
+
+	// XXX: revert this check so we can trigger a key reinstallation
+	//if (memcmp(sm->handshake->anonce, ek->key_nonce, sizeof(ek->key_nonce)))
+	//	return;
 
 	/*
 	 * 11.6.6.4: "Verifies the RSNE. If it is part of a Fast BSS Transition
@@ -1382,8 +1387,10 @@ static void eapol_handle_ptk_3_of_4(struct eapol_sm *sm,
 	 * and we wouldn't get here.  Skip processing the rest of the message
 	 * and send our reply.  Do not install the keys again.
 	 */
-	if (sm->handshake->ptk_complete)
-		goto retransmit;
+
+	//XXX: revert defenses against key reinstallation attacks.
+	//if (sm->handshake->ptk_complete)
+	//	goto retransmit;
 
 	/*
 	 * 11.6.6.4: "If a second RSNE is provided in the message, the
@@ -1503,8 +1510,9 @@ retransmit:
 	eapol_sm_write(sm, (struct eapol_frame *) step4, false);
 	l_free(step4);
 
-	if (sm->handshake->ptk_complete)
-		return;
+	// XXX: revert defenses against key reinstallation patches
+	// if (sm->handshake->ptk_complete)
+	//	return;
 
 	/*
 	 * For WPA1 the group handshake should be happening after we set the
@@ -1729,6 +1737,8 @@ static void eapol_key_handle(struct eapol_sm *sm,
 	 * mandate that the Authenticator has to increment the replay counter
 	 * for each frame sent.  Contradictory.
 	 */
+
+	// XXX: don't patch this, so AFL at least needs to fuzz a new replay counter
 	if (sm->have_replay && sm->replay_counter >= replay_counter)
 		return;
 
@@ -1811,7 +1821,7 @@ static void eapol_eap_msg_cb(const uint8_t *eap_data, size_t len,
 static void eapol_eap_complete_cb(enum eap_result result, void *user_data)
 {
 	struct eapol_sm *sm = user_data;
-	
+
 	l_info("EAP completed with %s", result == EAP_RESULT_SUCCESS ?
 			"eapSuccess" : (result == EAP_RESULT_FAIL ?
 				"eapFail" : "eapTimeout"));
@@ -1822,8 +1832,6 @@ static void eapol_eap_complete_cb(enum eap_result result, void *user_data)
 		handshake_failed(sm, MMPDU_REASON_CODE_IEEE8021X_FAILED);
 		return;
 	}
-	//XXX
-	assert(true);
 
 	eap_reset(sm->eap);
 }
