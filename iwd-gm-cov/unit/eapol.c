@@ -104,7 +104,7 @@ bool eapol_verify_mic(enum ie_rsn_akm_suite akm, const uint8_t *kck,
 	struct iovec iov[3];
 	struct l_checksum *checksum = NULL;
 
-	//XXX : we remove checksums, signature checks, and in this case
+	// Mathy: we remove checksums, signature checks, and in this case
 	// message authentication checks. This is because it's impossible
 	// for AFL to guess all 16+ bytes of the checksum correctly.
 	return true;
@@ -1320,7 +1320,7 @@ static void eapol_handle_ptk_3_of_4(struct eapol_sm *sm,
 	 * in message 1."
 	 */
 
-	// XXX: revert this check so we can trigger a key reinstallation
+	// Mathy: revert this check so we can trigger a key reinstallation
 	//if (memcmp(sm->handshake->anonce, ek->key_nonce, sizeof(ek->key_nonce)))
 	//	return;
 
@@ -1388,7 +1388,7 @@ static void eapol_handle_ptk_3_of_4(struct eapol_sm *sm,
 	 * and send our reply.  Do not install the keys again.
 	 */
 
-	//XXX: revert defenses against key reinstallation attacks.
+	// Mathy: revert defenses against key reinstallation attacks.
 	//if (sm->handshake->ptk_complete)
 	//	goto retransmit;
 
@@ -1510,7 +1510,7 @@ retransmit:
 	eapol_sm_write(sm, (struct eapol_frame *) step4, false);
 	l_free(step4);
 
-	// XXX: revert defenses against key reinstallation patches
+	// Mathy: revert defenses against key reinstallation patches
 	// if (sm->handshake->ptk_complete)
 	//	return;
 
@@ -1738,7 +1738,7 @@ static void eapol_key_handle(struct eapol_sm *sm,
 	 * for each frame sent.  Contradictory.
 	 */
 
-	// XXX: don't patch this, so AFL at least needs to fuzz a new replay counter
+	// Mathy: don't patch this, so AFL at least needs to fuzz a new replay counter
 	if (sm->have_replay && sm->replay_counter >= replay_counter)
 		return;
 

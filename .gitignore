@@ -3,4 +3,4 @@
 backup.sh
 fuzzing_loc.sh
 start_hostapd.sh
-#fuzzer_result/
+fuzzer_result/
