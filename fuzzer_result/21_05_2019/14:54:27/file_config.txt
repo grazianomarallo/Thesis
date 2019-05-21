@@ -1,0 +1,1 @@
+Using frame 1 from fuzzer, frame 3 static

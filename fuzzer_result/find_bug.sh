@@ -20,7 +20,8 @@ do
         echo
         echo "Analysing file:  $line"
         echo
-        ../iwd-gm/unit/test-eapol $1/output/crashes/$line 
+	$1/test-eapol $1/output/crashes/$line
+#        ../iwd-gm/unit/test-eapol $1/output/crashes/$line 
         echo 
         echo "XXXXXXXXXXXXXXXXXXXXXXXXENDXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
         echo

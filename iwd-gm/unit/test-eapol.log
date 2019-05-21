@@ -1,59 +1,51 @@
 !!! Warning: no input file for AFL. Tests will be executed with static data!!!
 : Bad address
-!!! Warning: no input file for AFL. Tests will be executed with static data!!!
-: Bad address
 TEST: EAPoL/WPA2 PTK State Machine
---- DEBUG IN eapol_sm_test_ptk --- 
+--- Executing  eapol_sm_test_ptk() --- 
 
-
-__eapol_set_tx_packet_func has been called
-
+--- Calling eapol_start() ---
+--- __eapol_set_tx_packet_func() --- 
+--- Calling __eapol_rx_packet() --- 
 ------ DEBUGGING HERE  ------
- Frame len: 121
-Protocol version  1 
+ Frame len: 99
+Protocol version  2 
 --- Protocol valid path ---
- 4, 117--- Executing Watchlist ---
+--- Executing Watchlist ---
+--- Calling eapol_rx_packet() ---
+!!! Entering case EAPOL-Key
+--- Calling eapol_key_handle() ---
+--- Calling eapol_handle_ptk_1_of_4 ---
+--- Calling eapol_calculate_mic() --- 
+--- Calling eapol_write() ---
+--- Calling verify_step2() --- 
+!!eklen 121, 121
 --- Watchlist--- 
+step 2 true
 
 
  XXX Working on second frame XXX 
 
-
-__eapol_set_tx_packet_func has been called
-
+--- __eapol_set_tx_packet_func() --- 
+--- Calling __eapol_rx_packet() --- 
 ------ DEBUGGING HERE  ------
- Frame len: 99
-Protocol version  1 
---- Protocol valid path ---
- 4, 95--- Executing Watchlist ---
---- Watchlist--- 
-Exit from test
-TEST: EAPoL IGTK & 4-Way Handshake
-
---- DEBUG IN eapol_sm_test_igtk --- 
-
-
-__eapol_set_tx_packet_func has been called
-
------- DEBUGGING HERE  ------
- Frame len: 99
+ Frame len: 155
 Protocol version  2 
 --- Protocol valid path ---
- 4, 95--- Executing Watchlist ---
-
-XXX function verify_step2 called XXX 
---- Watchlist--- 
-step 2 true
-
-__eapol_set_tx_packet_func has been called
-
------- DEBUGGING HERE  ------
- Frame len: 215
-Protocol version  2 
---- Protocol valid path ---
- 4, 211--- Executing Watchlist ---
-
-XXX function verify_step4 called XXX
+--- Executing Watchlist ---
+--- Calling eapol_rx_packet() ---
+!!! Entering case EAPOL-Key
+--- Calling eapol_key_handle() ---
+--- Calling eapol_eapol_verify_mic() ---
+--- Calling eapol_decrypt_key_data() ---
+--- Calling eapol_handle_ptk_3_of_4() ---
+--- Calling eapol_calculate_mic() --- 
+--- Calling eapol_write() ---
+--- Calling verify_step4() --- 
+!!eklen 99, 99
+!!!! Calling eapol_install_gtk !!!!
 --- Watchlist--- 
 step 4 true
+--- Calling eapol_sm_destroy() ---
+--- Exit from test ---
+--- Calling eapol_exit() ---
 PASS unit/test-eapol (exit status: 0)

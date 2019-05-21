@@ -1,4 +1,0 @@
-diff id:000229,src:000228,op:flip1,pos:120,+cov -> id:000230,src:000229,op:arith8,pos:124,val:-14,+cov
-Src file: /home/ubuntu/Thesis/iwd-gm-cov/unit/test-eapol.c
-  New 'line' coverage: 719
-  New 'line' coverage: 721
