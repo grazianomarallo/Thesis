@@ -34,8 +34,10 @@ const struct eapol_key *eapol_key_validate(const uint8_t *frame, size_t len)
 	const struct eapol_key *ek;
 	uint16_t key_data_len;
 
-	if (len < sizeof(struct eapol_key))
-		return NULL;
+	if (len < sizeof(struct eapol_key)){
+		printf("Warning :eapol_key_validate returned NULL on len check\n");
+		//return NULL;
+	}
 
 	ek = (const struct eapol_key *) frame;
 
@@ -44,19 +46,24 @@ const struct eapol_key *eapol_key_validate(const uint8_t *frame, size_t len)
 	case EAPOL_PROTOCOL_VERSION_2004:
 		break;
 	default:
-		return NULL;
+		 printf("Warning :eapol_key_validate returned NULL on protcol check\n");
+		break;
+	//	return NULL;
 	}
 
-	if (ek->header.packet_type != 3)
+	if (ek->header.packet_type != 3){
+		printf("Warning: header packer wrong != 3\n");
 		return NULL;
+	}
 
 	switch (ek->descriptor_type) {
 	case EAPOL_DESCRIPTOR_TYPE_RC4:
 	case EAPOL_DESCRIPTOR_TYPE_80211:
 	case EAPOL_DESCRIPTOR_TYPE_WPA:
 		break;
-	default:
-		return NULL;
+	default: 
+		break;
+		//return NULL;
 	}
 
 	switch (ek->key_descriptor_version) {
@@ -66,12 +73,16 @@ const struct eapol_key *eapol_key_validate(const uint8_t *frame, size_t len)
 	case EAPOL_KEY_DESCRIPTOR_VERSION_AKM_DEFINED:
 		break;
 	default:
-		return NULL;
+		break;
+		//return NULL;
 	}
 
 	key_data_len = L_BE16_TO_CPU(ek->key_data_len);
-	if (len < sizeof(struct eapol_key) + key_data_len)
-		return NULL;
+
+	if (len < sizeof(struct eapol_key) + key_data_len){
+		 printf("Warning :eapol_key_validate returned NULL on key_data_len check\n");
+	//	return NULL;
+	}
 
 	return ek;
 }

@@ -769,23 +769,17 @@ am__distuninstallcheck_listfiles = $(distuninstallcheck_listfiles) \
   | sed 's|^\./|$(prefix)/|' | grep -v '$(infodir)/dir$$'
 distcleancheck_listfiles = find . -type f -print
 A2X = 
-ACLOCAL = ${SHELL} /home/ubuntu/Thesis/iwd-gm/build-aux/missing aclocal-1.15
+ACLOCAL = ${SHELL} /home/ubuntu/Krack/Thesis/iwd-gm/build-aux/missing aclocal-1.15
 AMTAR = $${TAR-tar}
 AM_DEFAULT_VERBOSITY = 0
 AR = ar
-AUTOCONF = ${SHELL} /home/ubuntu/Thesis/iwd-gm/build-aux/missing autoconf
-AUTOHEADER = ${SHELL} /home/ubuntu/Thesis/iwd-gm/build-aux/missing autoheader
-AUTOMAKE = ${SHELL} /home/ubuntu/Thesis/iwd-gm/build-aux/missing automake-1.15
+AUTOCONF = ${SHELL} /home/ubuntu/Krack/Thesis/iwd-gm/build-aux/missing autoconf
+AUTOHEADER = ${SHELL} /home/ubuntu/Krack/Thesis/iwd-gm/build-aux/missing autoheader
+AUTOMAKE = ${SHELL} /home/ubuntu/Krack/Thesis/iwd-gm/build-aux/missing automake-1.15
 AWK = gawk
-#XXX change compiler for afl-cov
-#CC= gcc
 CC = /home/ubuntu/afl/afl-gcc
 CCDEPMODE = depmode=gcc3
 CFLAGS = -Wall -O2 -fsigned-char -fno-exceptions -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=2
-#XXX Run without any protection from the compiler
-#CFLAGS = -fno-stack-protector -D_FORTIFY_SOURCE=0
-#XXX Compile the code for afl-cov usage
-#CFLAGS= -fprofile-arcs -ftest-coverage
 CPP = /home/ubuntu/afl/afl-gcc -E
 CPPFLAGS = 
 CYGPATH_W = echo
@@ -820,7 +814,7 @@ LN_S = ln -s
 LTLIBOBJS = 
 LT_SYS_LIBRARY_PATH = 
 MAINT = #
-MAKEINFO = ${SHELL} /home/ubuntu/Thesis/iwd-gm/build-aux/missing makeinfo
+MAKEINFO = ${SHELL} /home/ubuntu/Krack/Thesis/iwd-gm/build-aux/missing makeinfo
 MANIFEST_TOOL = :
 MKDIR_P = /bin/mkdir -p
 NM = /usr/bin/nm -B
@@ -847,10 +841,10 @@ SHELL = /bin/bash
 STRIP = strip
 SYSTEMD_UNITDIR = /lib/systemd/system
 VERSION = 0.12
-abs_builddir = /home/ubuntu/Thesis/iwd-gm
-abs_srcdir = /home/ubuntu/Thesis/iwd-gm
-abs_top_builddir = /home/ubuntu/Thesis/iwd-gm
-abs_top_srcdir = /home/ubuntu/Thesis/iwd-gm
+abs_builddir = /home/ubuntu/Krack/Thesis/iwd-gm
+abs_srcdir = /home/ubuntu/Krack/Thesis/iwd-gm
+abs_top_builddir = /home/ubuntu/Krack/Thesis/iwd-gm
+abs_top_srcdir = /home/ubuntu/Krack/Thesis/iwd-gm
 ac_ct_AR = ar
 ac_ct_CC = /home/ubuntu/afl/afl-gcc
 ac_ct_DUMPBIN = 
@@ -879,7 +873,7 @@ host_vendor = pc
 htmldir = ${docdir}
 includedir = ${prefix}/include
 infodir = ${datarootdir}/info
-install_sh = ${SHELL} /home/ubuntu/Thesis/iwd-gm/build-aux/install-sh
+install_sh = ${SHELL} /home/ubuntu/Krack/Thesis/iwd-gm/build-aux/install-sh
 libdir = ${exec_prefix}/lib
 libexecdir = ${exec_prefix}/libexec
 localedir = ${datarootdir}/locale

@@ -1,5 +1,4 @@
-/*
- *
+/*  
  *  Wireless daemon for Linux
  *
  *  Copyright (C) 2013-2014  Intel Corporation. All rights reserved.
@@ -70,6 +69,8 @@ uint32_t next_frame_watch_id;
 bool eapol_calculate_mic(enum ie_rsn_akm_suite akm, const uint8_t *kck,
 				const struct eapol_key *frame, uint8_t *mic)
 {
+	printf("--- Calling eapol_calculate_mic() --- \n");
+
 	size_t frame_len = sizeof(struct eapol_key);
 
 	frame_len += L_BE16_TO_CPU(frame->key_data_len);
@@ -89,9 +90,11 @@ bool eapol_calculate_mic(enum ie_rsn_akm_suite akm, const uint8_t *kck,
 		case IE_RSN_AKM_SUITE_OWE:
 			return hmac_sha256(kck, 16, frame, frame_len, mic, 16);
 		default:
+			printf("Warning: No MIC calculated\n");
 			return false;
 		}
 	default:
+	printf("Warning: No MIC calculated\n");
 		return false;
 	}
 }
@@ -99,12 +102,14 @@ bool eapol_calculate_mic(enum ie_rsn_akm_suite akm, const uint8_t *kck,
 bool eapol_verify_mic(enum ie_rsn_akm_suite akm, const uint8_t *kck,
 			const struct eapol_key *frame)
 {
+	printf("--- Calling eapol_eapol_verify_mic() ---\n");
+
 	size_t frame_len = sizeof(struct eapol_key);
 	uint8_t mic[16];
 	struct iovec iov[3];
 	struct l_checksum *checksum = NULL;
 
-	//XXX : we remove checksums, signature checks, and in this case
+	// AFL: we remove checksums, signature checks, and in this case
 	// message authentication checks. This is because it's impossible
 	// for AFL to guess all 16+ bytes of the checksum correctly.
 	return true;
@@ -167,6 +172,8 @@ uint8_t *eapol_decrypt_key_data(enum ie_rsn_akm_suite akm, const uint8_t *kek,
 				const struct eapol_key *frame,
 				size_t *decrypted_size)
 {
+	 printf("--- Calling eapol_decrypt_key_data() ---\n");
+
 	size_t key_data_len = L_BE16_TO_CPU(frame->key_data_len);
 	const uint8_t *key_data = frame->key_data;
 	size_t expected_len;
@@ -248,6 +255,9 @@ static bool eapol_encrypt_key_data(const uint8_t *kek, uint8_t *key_data,
 				size_t key_data_len,
 				struct eapol_key *out_frame)
 {
+
+	printf("--- Calling eapol_encrypt_key_data() --- \n");
+
 	switch (out_frame->key_descriptor_version) {
 	case EAPOL_KEY_DESCRIPTOR_VERSION_HMAC_MD5_ARC4:
 		/* Not supported */
@@ -277,6 +287,9 @@ static void eapol_key_data_append(struct eapol_key *ek,
 				enum handshake_kde selector,
 				const uint8_t *data, size_t data_len)
 {
+
+	 printf("--- Calling eapol_key_data_append() --- \n");
+
 	uint16_t key_data_len = L_BE16_TO_CPU(ek->key_data_len);
 
 	ek->key_data[key_data_len++] = IE_TYPE_VENDOR_SPECIFIC;
@@ -305,23 +318,35 @@ bool eapol_verify_ptk_1_of_4(const struct eapol_key *ek)
 	/* Verify according to 802.11, Section 11.6.6.2 */
 	VERIFY_PTK_COMMON(ek);
 
-	if (ek->install)
+	if (ek->install){
+		printf("Warning: ptk_1_of_4 failed: install\n");
 		return false;
+	}
 
-	if (!ek->key_ack)
+	if (!ek->key_ack){
+		printf("Warning: ptk_1_of_4 failed: key_ack\n");
 		return false;
+	}
 
-	if (ek->key_mic)
+	if (ek->key_mic){
+		printf("Warning: ptk_1_of_4 failed: key_mic\n");
 		return false;
+	}
 
-	if (ek->secure)
+	if (ek->secure){
+		printf("Warning: ptk_1_of_4 failed: secure\n");
 		return false;
+	}
 
-	if (ek->encrypted_key_data)
+	if (ek->encrypted_key_data){
+		printf("Warning: ptk_1_of_4 failed: enc_key_data\n");
 		return false;
+	}
 
-	if (ek->wpa_key_id)
+	if (ek->wpa_key_id){
+		printf("Warning: ptk_1_of_4 failed: wpa_key_id\n");
 		return false;
+	}
 
 	VERIFY_IS_ZERO(ek->key_rsc);
 	VERIFY_IS_ZERO(ek->reserved);
@@ -333,7 +358,6 @@ bool eapol_verify_ptk_1_of_4(const struct eapol_key *ek)
 bool eapol_verify_ptk_2_of_4(const struct eapol_key *ek)
 {
 	uint16_t key_len;
-
 	/* Verify according to 802.11, Section 11.6.6.3 */
 	VERIFY_PTK_COMMON(ek);
 
@@ -372,6 +396,7 @@ bool eapol_verify_ptk_2_of_4(const struct eapol_key *ek)
 bool eapol_verify_ptk_3_of_4(const struct eapol_key *ek, bool is_wpa)
 {
 	uint16_t key_len;
+
 
 	/* Verify according to 802.11, Section 11.6.6.4 */
 	VERIFY_PTK_COMMON(ek);
@@ -413,6 +438,7 @@ bool eapol_verify_ptk_3_of_4(const struct eapol_key *ek, bool is_wpa)
 bool eapol_verify_ptk_4_of_4(const struct eapol_key *ek, bool is_wpa)
 {
 	uint16_t key_len;
+
 
 	/* Verify according to 802.11, Section 11.6.6.5 */
 	VERIFY_PTK_COMMON(ek);
@@ -464,7 +490,9 @@ bool eapol_verify_ptk_4_of_4(const struct eapol_key *ek, bool is_wpa)
 
 bool eapol_verify_gtk_1_of_2(const struct eapol_key *ek, bool is_wpa)
 {
+
 	uint16_t key_len;
+	printf("--- Calling eapol_verify_gtk_1_of_2() ---\n");
 
 	VERIFY_GTK_COMMON(ek);
 
@@ -515,6 +543,7 @@ bool eapol_verify_gtk_1_of_2(const struct eapol_key *ek, bool is_wpa)
 bool eapol_verify_gtk_2_of_2(const struct eapol_key *ek, bool is_wpa)
 {
 	uint16_t key_len;
+	printf("!!!! Calling eapol_verify_gtk_2_of_2 !!!!\n");
 
 	/* Verify according to 802.11, Section 11.6.7.3 */
 	VERIFY_GTK_COMMON(ek);
@@ -703,6 +732,8 @@ struct eapol_sm {
 
 static void eapol_sm_destroy(void *value)
 {
+	printf("--- Calling eapol_sm_destroy() ---\n");
+
 	struct eapol_sm *sm = value;
 
 	l_timeout_remove(sm->timeout);
@@ -727,6 +758,7 @@ static void eapol_sm_destroy(void *value)
 
 struct eapol_sm *eapol_sm_new(struct handshake_state *hs)
 {
+
 	struct eapol_sm *sm;
 
 	sm = l_new(struct eapol_sm, 1);
@@ -742,40 +774,52 @@ struct eapol_sm *eapol_sm_new(struct handshake_state *hs)
 }
 
 void eapol_sm_free(struct eapol_sm *sm)
-{
+{	
+	//printf("--- Calling eapol_sm_free() ---\n");
 	eapol_sm_destroy(sm);
 }
 
 void eapol_sm_set_protocol_version(struct eapol_sm *sm,
 				enum eapol_protocol_version protocol_version)
 {
+	//printf("--- Calling eapol_sm_set_protocol_version() ---\n");
 	sm->protocol_version = protocol_version;
 }
 
 void eapol_sm_set_listen_interval(struct eapol_sm *sm, uint16_t interval)
 {
+	 printf("!!!! Calling eapol_sm_set_listen_interval !!!!\n");
+
 	sm->listen_interval = interval;
 }
 
 void eapol_sm_set_user_data(struct eapol_sm *sm, void *user_data)
 {
+	 printf("!!!! Calling eapol_sm_set_user_data !!!!\n");
+
 	sm->user_data = user_data;
 }
 
 void eapol_sm_set_event_func(struct eapol_sm *sm, eapol_sm_event_func_t func)
 {
+	 printf("!!!! Calling eapol_sm_set_event_func !!!!\n");
+
 	sm->event_func = func;
 }
 
 static void eapol_sm_write(struct eapol_sm *sm, const struct eapol_frame *ef,
 				bool noencrypt)
 {
+	 printf("--- Calling eapol_write() ---\n");
+
 	__eapol_tx_packet(sm->handshake->ifindex, sm->handshake->aa, ETH_P_PAE,
 				ef, noencrypt);
 }
 
 static inline void handshake_failed(struct eapol_sm *sm, uint16_t reason_code)
 {
+	printf("--- Calling handshake_failed() --- Freeing state machine --- \n");
+
 	handshake_event(sm->handshake, HANDSHAKE_EVENT_FAILED, &reason_code);
 
 	eapol_sm_free(sm);
@@ -783,6 +827,8 @@ static inline void handshake_failed(struct eapol_sm *sm, uint16_t reason_code)
 
 static void eapol_timeout(struct l_timeout *timeout, void *user_data)
 {
+	 printf("--- Calling eapol_timeout() ---\n");
+
 	struct eapol_sm *sm = user_data;
 
 	l_timeout_remove(sm->timeout);
@@ -795,13 +841,18 @@ static void eapol_install_gtk(struct eapol_sm *sm, uint8_t gtk_key_index,
 					const uint8_t *gtk, size_t gtk_len,
 					const uint8_t *rsc)
 {
+
+	 printf("--- Calling eapol_install_gtk() ---\n");
+
 	/*
 	 * Don't install the same GTK.  On older kernels this resets the
 	 * replay counters, etc and can lead to various attacks
 	 */
 	if (sm->installed_gtk_len == gtk_len &&
-			!memcmp(sm->installed_gtk, gtk, gtk_len))
+			!memcmp(sm->installed_gtk, gtk, gtk_len)){
+		printf("Do not install gtk\n");
 		return;
+			}
 
 	handshake_state_install_gtk(sm->handshake, gtk_key_index,
 					gtk, gtk_len, rsc, 6);
@@ -812,6 +863,9 @@ static void eapol_install_gtk(struct eapol_sm *sm, uint8_t gtk_key_index,
 static void eapol_install_igtk(struct eapol_sm *sm, uint8_t igtk_key_index,
 					const uint8_t *igtk, size_t igtk_len)
 {
+
+	 printf("!!!! Calling eapol_install_igtk !!!!\n");
+
 	/*
 	 * Don't install the same IGTK.  On older kernels this resets the
 	 * replay counters, etc and can lead to various attacks
@@ -828,6 +882,9 @@ static void eapol_install_igtk(struct eapol_sm *sm, uint8_t igtk_key_index,
 
 static void send_eapol_start(struct l_timeout *timeout, void *user_data)
 {
+
+	 printf("!!!! Calling send_eapol_start !!!!\n");
+
 	struct eapol_sm *sm = user_data;
 	uint8_t buf[sizeof(struct eapol_frame)];
 	struct eapol_frame *frame = (struct eapol_frame *) buf;
@@ -850,6 +907,8 @@ static void send_eapol_start(struct l_timeout *timeout, void *user_data)
 static void eapol_set_key_timeout(struct eapol_sm *sm,
 					l_timeout_notify_cb_t cb)
 {
+	 printf("!!!! Calling eapol_set_key_timeout !!!!\n");
+
 	/*
 	 * 802.11-2016 12.7.6.6: "The retransmit timeout value shall be
 	 * 100 ms for the first timeout, half the listen interval for the
@@ -883,6 +942,9 @@ static void eapol_set_key_timeout(struct eapol_sm *sm,
 /* 802.11-2016 Section 12.7.6.2 */
 static void eapol_send_ptk_1_of_4(struct eapol_sm *sm)
 {
+
+	 printf("!!!! Calling eapol_send_ptk_1_of_4 !!!!\n");
+
 	uint32_t ifindex = sm->handshake->ifindex;
 	const uint8_t *aa = sm->handshake->aa;
 	uint8_t frame_buf[512];
@@ -926,6 +988,9 @@ static void eapol_send_ptk_1_of_4(struct eapol_sm *sm)
 
 static void eapol_ptk_1_of_4_retry(struct l_timeout *timeout, void *user_data)
 {
+
+	 printf("!!!! Calling eapol_ptk_1_of_4_retry !!!!\n");
+
 	struct eapol_sm *sm = user_data;
 
 	if (sm->frame_retry >= 3) {
@@ -941,6 +1006,8 @@ static void eapol_ptk_1_of_4_retry(struct l_timeout *timeout, void *user_data)
 static void eapol_handle_ptk_1_of_4(struct eapol_sm *sm,
 					const struct eapol_key *ek)
 {
+	printf("--- Calling eapol_handle_ptk_1_of_4 ---\n");
+
 	const struct crypto_ptk *ptk;
 	struct eapol_key *step2;
 	uint8_t mic[16];
@@ -952,8 +1019,10 @@ static void eapol_handle_ptk_1_of_4(struct eapol_sm *sm,
 
 	l_debug("ifindex=%u", sm->handshake->ifindex);
 
-	if (!eapol_verify_ptk_1_of_4(ek))
+	if (!eapol_verify_ptk_1_of_4(ek)){
+		printf("Cannot verify packet 1\n");
 		goto error_unspecified;
+	}
 
 	pmkid = handshake_util_find_pmkid_kde(ek->key_data,
 					L_BE16_TO_CPU(ek->key_data_len));
@@ -1024,8 +1093,10 @@ static void eapol_handle_ptk_1_of_4(struct eapol_sm *sm,
 		handshake_state_new_snonce(sm->handshake);
 		handshake_state_set_anonce(sm->handshake, ek->key_nonce);
 
-		if (!handshake_state_derive_ptk(sm->handshake))
+		if (!handshake_state_derive_ptk(sm->handshake)){
+			printf("Cannot derive ptk from handshake\n");
 			goto error_unspecified;
+		}
 	}
 
 	if (sm->handshake->akm_suite &
@@ -1071,9 +1142,12 @@ static void eapol_handle_ptk_1_of_4(struct eapol_sm *sm,
 			"Ensure Kernel Crypto is available.");
 		l_free(step2);
 		handshake_failed(sm, MMPDU_REASON_CODE_UNSPECIFIED);
-
+		//XXX Added by me
+		//assert(false);
 		return;
 	}
+
+	assert(true);
 
 	memcpy(step2->key_mic_data, mic, sizeof(mic));
 	eapol_sm_write(sm, (struct eapol_frame *) step2, false);
@@ -1093,6 +1167,8 @@ error_unspecified:
 /* 802.11-2016 Section 12.7.6.4 */
 static void eapol_send_ptk_3_of_4(struct eapol_sm *sm)
 {
+	printf("!!!! Calling eapol_eapol_send_ptk_3_of_4 !!!!\n");
+
 	uint32_t ifindex = sm->handshake->ifindex;
 	uint8_t frame_buf[512];
 	uint8_t key_data_buf[128];
@@ -1175,6 +1251,9 @@ static void eapol_send_ptk_3_of_4(struct eapol_sm *sm)
 static void eapol_ptk_3_of_4_retry(struct l_timeout *timeout,
 						void *user_data)
 {
+
+	printf("!!!! Calling eapol_ptk_3_of_4_retry!!!!\n");
+
 	struct eapol_sm *sm = user_data;
 
 	if (sm->frame_retry >= EAPOL_PAIRWISE_UPDATE_COUNT) {
@@ -1219,6 +1298,8 @@ static const uint8_t *eapol_find_rsne(const uint8_t *data, size_t data_len,
 static void eapol_handle_ptk_2_of_4(struct eapol_sm *sm,
 					const struct eapol_key *ek)
 {
+	 printf("---Calling eapol_handle_ptk_2_of_4() ---\n");
+
 	const uint8_t *rsne;
 	enum crypto_cipher cipher;
 	size_t ptk_size;
@@ -1228,8 +1309,10 @@ static void eapol_handle_ptk_2_of_4(struct eapol_sm *sm,
 
 	l_debug("ifindex=%u", sm->handshake->ifindex);
 
-	if (!eapol_verify_ptk_2_of_4(ek))
+	if (!eapol_verify_ptk_2_of_4(ek)){
+		printf("Cannot verify packet 2\n");
 		return;
+	}
 
 	if (L_BE64_TO_CPU(ek->key_replay_counter) != sm->replay_counter)
 		return;
@@ -1293,6 +1376,9 @@ static void eapol_handle_ptk_3_of_4(struct eapol_sm *sm,
 					const uint8_t *decrypted_key_data,
 					size_t decrypted_key_data_size)
 {
+
+	 printf("--- Calling eapol_handle_ptk_3_of_4() ---\n");
+
 	const struct crypto_ptk *ptk;
 	struct eapol_key *step4;
 	uint8_t mic[16];
@@ -1308,6 +1394,7 @@ static void eapol_handle_ptk_3_of_4(struct eapol_sm *sm,
 	l_debug("ifindex=%u", sm->handshake->ifindex);
 
 	if (!eapol_verify_ptk_3_of_4(ek, sm->handshake->wpa_ie)) {
+		printf("Cannot verify packet 3\n");
 		handshake_failed(sm, MMPDU_REASON_CODE_UNSPECIFIED);
 		return;
 	}
@@ -1319,10 +1406,13 @@ static void eapol_handle_ptk_3_of_4(struct eapol_sm *sm,
 	 * or if the ANonce value in message 3 differs from the ANonce value
 	 * in message 1."
 	 */
-
-	// XXX: revert this check so we can trigger a key reinstallation
-	//if (memcmp(sm->handshake->anonce, ek->key_nonce, sizeof(ek->key_nonce)))
+	
+	
+	// AFL: revert this check so we can trigger a key reinstallation
+	//if (memcmp(sm->handshake->anonce, ek->key_nonce, sizeof(ek->key_nonce))){
+	//	printf("Message discarded. Key replay counter already used or Anonce in msg3 differs from Anonce msg1\n");
 	//	return;
+	//}
 
 	/*
 	 * 11.6.6.4: "Verifies the RSNE. If it is part of a Fast BSS Transition
@@ -1388,7 +1478,8 @@ static void eapol_handle_ptk_3_of_4(struct eapol_sm *sm,
 	 * and send our reply.  Do not install the keys again.
 	 */
 
-	//XXX: revert defenses against key reinstallation attacks.
+
+	// AFL: revert defenses against key reinstallation attacks.
 	//if (sm->handshake->ptk_complete)
 	//	goto retransmit;
 
@@ -1510,8 +1601,8 @@ retransmit:
 	eapol_sm_write(sm, (struct eapol_frame *) step4, false);
 	l_free(step4);
 
-	// XXX: revert defenses against key reinstallation patches
-	// if (sm->handshake->ptk_complete)
+	// AFL: revert defenses against key reinstallation patches
+	//if (sm->handshake->ptk_complete)
 	//	return;
 
 	/*
@@ -1548,12 +1639,16 @@ error_ie_different:
 static void eapol_handle_ptk_4_of_4(struct eapol_sm *sm,
 					const struct eapol_key *ek)
 {
+	printf("--- Calling eapol_handle_ptk_4_of_4 ---\n");
+
 	const struct crypto_ptk *ptk = (struct crypto_ptk *) sm->handshake->ptk;
 
 	l_debug("ifindex=%u", sm->handshake->ifindex);
 
-	if (!eapol_verify_ptk_4_of_4(ek, false))
+	if (!eapol_verify_ptk_4_of_4(ek, false)){
+		printf("Cannot verify packet 4\n");
 		return;
+	}
 
 	if (L_BE64_TO_CPU(ek->key_replay_counter) != sm->replay_counter)
 		return;
@@ -1582,6 +1677,7 @@ static void eapol_handle_gtk_1_of_2(struct eapol_sm *sm,
 	size_t igtk_len;
 	uint8_t igtk_key_index;
 
+	 printf("--- Calling eapol_handle_gtk_1_of_2 ---\n");
 	if (!eapol_verify_gtk_1_of_2(ek, sm->handshake->wpa_ie)) {
 		handshake_failed(sm, MMPDU_REASON_CODE_UNSPECIFIED);
 		return;
@@ -1687,6 +1783,9 @@ static struct eapol_sm *eapol_find_sm(uint32_t ifindex, const uint8_t *aa)
 static void eapol_key_handle(struct eapol_sm *sm,
 				const struct eapol_frame *frame)
 {
+
+	 printf("--- Calling eapol_key_handle() ---\n");
+
 	const struct eapol_key *ek;
 	const struct crypto_ptk *ptk;
 	uint8_t *decrypted_key_data = NULL;
@@ -1738,7 +1837,7 @@ static void eapol_key_handle(struct eapol_sm *sm,
 	 * for each frame sent.  Contradictory.
 	 */
 
-	// XXX: don't patch this, so AFL at least needs to fuzz a new replay counter
+	// AFL: don't patch this, so AFL at least needs to fuzz a new replay counter
 	if (sm->have_replay && sm->replay_counter >= replay_counter)
 		return;
 
@@ -1756,14 +1855,19 @@ static void eapol_key_handle(struct eapol_sm *sm,
 	if ((ek->encrypted_key_data && !sm->handshake->wpa_ie) ||
 			(ek->key_type == 0 && sm->handshake->wpa_ie)) {
 		/* Haven't received step 1 yet, so no ptk */
-		if (!sm->handshake->have_snonce)
+		
+		if (!sm->handshake->have_snonce){
+		printf("Error in eapol_key_handle: no ptk\n");
 			return;
-
+		}
 		decrypted_key_data = eapol_decrypt_key_data(
 					sm->handshake->akm_suite, ptk->kek,
 					ek, &key_data_len);
-		if (!decrypted_key_data)
+		if (!decrypted_key_data){
+			printf("Error in eapol_key_handle: cannot decrypt_key \n");
+
 			return;
+		}
 	} else
 		key_data_len = L_BE16_TO_CPU(ek->key_data_len);
 
@@ -1804,6 +1908,8 @@ done:
 static void eapol_eap_msg_cb(const uint8_t *eap_data, size_t len,
 					void *user_data)
 {
+	 printf("!!!! Calling eapol_eap_msg_cb !!!!\n");
+
 	struct eapol_sm *sm = user_data;
 	uint8_t buf[sizeof(struct eapol_frame) + len];
 	struct eapol_frame *frame = (struct eapol_frame *) buf;
@@ -1820,8 +1926,10 @@ static void eapol_eap_msg_cb(const uint8_t *eap_data, size_t len,
 /* This respresentes the eapTimout, eapFail and eapSuccess messages */
 static void eapol_eap_complete_cb(enum eap_result result, void *user_data)
 {
-	struct eapol_sm *sm = user_data;
 
+	printf("--- Calling eapol_eap_complete_cb() ---\n");
+	struct eapol_sm *sm = user_data;
+	
 	l_info("EAP completed with %s", result == EAP_RESULT_SUCCESS ?
 			"eapSuccess" : (result == EAP_RESULT_FAIL ?
 				"eapFail" : "eapTimeout"));
@@ -1832,6 +1940,8 @@ static void eapol_eap_complete_cb(enum eap_result result, void *user_data)
 		handshake_failed(sm, MMPDU_REASON_CODE_IEEE8021X_FAILED);
 		return;
 	}
+	//XXX
+	assert(true);
 
 	eap_reset(sm->eap);
 }
@@ -1842,6 +1952,9 @@ static void eapol_eap_results_cb(const uint8_t *msk_data, size_t msk_len,
 				const uint8_t *iv, size_t iv_len,
 				void *user_data)
 {
+
+		 printf("\n!!!! Calling eapol_eap_results_cb !!!!\n");
+
 	struct eapol_sm *sm = user_data;
 
 	l_debug("EAP key material received");
@@ -1908,6 +2021,8 @@ void eapol_sm_set_use_eapol_start(struct eapol_sm *sm, bool enabled)
 
 void eapol_sm_set_require_handshake(struct eapol_sm *sm, bool enabled)
 {
+	 printf("!!!! Calling  eapol_sm_set_require_handshake !!!!\n");
+
 	sm->require_handshake = enabled;
 
 	if (!sm->require_handshake)
@@ -1917,6 +2032,8 @@ void eapol_sm_set_require_handshake(struct eapol_sm *sm, bool enabled)
 static void eapol_auth_key_handle(struct eapol_sm *sm,
 				const struct eapol_frame *frame)
 {
+	 printf("!!!! Calling eapol_auth_key_handle  !!!!\n");
+
 	size_t frame_len = 4 + L_BE16_TO_CPU(frame->header.packet_len);
 	const struct eapol_key *ek = eapol_key_validate((const void *) frame,
 							frame_len);
@@ -1944,6 +2061,8 @@ static void eapol_rx_auth_packet(uint16_t proto, const uint8_t *from,
 				const struct eapol_frame *frame,
 				void *user_data)
 {
+	 printf("--- Calling eapol_rx_auth_packet() ---\n");
+
 	struct eapol_sm *sm = user_data;
 
 	if (!sm->protocol_version)
@@ -1966,6 +2085,8 @@ static void eapol_rx_packet(uint16_t proto, const uint8_t *from,
 				const struct eapol_frame *frame,
 				void *user_data)
 {
+
+	printf("--- Calling eapol_rx_packet() ---\n");
 	struct eapol_sm *sm = user_data;
 
 	if (proto != ETH_P_PAE || memcmp(from, sm->handshake->aa, 6))
@@ -1979,8 +2100,10 @@ static void eapol_rx_packet(uint16_t proto, const uint8_t *from,
 		 * If the state machine hasn't started yet save the frame
 		 * for processing later.
 		 */
-		if (sm->early_frame) /* Is the 1-element queue full */
+		if (sm->early_frame){ /* Is the 1-element queue full */
+			printf("Warning: Early frame\n");
 			return;
+		}
 
 		sm->early_frame = l_memdup(frame, len);
 
@@ -1992,6 +2115,7 @@ static void eapol_rx_packet(uint16_t proto, const uint8_t *from,
 
 	switch (frame->header.packet_type) {
 	case 0: /* EAPOL-EAP */
+		printf("!!! Entering case EAPOL-EAP\n");
 		l_timeout_remove(sm->eapol_start_timeout);
 		sm->eapol_start_timeout = 0;
 
@@ -2000,6 +2124,7 @@ static void eapol_rx_packet(uint16_t proto, const uint8_t *from,
 			sm->eap = eap_new(eapol_eap_msg_cb,
 						eapol_eap_complete_cb, sm);
 
+			printf("!!! Sending NAK\n");
 			if (!sm->eap)
 				return;
 
@@ -2015,6 +2140,7 @@ static void eapol_rx_packet(uint16_t proto, const uint8_t *from,
 		break;
 
 	case 3: /* EAPOL-Key */
+	printf("!!! Entering case EAPOL-Key\n");
 		if (!sm->handshake->have_pmk) {
 			if (!sm->eap)
 				return;
@@ -2025,9 +2151,10 @@ static void eapol_rx_packet(uint16_t proto, const uint8_t *from,
 			 * use a cached PMK.  We don't yet cache PMKs so
 			 * send an EAPOL-Start if we haven't sent one yet.
 			 */
-			if (sm->eapol_start_timeout)
+			if (sm->eapol_start_timeout){
+				printf("!!! Sending eapol-start\n");
 				send_eapol_start(NULL, sm);
-
+			}
 			return;
 		}
 
@@ -2042,6 +2169,8 @@ static void eapol_rx_packet(uint16_t proto, const uint8_t *from,
 void __eapol_update_replay_counter(uint32_t ifindex, const uint8_t *spa,
 				const uint8_t *aa, uint64_t replay_counter)
 {
+	 printf("!!!! Calling __eapol_update_replay_counter !!!!\n");
+
 	struct eapol_sm *sm;
 
 	sm = eapol_find_sm(ifindex, aa);
@@ -2057,7 +2186,7 @@ void __eapol_update_replay_counter(uint32_t ifindex, const uint8_t *spa,
 
 void __eapol_set_tx_packet_func(eapol_tx_packet_func_t func)
 {
-    printf("\n__eapol_set_tx_packet_func has been called\n\n");
+    printf("--- __eapol_set_tx_packet_func() --- \n");
 	tx_packet = func;
 }
 
@@ -2090,6 +2219,8 @@ void eapol_register(struct eapol_sm *sm)
 
 bool eapol_start(struct eapol_sm *sm)
 {
+	 printf("--- Calling eapol_start() ---\n");
+
 	if (sm->handshake->settings_8021x) {
 		sm->eap = eap_new(eapol_eap_msg_cb, eapol_eap_complete_cb, sm);
 
@@ -2356,12 +2487,15 @@ void __eapol_rx_packet(uint32_t ifindex, const uint8_t *src, uint16_t proto,
 					const uint8_t *frame, size_t len,
 					bool noencrypt)
 {
+	 printf("--- Calling __eapol_rx_packet() --- \n");
+
 	const struct eapol_header *eh;
  
 	/* Validate Header */
+	
 	if (len < sizeof(struct eapol_header)){
 	    printf("--- Frame len %ld < sizeof eapol header %ld --- \n", len, sizeof(struct eapol_header) );
-	   // assert(false);
+	//    assert(0);
         return;
     }
     
@@ -2379,24 +2513,24 @@ void __eapol_rx_packet(uint32_t ifindex, const uint8_t *src, uint16_t proto,
 	case EAPOL_PROTOCOL_VERSION_2001:
 	case EAPOL_PROTOCOL_VERSION_2004: {
         printf("--- Protocol valid path ---\n");
-
 		break;
              }
 	default: {
         printf("--- Default case path ---\n");
-        // assert (false);
-		return;
+        // assert (0);
+	return;
              }
 	}
 
 
-	printf(" %ld, %d", sizeof(struct eapol_header), L_BE16_TO_CPU(eh->packet_len));
+//	printf(" %ld, %d", sizeof(struct eapol_header), L_BE16_TO_CPU(eh->packet_len));
+	
 	if (len < sizeof(struct eapol_header) + L_BE16_TO_CPU(eh->packet_len)){
         printf("--- Frame len %ld < sizeof eapol header + packet_len %ld ---\n",len,(sizeof(struct eapol_header) + L_BE16_TO_CPU(eh->packet_len)) );
-       // assert (false);
-		return;
+       // assert (0);
+	return;
      }
-
+	
     printf("--- Executing Watchlist ---\n");
 	WATCHLIST_NOTIFY_MATCHES(&frame_watches,
 					eapol_frame_watch_match_ifindex,
@@ -2408,8 +2542,10 @@ void __eapol_rx_packet(uint32_t ifindex, const uint8_t *src, uint16_t proto,
 void __eapol_tx_packet(uint32_t ifindex, const uint8_t *dst, uint16_t proto,
 			const struct eapol_frame *frame, bool noencrypt)
 {
-	if (!tx_packet)
+	if (!tx_packet){
+		 printf("Error: __eapol_tx_packet verification failed !\n");
 		return;
+	}
 
 	tx_packet(ifindex, dst, proto, frame, noencrypt, tx_user_data);
 }
@@ -2432,6 +2568,9 @@ bool eapol_init()
 
 bool eapol_exit()
 {
+
+	 printf("--- Calling eapol_exit() ---\n");
+
 	if (!l_queue_isempty(state_machines))
 		l_warn("stale eapol state machines found");
 
@@ -2446,3 +2585,4 @@ bool eapol_exit()
 
 	return true;
 }
+
