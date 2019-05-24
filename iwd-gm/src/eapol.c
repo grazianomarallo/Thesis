@@ -727,7 +727,7 @@ struct eapol_sm {
 
 static void eapol_sm_destroy(void *value)
 {
-	printf("--- Calling eapol_sm_destroy() ---\n");
+	//printf("--- Calling eapol_sm_destroy() ---\n");
 
 	struct eapol_sm *sm = value;
 
@@ -816,7 +816,6 @@ static inline void handshake_failed(struct eapol_sm *sm, uint16_t reason_code)
 	printf("--- Calling handshake_failed() --- Freeing state machine --- \n");
 
 	handshake_event(sm->handshake, HANDSHAKE_EVENT_FAILED, &reason_code);
-
 	eapol_sm_free(sm);
 }
 
@@ -828,7 +827,7 @@ static void eapol_timeout(struct l_timeout *timeout, void *user_data)
 
 	l_timeout_remove(sm->timeout);
 	sm->timeout = NULL;
-
+	printf("Debug: eapol_destroy called from eapol_timeout\n");
 	handshake_failed(sm, MMPDU_REASON_CODE_4WAY_HANDSHAKE_TIMEOUT);
 }
 
@@ -987,6 +986,7 @@ static void eapol_ptk_1_of_4_retry(struct l_timeout *timeout, void *user_data)
 	struct eapol_sm *sm = user_data;
 
 	if (sm->frame_retry >= 3) {
+		printf("Debug: eapol_destroy called from eapol 1_4 retry\n");
 		handshake_failed(sm, MMPDU_REASON_CODE_4WAY_HANDSHAKE_TIMEOUT);
 		return;
 	}
@@ -1013,9 +1013,11 @@ static void eapol_handle_ptk_1_of_4(struct eapol_sm *sm,
 	l_debug("ifindex=%u", sm->handshake->ifindex);
 
 	if (!eapol_verify_ptk_1_of_4(ek)){
-		printf("Cannot verify packet 1\n");
+		printf("Cannot verify packet 1, calling destroy\n");
 		goto error_unspecified;
 	}
+
+	
 
 	pmkid = handshake_util_find_pmkid_kde(ek->key_data,
 					L_BE16_TO_CPU(ek->key_data_len));
@@ -1087,7 +1089,7 @@ static void eapol_handle_ptk_1_of_4(struct eapol_sm *sm,
 		handshake_state_set_anonce(sm->handshake, ek->key_nonce);
 
 		if (!handshake_state_derive_ptk(sm->handshake)){
-			printf("Cannot derive ptk from handshake\n");
+			printf("Cannot derive ptk from handshake, calling destroy\n");
 			goto error_unspecified;
 		}
 	}
@@ -1134,6 +1136,7 @@ static void eapol_handle_ptk_1_of_4(struct eapol_sm *sm,
 		l_info("MIC calculation failed. "
 			"Ensure Kernel Crypto is available.");
 		l_free(step2);
+		printf("Debug: eapol_destroy called from eapol handle 1_4 \n");
 		handshake_failed(sm, MMPDU_REASON_CODE_UNSPECIFIED);
 		//XXX Added by me
 		//assert(false);
@@ -1250,6 +1253,7 @@ static void eapol_ptk_3_of_4_retry(struct l_timeout *timeout,
 	struct eapol_sm *sm = user_data;
 
 	if (sm->frame_retry >= EAPOL_PAIRWISE_UPDATE_COUNT) {
+
 		handshake_failed(sm, MMPDU_REASON_CODE_4WAY_HANDSHAKE_TIMEOUT);
 		return;
 	}
@@ -1330,7 +1334,7 @@ static void eapol_handle_ptk_2_of_4(struct eapol_sm *sm,
 	if (!rsne || rsne[1] != sm->handshake->supplicant_ie[1] ||
 			memcmp(rsne + 2, sm->handshake->supplicant_ie + 2,
 				rsne[1])) {
-
+		printf("Debug: eapol_destroy called from  eapol 2_4\n");
 		handshake_failed(sm, MMPDU_REASON_CODE_IE_DIFFERENT);
 		return;
 	}
@@ -1388,6 +1392,7 @@ static void eapol_handle_ptk_3_of_4(struct eapol_sm *sm,
 
 	if (!eapol_verify_ptk_3_of_4(ek, sm->handshake->wpa_ie)) {
 		printf("Cannot verify packet 3\n");
+		printf("Debug: eapol_destroy called from eapol handle 3_4 \n");
 		handshake_failed(sm, MMPDU_REASON_CODE_UNSPECIFIED);
 		return;
 	}
@@ -1515,6 +1520,7 @@ static void eapol_handle_ptk_3_of_4(struct eapol_sm *sm,
 		if (override == info1.pairwise_ciphers ||
 				!(info1.pairwise_ciphers & override) ||
 				__builtin_popcount(override) != 1) {
+			printf("Debug: eapol_destroy called from 3_4 in override \n");	
 			handshake_failed(sm,
 				MMPDU_REASON_CODE_INVALID_PAIRWISE_CIPHER);
 			return;
@@ -1530,6 +1536,7 @@ static void eapol_handle_ptk_3_of_4(struct eapol_sm *sm,
 							decrypted_key_data_size,
 							&gtk_len);
 		if (!gtk) {
+			printf("Debug: eapol_destroy called from eapol 3_4 gtk \n");
 			handshake_failed(sm, MMPDU_REASON_CODE_UNSPECIFIED);
 			return;
 		}
@@ -1547,6 +1554,7 @@ static void eapol_handle_ptk_3_of_4(struct eapol_sm *sm,
 							decrypted_key_data_size,
 							&igtk_len);
 		if (!igtk) {
+			printf("Debug: eapol_destroy called from eapol 3_4 gtk \n");
 			handshake_failed(sm, MMPDU_REASON_CODE_UNSPECIFIED);
 			return;
 		}
@@ -1580,6 +1588,7 @@ retransmit:
 	if (!eapol_calculate_mic(sm->handshake->akm_suite, ptk->kck,
 			step4, mic)) {
 		l_free(step4);
+		printf("Debug: eapol_destroy called from retransmission in 3_4 mic calc\n");
 		handshake_failed(sm, MMPDU_REASON_CODE_UNSPECIFIED);
 		return;
 	}
@@ -1618,6 +1627,7 @@ retransmit:
 	return;
 
 error_ie_different:
+printf("Debug: eapol_destroy called from ie_different \n");
 	handshake_failed(sm, MMPDU_REASON_CODE_IE_DIFFERENT);
 }
 
@@ -1665,6 +1675,7 @@ static void eapol_handle_gtk_1_of_2(struct eapol_sm *sm,
 
 	 printf("--- Calling eapol_handle_gtk_1_of_2 ---\n");
 	if (!eapol_verify_gtk_1_of_2(ek, sm->handshake->wpa_ie)) {
+		printf("Debug: eapol_destroy called from gtk 1-2 \n");
 		handshake_failed(sm, MMPDU_REASON_CODE_UNSPECIFIED);
 		return;
 	}
@@ -1731,6 +1742,7 @@ static void eapol_handle_gtk_1_of_2(struct eapol_sm *sm,
 	if (!eapol_calculate_mic(sm->handshake->akm_suite, ptk->kck,
 			step2, mic)) {
 		l_free(step2);
+		printf("Debug: eapol_destroy called from  gtk1-2 on mic calulation\n");
 		handshake_failed(sm, MMPDU_REASON_CODE_UNSPECIFIED);
 		return;
 	}
@@ -1921,6 +1933,7 @@ static void eapol_eap_complete_cb(enum eap_result result, void *user_data)
 	if (result != EAP_RESULT_SUCCESS) {
 		eap_free(sm->eap);
 		sm->eap = NULL;
+		printf("Debug: eapol_destroy called from eap_complet_cb \n");
 		handshake_failed(sm, MMPDU_REASON_CODE_IEEE8021X_FAILED);
 		return;
 	}
@@ -1983,7 +1996,7 @@ static void eapol_eap_results_cb(const uint8_t *msk_data, size_t msk_len,
 msk_short:
 	l_error("EAP method's MSK too short for AKM suite %u",
 			sm->handshake->akm_suite);
-
+	printf("Debug: eapol_destroy called from eapo_result_cb \n");
 	handshake_failed(sm, MMPDU_REASON_CODE_IEEE8021X_FAILED);
 }
 

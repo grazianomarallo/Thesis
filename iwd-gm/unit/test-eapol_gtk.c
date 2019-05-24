@@ -1,4 +1,4 @@
-/*
+/*     !!!! TEST EAPoL IGTK & 4-Way Handshake
  *
  *  Wireless daemon for Linux
  *
@@ -75,7 +75,7 @@ uint8_t * __afl_key;
 uint8_t  * __afl_key1;
 size_t len_frame1;
 size_t len_frame2;
-#define BUF_LEN 2048
+#define MAX_FRAME 1024
 
 
 
@@ -324,9 +324,7 @@ void * __afl_get_key_data_igtk( ){
     FILE *fp1=NULL;
     int i;
     int data;
-    //int count=0;
-    //int expected_byte=0;
-  //  int sz;
+
     size_t ret;
 
     fp1 = fopen(__afl_input_filename , "rb");
@@ -349,7 +347,7 @@ void * __afl_get_key_data_igtk( ){
 	printf("\n Read len failed!\n");
     	exit(EXIT_FAILURE);
 	}
-    if(len_frame1 <= 0 || len_frame1 > 1024){
+    if(len_frame1 <= 0 || len_frame1 > MAX_FRAME){
         printf("\nLen frame1 is either < 0 or > of file size! %ld\n",len_frame1 );
         exit(EXIT_FAILURE);
 
@@ -377,7 +375,7 @@ void * __afl_get_key_data_igtk( ){
     	exit(EXIT_FAILURE);
     }
 
-    if(len_frame2 <= 0 || len_frame2 > 1024){
+    if(len_frame2 <= 0 || len_frame2 > MAX_FRAME){
         printf("\nLen frame2 is either < 0 or > of file size! %ld\n",len_frame2);
         exit(EXIT_FAILURE);
         //return -1;
@@ -461,12 +459,12 @@ static int verify_step2(uint32_t ifindex,
     if((ek_len != expected_step2_frame_size)){
         printf("step2 different frame size\n");
        // assert(false);
-        exit(1);
+       // exit(1);
     }
     if(memcmp(ek, expected_step2_frame, expected_step2_frame_size)){
         printf("step2 memcmp failed\n");
        // assert(false);
-        exit(1);
+       // exit(1);
 
     }
 
@@ -495,12 +493,12 @@ static int verify_step4(uint32_t ifindex,
     if((ek_len != expected_step4_frame_size)){
         printf("step4 different frame size\n");
        // assert(false);
-        exit(1);
+        //exit(1);
     }
     if(memcmp(ek, expected_step4_frame, expected_step4_frame_size)){
         printf("step4 memcmp failed\n");
         //assert(false);
-        exit(1);
+       // exit(1);
     }
 
 //       assert(ek_len == expected_step4_frame_size);
