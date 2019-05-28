@@ -50,6 +50,7 @@ eapol_tx_packet_func_t tx_packet = NULL;
 void *tx_user_data;
 
 uint32_t next_frame_watch_id;
+bool already_freed=false;
 
 #define VERIFY_IS_ZERO(field)						\
 	do {								\
@@ -773,9 +774,15 @@ struct eapol_sm *eapol_sm_new(struct handshake_state *hs)
 	return sm;
 }
 
+bool is_freed(){
+	return already_freed;
+}
+
+
 void eapol_sm_free(struct eapol_sm *sm)
 {	
 	//printf("--- Calling eapol_sm_free() ---\n");
+	already_freed= true;
 	eapol_sm_destroy(sm);
 }
 

@@ -1,48 +1,13 @@
 !!! Warning: no input file for AFL. Tests will be executed with static data!!!
 : Bad address
-TEST: EAPoL/WPA2 Retransmit Test
+TEST: EAPoL/WPA2 PTK State Machine
+--- DEBUG IN eapol_sm_test_ptk --- 
+
 --- Calling eapol_start() ---
 --- __eapol_set_tx_packet_func() --- 
 --- Calling __eapol_rx_packet() --- 
 ------ DEBUGGING HERE  ------
- Frame len: 99
-Protocol version  2 
---- Protocol valid path ---
---- Executing Watchlist ---
---- Calling eapol_rx_packet() ---
-!!! Entering case EAPOL-Key
---- Calling eapol_key_handle() ---
---- Calling eapol_handle_ptk_1_of_4 ---
---- Calling eapol_calculate_mic() --- 
---- Calling eapol_write() ---
-
-XXX function verify_step2 called XXX 
-step2 memcmp failed
---- Watchlist--- 
-
-XXX Retransmit frame 1 without update counter
---- Calling __eapol_rx_packet() --- 
------- DEBUGGING HERE  ------
- Frame len: 99
-Protocol version  2 
---- Protocol valid path ---
---- Executing Watchlist ---
---- Calling eapol_rx_packet() ---
-!!! Entering case EAPOL-Key
---- Calling eapol_key_handle() ---
---- Calling eapol_handle_ptk_1_of_4 ---
---- Calling eapol_calculate_mic() --- 
---- Calling eapol_write() ---
-
-XXX function verify_step2 called XXX 
-step2 memcmp failed
---- Watchlist--- 
-
- XXXX Retransmit frame 1 with updated counter
---- Calling eapol_calculate_mic() --- 
---- Calling __eapol_rx_packet() --- 
------- DEBUGGING HERE  ------
- Frame len: 99
+ Frame len: 155
 Protocol version  2 
 --- Protocol valid path ---
 --- Executing Watchlist ---
@@ -55,39 +20,43 @@ Protocol version  2
 
 XXX function verify_step2 called XXX 
 --- Watchlist--- 
+step 2 true
+
+
+ XXX Working on second frame XXX 
+
 --- __eapol_set_tx_packet_func() --- 
 --- Calling __eapol_rx_packet() --- 
 ------ DEBUGGING HERE  ------
- Frame len: 99
+ Frame len: 155
 Protocol version  2 
 --- Protocol valid path ---
 --- Executing Watchlist ---
 --- Calling eapol_rx_packet() ---
 !!! Entering case EAPOL-Key
 --- Calling eapol_key_handle() ---
---- Calling eapol_handle_ptk_1_of_4 ---
+--- Calling eapol_eapol_verify_mic() ---
+--- Calling eapol_decrypt_key_data() ---
+--- Calling eapol_handle_ptk_3_of_4() ---
 --- Calling eapol_calculate_mic() --- 
 --- Calling eapol_write() ---
 
 XXX function verify_step4 called XXX
+--- Calling eapol_install_gtk() ---
 --- Watchlist--- 
-
- XXXX Retransmit message 3 
---- Calling eapol_calculate_mic() --- 
---- Calling eapol_calculate_mic() --- 
+step 4 true
+--- __eapol_set_tx_packet_func() --- 
 --- Calling __eapol_rx_packet() --- 
 ------ DEBUGGING HERE  ------
- Frame len: 99
+ Frame len: 155
 Protocol version  2 
 --- Protocol valid path ---
 --- Executing Watchlist ---
 --- Calling eapol_rx_packet() ---
 !!! Entering case EAPOL-Key
 --- Calling eapol_key_handle() ---
---- Calling eapol_handle_ptk_1_of_4 ---
-Cannot verify packet 1
---- Calling handshake_failed() --- Freeing state machine --- 
---- Calling eapol_sm_destroy() ---
 --- Watchlist--- 
-Exit 
+--- Calling eapol_sm_destroy() ---
+Exit from test
+--- Calling eapol_exit() ---
 PASS unit/test-eapol (exit status: 0)
