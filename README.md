@@ -1,4 +1,4 @@
-# Security Analysis of the WPA2 KRACK patches
+# Identifying Software and Protocol Vulnerabilities in WPA2 Implementations through Fuzzing
 
 Master Thesis @Polito, developed at @KULeuven.
 
